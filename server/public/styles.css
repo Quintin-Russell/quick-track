@@ -1,10 +1,23 @@
 .header-cont {
   background-image: linear-gradient(rgb(68 170 68 / 58%), rgb(68 170 68 / 5%), rgb(68 170 68 / 0%));
-  height: 25%;
+  height: 15%;
   padding: 0.5rem;
 }
 
 .header-bars {
   color: #8a8a8a6e;
   font-size: 2rem;
+}
+
+.pg-id-txt {
+  font-family: noto-sans, sans-serif;
+  font-weight: 700;
+  color: #29292960;
+  font-size: 0.75rem;
+  margin: 0 0.5rem;
+}
+
+.pg-id-img {
+  width: 15%;
+  opacity: 60%;
 }
