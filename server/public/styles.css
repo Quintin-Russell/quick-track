@@ -1,0 +1,10 @@
+.header-cont {
+  background-image: linear-gradient(rgb(68 170 68 / 58%), rgb(68 170 68 / 5%), rgb(68 170 68 / 0%));
+  height: 25%;
+  padding: 0.5rem;
+}
+
+.header-bars {
+  color: #8a8a8a6e;
+  font-size: 2rem;
+}

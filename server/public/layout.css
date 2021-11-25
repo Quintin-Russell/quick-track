@@ -1,0 +1,48 @@
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.header-logo {
+  height: 5rem;
+  padding: 1rem;
+  padding-bottom: 0;
+}
+
+.col-3 {
+  flex-basis: calc(100% / 3);
+}
+
+.whole-pg-cont {
+  display: flex;
+  flex-direction: column;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
+.just-cent {
+  justify-content: center;
+}
+
+.pg-id-cont {
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+
+.pg-id-img-cont {
+  display: flex;
+  align-items: center;
+  width: 41%;
+}
+
+.pg-id-img {
+  width: 95%;
+}
+
+.pg-id-txt {
+  font-size: 0.75rem;
+}
