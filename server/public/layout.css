@@ -1,3 +1,7 @@
+.hidden {
+  display: none !important;
+}
+
 .row {
   display: flex;
   flex-direction: row;
@@ -24,10 +28,18 @@
 .pg-id-cont {
   justify-content: start;
   align-items: center;
+  flex-basis: 50%;
 }
 
 .pg-id-img-cont {
   display: flex;
   align-items: center;
-  width: 41%;
+  width: 100%;
+}
+
+.create-cont {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  flex-basis: 50%;
 }
