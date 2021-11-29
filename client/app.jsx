@@ -1,6 +1,8 @@
 // import React from 'react';
 // import parseRoute from '../client/parse-route';
 // import Home from './pages/home';
+// import Header from './components/header'
+// import Footer from './components/footer'
 
 // export default class App extends React.Component {
 //   constructor(props) {
@@ -15,6 +17,9 @@
 //   }
 
 //   render() {
-//     return <Home />;
-//   }
+//     return (
+//       <Header />
+//       { this.renderPage() }
+//       <Footer />
+//     )
 // }

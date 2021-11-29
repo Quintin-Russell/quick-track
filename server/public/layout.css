@@ -43,3 +43,18 @@
   align-items: center;
   flex-basis: 50%;
 }
+
+.footer-cont {
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 3rem;
+}
+
+.indicator-circle {
+  border-radius: 50%;
+  background-color: #0e9aa745;
+  height: 3rem;
+}

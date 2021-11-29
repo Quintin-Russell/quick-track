@@ -26,3 +26,18 @@
   font-size: 3rem;
   color: #29292960;
 }
+
+.footer-cont {
+  border: 0.15rem solid rgb(0 0 0 / 34.9%);
+  background-color: #d9cab345;
+}
+
+.footer-icon {
+  width: 2rem;
+  margin: 0.5rem;
+}
+
+.header-bars:hover,
+.create-icon:hover {
+  cursor: pointer;
+}
