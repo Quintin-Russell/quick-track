@@ -1,6 +1,5 @@
 .header-cont {
   background-image: linear-gradient(rgb(68 170 68 / 58%), rgb(68 170 68 / 5%), rgb(68 170 68 / 0%));
-  height: 15%;
   padding: 0.5rem;
 }
 
@@ -23,12 +22,12 @@
 }
 
 .create-icon {
-  font-size: 3rem;
+  font-size: 2rem;
   color: #29292960;
 }
 
 .footer-cont {
-  border: 0.15rem solid rgb(0 0 0 / 34.9%);
+  border: 0.15rem solid rgb(0 0 0 / 40%);
   background-color: #d9cab345;
 }
 
@@ -37,7 +36,14 @@
   margin: 0.5rem;
 }
 
+.indicator-circle {
+  border-radius: 50%;
+  background-color: #0e9aa745;
+  height: 3rem;
+}
+
 .header-bars:hover,
-.create-icon:hover {
+.create-icon:hover,
+.header-logo-cont:hover {
   cursor: pointer;
 }
