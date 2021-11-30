@@ -3,26 +3,7 @@ import parseRoute from '../client/parse-route';
 // import Home from './pages/home';
 import Header from './components/header';
 import Footer from './components/footer';
-const pages = [
-  {
-    name: 'Past Expenses',
-    hash: '#past-expenses',
-    imgSrc: 'images/past-exp-logo2.png',
-    imgAlt: 'past-exp-icon'
-  },
-  {
-    name: 'Summary',
-    hash: '#summary',
-    imgSrc: 'images/summary-logo.png',
-    imgAlt: 'summary-icon'
-  },
-  {
-    name: 'Account Settings',
-    hash: '#acc-setting',
-    imgSrc: 'images/acc-settings-logo.png',
-    imgAlt: 'account-settings-icon'
-  }
-];
+import pages from './pages';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -36,20 +17,19 @@ export default class App extends React.Component {
   //   const route = this.state.route
   // }
 
-  // componentDidMount() {
-  //   console.log('event listener on window obj');
-  //   window.addEventListener('hashchange', e => {
-  //     const route = parseRoute(window.location.hash);
-  //     this.setState({ route });
-  //   });
-  // }
+  componentDidMount() {
+    window.addEventListener('hashchange', e => {
+      const route = parseRoute(window.location.hash);
+      this.setState({ route });
+    });
+  }
 
   render() {
     return (
       <>
-      <Header />
+      <Header route={this.state.route.path} pages={pages}/>
 
-      <Footer pages={pages} route={this.state.route} parseRoute={parseRoute}/>
+      <Footer pages={pages} route={this.state.route.path} />
       </>
     );
   }
