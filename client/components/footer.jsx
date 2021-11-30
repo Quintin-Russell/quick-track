@@ -18,7 +18,7 @@ export default class Footer extends React.Component {
       <footer className="footer-cont row">
         {
           this.props.pages.map(page => (
-            <FooterIcons key={page.hash} page={page} footerIndincator={this.footerIndincator(this.props.route, page.hash)}/>
+            <FooterIcons key={page.hash} page={page} footerIndincator={this.footerIndincator(this.props.route.path, page.hash)}/>
           ))
         }
       </footer>
@@ -28,9 +28,14 @@ export default class Footer extends React.Component {
 
 function FooterIcons(props) {
   const { hash, imgSrc, imgAlt } = props.page;
-  return (
+  if (props.page.footerIcon) {
+    return (
     <a className={props.footerIndincator} href= {hash}>
       <img src={imgSrc} alt={imgAlt} className="footer-icon"></img>
     </a>
-  );
+    );
+  } else {
+    return <></>;
+  }
+
 }

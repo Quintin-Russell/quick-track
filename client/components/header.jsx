@@ -7,43 +7,69 @@ export default class Header extends React.Component {
       <header className="header-cont col">
         <i onClick= { this.props.handleMenuClick } className="fas fa-bars header-bars"></i>
         <div className="row just-cent">
-          <img className="header-logo" src="images/quick-track-logo.png" alt="quick-track-logo"></img>
+          <img onClick= { this.goHome } className="header-logo" src="images/quick-track-logo.png" alt="quick-track-logo"></img>
         </div>
           <div className="row">
             <div className="pg-id-cont row">
               <section className="pg-id-img-cont">
-                <RenderPgId pages={this.props.pages} route={this.props.route}/>
+                <PgId pages={this.props.pages} route={this.props.route}/>
             </section>
           </div>
-              <div onClick= { this.handleCreatIconClick } className="create-cont">
-                <i className= { this.displayCreateIcon }></i>
-              </div>
+            <CreateIcon route={this.props.route} pages={this.props.pages}/>
             </div>
           </header>
     );
   }
 }
 
-function RenderPgId(props) {
-  const route = `#${props.route}`;
-  let pgId = (
-    <>
-      <img src="" alt="" className="pg-ig-img" />
-      <p className="pg-id-txt"></p>
+function CreateIcon(props) {
+  if (!props.route.path) {
+    return <></>;
+  }
+  const route = `#${props.route.path}`;
+  const pg = props.pages.find(page => {
+    return page.hash === route;
+  });
+  if (pg && pg.createQuery) {
+    return (
+      <a onClick= {props.handleCreatIconClick} href={pg.createQuery} className="create-cont">
+        <i className="fas fa-plus-circle create-icon"></i>
+      </a>
+    );
+  } else {
+    return <></>;
+  }
+  // for (const pg of props.pages) {
+  //   if ((pg.hash === route) && (pg.createQuery)) {
+  //     return (
+  //     <a onClick= {props.handleCreatIconClick} href={pg.createQuery} className="create-icon">
+  //       <i className="fas fa-plus-circle create-icon"></i>
+  //       </a>
+  //     );
+  //   }
+  // }
+}
+
+function PgId(props) {
+  if (!props.route.path) {
+    return (
+      <>
+    <img src="images/home.png" alt="home-icon" className="pg-id-img"/>
+    <p className="pg-id-txt">Home</p>
     </>
-  );
+    );
+  }
+  const route = `#${props.route.path}`;
   for (const page of props.pages) {
     if (page.hash === route) {
-      pgId = (
+      return (
         <>
           <img src={page.imgSrc} alt={page.imgAlt} className="pg-id-img" />
           <p className="pg-id-txt">{page.name}</p>
         </>
       );
-      break;
     }
   }
-  return pgId;
 }
 
 // // raw html: for reference

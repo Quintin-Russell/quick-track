@@ -27,9 +27,9 @@ export default class App extends React.Component {
   render() {
     return (
       <>
-      <Header route={this.state.route.path} pages={pages}/>
+      <Header route={this.state.route} pages={pages}/>
 
-      <Footer pages={pages} route={this.state.route.path} />
+      <Footer pages={pages} route={this.state.route} />
       </>
     );
   }
