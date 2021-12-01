@@ -3,7 +3,6 @@ import React from 'react';
 export default class Footer extends React.Component {
 
   footerIndincator(path, href) {
-    path = `#${path}`;
     const standard = 'footer-icon-cont';
     const circle = 'footer-icon-cont indicator-circle';
     if (path === href) {

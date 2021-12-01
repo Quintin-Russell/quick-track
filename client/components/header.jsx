@@ -2,12 +2,23 @@ import React from 'react';
 
 export default class Header extends React.Component {
 
+  // toggleMenu(e) {
+  //   this.props.toggleMenu();
+  // }
+
+  // showMenu() {
+  //   console.log('eventListener working');
+  //   return <Menu pages={this.props.pages}/>;
+  // }
+
   render() {
     return (
       <header className="header-cont col">
-        <i onClick= { this.props.handleMenuClick } className="fas fa-bars header-bars"></i>
+          <i onClick={this.props.toggleMenu} className="fas fa-bars header-bars"></i>
         <div className="row just-cent">
-          <img onClick= { this.goHome } className="header-logo" src="images/quick-track-logo.png" alt="quick-track-logo"></img>
+          <a href="">
+            <img className="header-logo" src="images/quick-track-logo.png" alt="quick-track-logo"></img>
+          </a>
         </div>
           <div className="row">
             <div className="pg-id-cont row">
@@ -22,11 +33,49 @@ export default class Header extends React.Component {
   }
 }
 
+// function Menu(props) {
+//   console.log('porps in Menu funct:', props);
+//   return (
+//     <div className="overlay">
+//       <div className="menu-cont">
+//         <div className="header-cont">
+//           <a className="row header-logo-cont" href="#">
+//             <img className="header-logo" src="images/quick-track-logo.png" alt="quick-track-logo"></img>
+//                 </a>
+//             <h1 className="menu-txt">
+//               Menu
+//                 </h1>
+//               </div>
+//           <div className="menu-icon-cont">
+//             {props.pages.map(page => {
+//               if (page.menuIcon) {
+//                 return (
+//                   <a className= "col" key={page.hash} href={ page.hash }>
+//                     <img src={ page.imgSrc } alt={ page.imgAlt } />
+//                     <p className="pg-id-txt">{page.name}</p>
+//                     </a>
+//                 );
+//               } else {
+//                 return <></>;
+//               }
+//             })}
+//           </div>
+//           <div className="menu-footer-cont">
+//             <p className="menu-txt">
+//               Designed by Quintin Russell
+//                 QuickTrack Finance 2021
+//                 </p>
+//               </div>
+//           </div>
+//         </div>
+//   );
+// }
+
 function CreateIcon(props) {
   if (!props.route.path) {
     return <></>;
   }
-  const route = `#${props.route.path}`;
+  const route = props.route.path;
   const pg = props.pages.find(page => {
     return page.hash === route;
   });
@@ -59,7 +108,7 @@ function PgId(props) {
     </>
     );
   }
-  const route = `#${props.route.path}`;
+  const route = props.route.path;
   for (const page of props.pages) {
     if (page.hash === route) {
       return (

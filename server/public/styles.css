@@ -14,6 +14,7 @@
   color: #29292960;
   font-size: 0.75rem;
   margin: 0 0.5rem;
+  text-decoration: none;
 }
 
 .pg-id-img {
@@ -42,6 +43,20 @@
   height: 3rem;
 }
 
+.menu-txt {
+  font-family: Oswald, sans-serif;
+  font-weight: 300;
+  text-align: center;
+  margin: 0;
+}
+
+.menu-footer-cont {
+  font-size: 0.5rem;
+  background-color: white;
+  text-align: center;
+}
+
+.fa-angle-double-left:hover,
 .header-bars:hover,
 .create-icon:hover,
 .header-logo-cont:hover {

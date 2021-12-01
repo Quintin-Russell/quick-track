@@ -1,7 +1,3 @@
-.hidden {
-  display: none !important;
-}
-
 .row {
   display: flex;
   flex-direction: row;
@@ -14,6 +10,7 @@
 .whole-pg-cont {
   display: flex;
   flex-direction: column;
+  margin-bottom: -3rem;
 }
 
 .col {
@@ -22,6 +19,7 @@
 }
 
 .header-logo-cont {
+  display: flex;
   justify-content: center;
 }
 
@@ -47,7 +45,7 @@
 .footer-cont {
   justify-content: space-between;
   align-items: center;
-  position: absolute;
+  min-height: 3rem;
   bottom: 0;
   width: 100%;
   height: 3rem;
@@ -56,3 +54,55 @@
 .just-cent {
   justify-content: center;
 }
+
+.overlay {
+  background: linear-gradient(transparent, rgb(0 0 0 / 75%));
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.menu-cont {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 33%;
+  background-color: white;
+}
+
+.menu-header-cont {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu-icon-cont {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.menu-header-logo {
+  width: 4rem;
+}
+
+.fa-angle-double-left {
+  width: 100%;
+  text-align: right;
+}
+
+.menu-icon-img {
+  width: 2rem;
+}
+
+/* .menu-header-cont {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+} */

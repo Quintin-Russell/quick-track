@@ -4,12 +4,15 @@ import parseRoute from '../client/parse-route';
 import Header from './components/header';
 import Footer from './components/footer';
 import pages from './pages';
+import Menu from './components/menu';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
+    this.toggleMenu = this.toggleMenu.bind(this);
     this.state = {
-      route: parseRoute(window.location.hash)
+      route: parseRoute(window.location.hash),
+      showMenu: false
     };
   }
 
@@ -24,11 +27,17 @@ export default class App extends React.Component {
     });
   }
 
+  toggleMenu(e) {
+    const curentShowMenu = this.state.showMenu;
+    this.setState({ showMenu: !curentShowMenu });
+  }
+
   render() {
     return (
       <>
-      <Header route={this.state.route} pages={pages}/>
-
+      <Header toggleMenu={this.toggleMenu} route={this.state.route} pages={pages}/>
+      {/* place Menu here; add if(props.route.params.get('funct')==='menu') to render() */}
+      { this.state.showMenu && <Menu toggleMenu={this.toggleMenu} pages={pages}/> }
       <Footer pages={pages} route={this.state.route} />
       </>
     );
