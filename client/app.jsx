@@ -12,7 +12,8 @@ export default class App extends React.Component {
     this.toggleMenu = this.toggleMenu.bind(this);
     this.state = {
       route: parseRoute(window.location.hash),
-      showMenu: false
+      showMenu: false,
+      pastExpenses: []
     };
   }
 
@@ -38,6 +39,7 @@ export default class App extends React.Component {
       <Header toggleMenu={this.toggleMenu} route={this.state.route} pages={pages}/>
       {/* place Menu here; add if(props.route.params.get('funct')==='menu') to render() */}
       { this.state.showMenu && <Menu toggleMenu={this.toggleMenu} pages={pages}/> }
+      <div className="whole-pg-cont"></div>
       <Footer pages={pages} route={this.state.route} />
       </>
     );
