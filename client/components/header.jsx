@@ -2,15 +2,6 @@ import React from 'react';
 
 export default class Header extends React.Component {
 
-  // toggleMenu(e) {
-  //   this.props.toggleMenu();
-  // }
-
-  // showMenu() {
-  //   console.log('eventListener working');
-  //   return <Menu pages={this.props.pages}/>;
-  // }
-
   render() {
     return (
       <header className="header-cont col">
@@ -33,44 +24,6 @@ export default class Header extends React.Component {
   }
 }
 
-// function Menu(props) {
-//   console.log('porps in Menu funct:', props);
-//   return (
-//     <div className="overlay">
-//       <div className="menu-cont">
-//         <div className="header-cont">
-//           <a className="row header-logo-cont" href="#">
-//             <img className="header-logo" src="images/quick-track-logo.png" alt="quick-track-logo"></img>
-//                 </a>
-//             <h1 className="menu-txt">
-//               Menu
-//                 </h1>
-//               </div>
-//           <div className="menu-icon-cont">
-//             {props.pages.map(page => {
-//               if (page.menuIcon) {
-//                 return (
-//                   <a className= "col" key={page.hash} href={ page.hash }>
-//                     <img src={ page.imgSrc } alt={ page.imgAlt } />
-//                     <p className="pg-id-txt">{page.name}</p>
-//                     </a>
-//                 );
-//               } else {
-//                 return <></>;
-//               }
-//             })}
-//           </div>
-//           <div className="menu-footer-cont">
-//             <p className="menu-txt">
-//               Designed by Quintin Russell
-//                 QuickTrack Finance 2021
-//                 </p>
-//               </div>
-//           </div>
-//         </div>
-//   );
-// }
-
 function CreateIcon(props) {
   if (!props.route.path) {
     return <></>;
@@ -88,15 +41,6 @@ function CreateIcon(props) {
   } else {
     return <></>;
   }
-  // for (const pg of props.pages) {
-  //   if ((pg.hash === route) && (pg.createQuery)) {
-  //     return (
-  //     <a onClick= {props.handleCreatIconClick} href={pg.createQuery} className="create-icon">
-  //       <i className="fas fa-plus-circle create-icon"></i>
-  //       </a>
-  //     );
-  //   }
-  // }
 }
 
 function PgId(props) {
@@ -120,22 +64,3 @@ function PgId(props) {
     }
   }
 }
-
-// // raw html: for reference
-// /* <div class="header-cont col">
-//   <i class="fas fa-bars header-bars"></i>
-//   <div class="row just-cent">
-//     <img class="header-logo" src="images/quick-track-logo.png" alt="quick-track-logo">
-//         </div>
-//     <div class="row">
-//       <div class="pg-id-cont row">
-//         <section class="pg-id-img-cont">
-//           <img class="pg-id-img" src="images/past-exp-logo.png" alt="past-expense-logo">
-//             <p class="pg-id-txt">Past Expenses</p>
-//             </section>
-//           </div>
-//         <div class="create-cont">
-//           <i class="fas fa-plus-circle create-icon"></i>
-//         </div>
-//       </div>
-//     </div> */

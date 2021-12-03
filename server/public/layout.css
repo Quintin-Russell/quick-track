@@ -50,9 +50,11 @@
   justify-content: space-between;
   align-items: center;
   min-height: 3rem;
+  position: fixed;
   bottom: 0;
   width: 100%;
-  height: 7vh;
+  height: 3rem;
+  z-index: 1;
 }
 
 .footer-icon {
@@ -61,6 +63,7 @@
 }
 
 .just-cent {
+  display: flex;
   justify-content: center;
 }
 
@@ -84,6 +87,7 @@
   flex-direction: column;
   justify-content: space-between;
   width: 33%;
+  z-index: 2;
 }
 
 .menu-header-cont {
@@ -96,7 +100,6 @@
 .menu-icon-cont {
   height: 100%;
   display: flex;
-  flex-direction: column;
   justify-content: space-evenly;
 }
 
@@ -117,27 +120,30 @@
   width: 2rem;
 }
 
+.menu-icon-txt {
+  text-align: center;
+}
+
 .fa-angle-double-left {
   width: 100%;
   text-align: right;
 }
 
-.content-cont {
-  height: 70vh;
-  background-color: white;
-}
+.exp-form-cont {
+  width: 85%;
+  border-radius: 5rem;
 
-.new-exp-form {
-  border: 0.25rem solid rgb(0 0 0 / 40%);
+  /* border: 0.25rem solid rgb(0 0 0 / 40%); */
   filter: drop-shadow(0 0 0.25rem black);
+  margin: auto;
   background-color: white;
 }
 
-.new-exp-toggle-span {
-  margin: 0.5rem;
+.exp-form {
+  padding: 1rem;
 }
 
-.new-exp-toggle-txt {
+.exp-toggle-txt {
   font-family: noto-sans, sans-serif;
   color: #292929c0;
   font-weight: 700;
@@ -148,4 +154,35 @@
 .toggle-highlight {
   background-color: #0e9aa765;
   border: 0.05rem solid rgb(0 0 0 / 26.7%);
+}
+
+.form-label {
+  width: 90%;
+  padding: 0.25rem;
+}
+
+.form-input {
+  min-width: 90%;
+  border-radius: 5rem;
+}
+
+.form-label-txt {
+  font-family: noto-sans, sans-serif;
+  font-size: 0.5rem;
+  margin: 0.25rem;
+}
+
+.button-cont {
+  justify-content: space-between;
+}
+
+.sm-button {
+  background-color: #efe9df;
+}
+
+.form-input::placeholder {
+  text-align: center;
+  font-family: noto-sans, sans-serif;
+  font-weight: 700;
+  color: #29292960;
 }

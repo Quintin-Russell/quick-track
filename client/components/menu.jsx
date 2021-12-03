@@ -13,13 +13,13 @@ export default function Menu(props) {
             Menu
                 </h1>
         </div>
-        <div className="menu-icon-cont">
+        <div className="menu-icon-cont col">
           {props.pages.map(page => {
             if (page.menuIcon) {
               return (
                 <a onClick={props.toggleMenu} className="menu-header-cont" key={page.hash} href={page.hash}>
                   <img className='menu-icon-img' src={page.imgSrc} alt={page.imgAlt} />
-                  <p className="pg-id-txt">{page.name}</p>
+                  <p className="pg-id-txt menu-icon-txt">{page.name}</p>
                 </a>
               );
             } else {

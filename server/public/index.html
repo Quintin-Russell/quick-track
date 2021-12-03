@@ -22,7 +22,7 @@
 
   <div id="root" class="whole-pg-cont">
 
-      <!-- <div class="header-cont col">
+      <div class="header-cont col">
           <i class="fas fa-bars header-bars"></i>
           <a class="row header-logo-cont" href="#">
            <img class="header-logo" src="images/quick-track-logo.png" alt="quick-track-logo">
@@ -38,26 +38,57 @@
            <i class="fas fa-plus-circle create-icon"></i>
           </div>
         </div>
-          </div> -->
+          </div>
           <!-- content -->
-          <!-- <div class="content-cont col">
-            <div class="new-exp-form col">
-                  <span class="row new-exp-toggle-span">
-                    <p class="toggle-highlight new-exp-toggle-txt">
+            <div class="exp-form-cont col">
+              <div>
+                  <span class="row exp-form">
+                    <p class="toggle-highlight exp-toggle-txt">
                       Expense
                     </p>
-                    <p class="new-exp-toggle-txt">
+                    <p class="exp-toggle-txt">
                       |
                     </p>
-                    <p class="new-exp-toggle-txt">
+                    <p class="exp-toggle-txt">
                       Deposit
                     </p>
                   </span>
-              <form action="">
-                <input type="text">
+                  <h2 class="menu-txt">Enter a New Expense</h2>
+              <form class="just-cent exp-form col" action="">
+                <label for="amount">
+                  <input class="form-input" placeholder="How much did you spend?" id="amount" name="amount" type="number">
+                </label>
+                <label for="spending-category" class="col form-label">
+                  <h3 class="form-label-txt">Pick a Spending Category:</h3>
+                  <select id="spending-category" name="spending-category" class="form-input">
+                    <option class="form-label-txt" value="Groceries">Groceries</option>
+                    <option class="form-label-txt" value="House">House</option>
+                    <option class="form-label-txt" value="Restaurant">Restaurant</option>
+                    <option class="form-label-txt" value="Gas">Gas</option>
+                  </select>
+                </label>
+                <label for="comment" class="col form-label">
+                  <h3 class="form-label-txt">Pick a Spending Category:</h3>
+                  <input class="form-input" placeholder="What did you buy?" id="comment" name="comment" type="text">
+                </label>
+                <label for="payment-method" class="col form-label">
+                  <h3 class="form-label-txt">Pick a Payment Method:</h3>
+                  <select id="payment-method" name="payment-method" class="form-input">
+                    <option class="form-label-txt" value="Visa">Visa</option>
+                    <option class="form-label-txt" value="MasterCard">MasterCard</option>
+                    <option class="form-label-txt" value="Cash">Cash</option>
+                    <option class="form-label-txt" value="Debit">Debit</option>
+                  </select>
+                </label>
+                <div class="row button-cont">
+                  <button class="sm-button">Start Over</button>
+                  <button class="sm-button">Done</button>
+                </div>
               </form>
+              </div>
+
             </div>
-          </div> -->
+
           <!-- menu -->
           <!-- <div class="overlay">
             <div class="menu-cont">
