@@ -6,7 +6,6 @@ CREATE TABLE "users" (
 	"email" TEXT NOT NULL UNIQUE,
 	"username" TEXT NOT NULL UNIQUE,
 	"hashedPassword" TEXT NOT NULL,
-	"budget" decimal NOT NULL,
 	"monthlyBudget" decimal NOT NULL,
 	"createdAt" timestamptz NOT NULL default now(),
 	CONSTRAINT "users_pk" PRIMARY KEY ("userId")
