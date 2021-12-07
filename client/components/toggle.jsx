@@ -1,13 +1,13 @@
 // import React, { Component } from 'react';
 
 // const toggleOptions = {
-//   #: {
-//     toggleOptions: ["Expense", "Deposit"]
-//   }
-//   #pastExp: {
+//   '#': {
 //     toggleOptions: ["Expense", "Deposit"]
 //   },
-//   #setBudget: {
+//   '#pastExp': {
+//     toggleOptions: ["Expense", "Deposit"]
+//   },
+//   '#setBudget': {
 //     toggleOptions: ["Weekly", "Monthly", "Year"]
 //   }
 // }
