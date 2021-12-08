@@ -1,6 +1,8 @@
 // import React from 'react';
 // import Dropdown from './dropdown';
-// import Toggle from './toggle';
+// // import Toggle from './toggle';
+
+// const userId = 1;
 
 // const formOptions = {
 //   '#': {
@@ -23,39 +25,43 @@
 
 // // make if/else for if it's a new or past expense
 
-// class ExpenseForm extends React.Component {
+// export default class ExpenseForm extends React.Component {
 //   constructor(props) {
 //     super(props);
 //     this.state = {
 //       function: props.route.path,
-//       spendingCategories: null,
-//       paymentMethods: null,
-//       inputedOption: null
+//       spendingCategories: [],
+//       paymentMethods: [],
+//       inputedOption: null,
+//       expense: true
 //     };
 //   }
 
 //   componentDidMount() {
-//     const spendingCategories = null;
-//     fetch('/api/spendingCategories')
-//       .then(res => res.json())
-//       .then(spendingCategories => spendingCategories = spendingCategories)
-//       .catch(err);
-//     fetch('/api/paymentMethods')
-//       .then(res => res.json())
-//       .then(paymentMethods => this.setState({ spendingCategories, paymentMethods }))
-//       .catch(err);
+//     console.log('componentdidmount in ExpenseForm');
+//     const spCatFetchUrl = `/api/spendingCategories/${userId}`;
+//     fetch(spCatFetchUrl)
+//       .then(spCatRes => );
+//     // const fetchUrl = `/api/expense-form/${userId}`;
+//     // fetch(fetchUrl)
+//     //   .then(result => result.json())
+//     //   .then(catAndMethObj => {
+//     //     console.log('catAndMethObj in fetch:', catAndMethObj);
+//     //     this.setState({ catAndMethObj });
+//     //   });
 //   }
 
-//   handleToggleClick(e) {
-//     this.setState({ function: [e.target.value] });
-//   }
+//   // handleToggleClick(e) {
+//   //   this.setState({ expense: [!this.state.expense] });
+//   // }
 
 //   // whichFormOption(path, )
 
 //   render() {
+//     console.log('catAndMethObj:', this.state.catAndMethObj);
 //     return (
 //       <div className="exp-form-cont col">
-//           <Toggle />
+//           {/* <Toggle handleToggleClick= /> */}
 //         <h2 className="menu-txt">{}</h2>
 //         <form className="just-cent exp-form col" action="">
 //           <label htmlFor="amount" className="col form-label">
@@ -64,7 +70,7 @@
 //             <label htmlFor="spending-category" className="col form-label">
 //               <h3 className="form-label-txt">Pick a Spending Category:</h3>
 //               {/* make component from fetch req to category db */}
-//               <Dropdown id="spending-category" name="spending-category" className="form-input" array={this.state.spendingCategories} primaryKey="spendingCategoryId" />
+//               {/* <Dropdown id="spending-category" name="spending-category" className="form-input" arr={this.state.catAndMethObj} primaryKey="spendingCategoryId" /> */}
 //               {/* <select id="spending-category" name="spending-category" class="form-input">
 //                 <option class="form-label-txt" value="Groceries">Groceries</option>
 //                 <option class="form-label-txt" value="House">House</option>

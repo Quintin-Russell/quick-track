@@ -1,14 +1,18 @@
 // import React from 'react';
-// import { render } from 'react-dom';
 
-// function Dropdown (id, name, className, array, primaryKey) {
+// export default class Dropdown extends React.Component {
+//   // constructor(props) {
+//   //   super(props);
+//   // }
+
 //   render() {
+//     console.log('this.props:', this.props);
 //     return (
-//       <select name={name} id={id}>
-//         array.map(item => {
-//           return <option className="form-label-txt" key={item.primaryKey} value={item.primaryKey}>{item.name}</option>
-//         })
+//       <select name={this.props.name} id={this.props.id}>
+//         {this.props.arr.map(item => {
+//           return <option className="form-label-txt" key={item[this.props.primaryKey]} value={item[this.props.primaryKey]}>{item.name}</option>;
+//         })}
 //       </select>
-//     )
+//     );
 //   }
 // }
