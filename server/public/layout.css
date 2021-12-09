@@ -170,6 +170,11 @@
   height: 2rem;
   border: 0.01rem solid #0e9aa7;
   filter: drop-shadow(0 0.1rem 0.1rem #29292960);
+  background-color: white;
+}
+
+.form-input-extra-padding {
+  padding-top: 1rem;
 }
 
 .form-label-txt {

@@ -33,7 +33,7 @@ app.get('/api/expenses/:userId', (req, res, next) => {
 });
 
 app.get('/api/paymentMethods/:userId', (req, res, next) => {
-  const { userId } = req.params.userId;
+  const userId = req.params.userId;
 
   const sql = `
   select *
@@ -50,7 +50,7 @@ app.get('/api/paymentMethods/:userId', (req, res, next) => {
 });
 
 app.get('/api/spendingCategories/:userId', (req, res, next) => {
-  const { userId } = req.params.userId;
+  const userId = req.params.userId;
 
   const sql = `
   select *

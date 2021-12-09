@@ -38,10 +38,15 @@
 //   }
 
 //   componentDidMount() {
-//     console.log('componentdidmount in ExpenseForm');
-//     const spCatFetchUrl = `/api/spendingCategories/${userId}`;
+//     const spCatFetchUrl = `/api/spendingCategories/${userId.toString()}`;
+//     const payMethFetchUrl = `/api/paymentMethods/${userId.toString()}`;
 //     fetch(spCatFetchUrl)
-//       .then(spCatRes => );
+//       .then(spCatRes => spCatRes.json())
+//       .then(spendingCategories => {
+//         fetch(payMethFetchUrl)
+//           .then(payMethRes => payMethRes.json())
+//           .then(paymentMethods => this.setState({ spendingCategories, paymentMethods }));
+//       });
 //     // const fetchUrl = `/api/expense-form/${userId}`;
 //     // fetch(fetchUrl)
 //     //   .then(result => result.json())
@@ -55,10 +60,14 @@
 //   //   this.setState({ expense: [!this.state.expense] });
 //   // }
 
-//   // whichFormOption(path, )
+//   whichFormOption(path, funct){
+//     if (Object.keys(formOptions).includes(path)) {
+
+//     }
+//   }
 
 //   render() {
-//     console.log('catAndMethObj:', this.state.catAndMethObj);
+//     console.log('this.state:', this.state);
 //     return (
 //       <div className="exp-form-cont col">
 //           {/* <Toggle handleToggleClick= /> */}
@@ -70,7 +79,7 @@
 //             <label htmlFor="spending-category" className="col form-label">
 //               <h3 className="form-label-txt">Pick a Spending Category:</h3>
 //               {/* make component from fetch req to category db */}
-//               {/* <Dropdown id="spending-category" name="spending-category" className="form-input" arr={this.state.catAndMethObj} primaryKey="spendingCategoryId" /> */}
+//               <Dropdown id="spending-category" name="spending-category" className="form-input" arr={this.state.spendingCategories} primaryKey="spendingCategoryId" />
 //               {/* <select id="spending-category" name="spending-category" class="form-input">
 //                 <option class="form-label-txt" value="Groceries">Groceries</option>
 //                 <option class="form-label-txt" value="House">House</option>
@@ -78,12 +87,13 @@
 //                 <option class="form-label-txt" value="Gas">Gas</option>
 //               </select> */}
 //             </label>
-//             <label htmlFor="comment" className="col form-label">
-//               <input className="form-input" placeholder="What did you buy?" id="comment" name="comment" type="text"></input>
+//             <label htmlFor="comment" className="col form-input-extra-padding form-label">
+//             <input className="form-input" placeholder="What did you buy?" id="comment" name="comment" type="text"></input>
 //             </label>
 //               {/* make a component from fetch req to payment method db */}
 //               <label htmlFor="payment-method" className="col form-label">
 //                 <h3 className="form-label-txt">Pick a Payment Method:</h3>
+//             <Dropdown id="payment-method" name="payment-method" className="form-input" arr={this.state.paymentMethods} primaryKey="paymentMethodId" />
 //                 {/* <select id="payment-method" name="payment-method" class="form-input">
 //                   <option class="form-label-txt" value="Visa">Visa</option>
 //                   <option class="form-label-txt" value="MasterCard">MasterCard</option>
