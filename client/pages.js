@@ -1,7 +1,7 @@
 export default [
   {
     name: 'Home',
-    hash: '',
+    hash: '#',
     imgSrc: 'images/home.png',
     imgAlt: 'home-icon',
     footerIcon: false,

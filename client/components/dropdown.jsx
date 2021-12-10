@@ -7,7 +7,7 @@ export default class Dropdown extends React.Component {
 
   render() {
     return (
-      <select className={this.props.className} name={this.props.name} id={this.props.id}>
+      <select id={this.props.id} name={this.props.name} className={this.props.className}>
         {this.props.arr.map(item => {
           return <option className="form-label-txt" key={item[this.props.primaryKey]} value={item[this.props.primaryKey]}>{item.name}</option>;
         })}
