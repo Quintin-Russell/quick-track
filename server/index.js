@@ -66,30 +66,6 @@ app.get('/api/spendingCategories/:userId', (req, res, next) => {
     .catch(err => next(err));
 });
 
-// app.get('/api/expense-form/:userId', (req, res, next) => {
-//   // const userId = req.params.userId;
-
-//   const sql = `
-//   select "spendingCategories"."spendingCategoryId",
-//     "spendingCategories"."name" as "spCatName",
-//     "paymentMethods"."paymentMethodId",
-//     "paymentMethods"."name" as "paymentName",
-//     "paymentMethods"."userId"
-//   from "spendingCategories"
-//   join "paymentMethods" using ("userId")
-//   `;
-//   // where "userId" = $1
-//   // const params = [parseInt(userId, 10)];
-//   // params
-//   db.query(sql)
-//     .then(result => {
-//       res.status(201).json(result.rows);
-//     })
-//     .catch(err => {
-//       next(err);
-//     });
-// });
-
 app.post('/api/expenses', (req, res, next) => {
   let { userId, amount, spendingCategory, comment, paymentMethod } = req.body;
   amount = Number.parseFloat(amount).toFixed(2);

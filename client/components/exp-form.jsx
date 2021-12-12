@@ -1,4 +1,7 @@
 import React from 'react';
+import ClientError from '../../server/client-error';
+// import { sources } from 'webpack';
+// import { ContextExclusionPlugin } from 'webpack';
 import Dropdown from './dropdown';
 // import Toggle from './toggle';
 
@@ -23,20 +26,18 @@ const formOptions = {
   }
 };
 
-// make if/else for if it's a new or past expense
-
 export default class ExpenseForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       route: props.route,
-      formSpCat: null,
-      formPayMeth: null,
-      formComment: null,
-      formAmount: null,
       spendingCategories: [],
       paymentMethods: [],
-      inputedOption: null,
+      spendingCategory: null,
+      paymentMethod: null,
+      comment: null,
+      amount: null,
+
       expense: true
     };
   }
@@ -49,13 +50,9 @@ export default class ExpenseForm extends React.Component {
       .then(spendingCategories => {
         fetch(payMethFetchUrl)
           .then(payMethRes => payMethRes.json())
-          .then(paymentMethods => this.setState({ spendingCategories, paymentMethods }));
+          .then(paymentMethods => this.setState({ spendingCategories, paymentMethods, spendingCategory: spendingCategories[0].spendingCategoryId, paymentMethod: paymentMethods[0].paymentMethodId }));
       });
   }
-
-  // handleToggleClick(e) {
-  //   this.setState({ expense: [!this.state.expense] });
-  // }
 
   whichFormOption(funct, bool, num) {
     if (Object.keys(formOptions).includes(this.state.route.path)) {
@@ -93,20 +90,33 @@ export default class ExpenseForm extends React.Component {
     }
   }
 
-  onChange(e) {
+  change(e) {
     const name = e.target.name;
     const val = e.target.value;
     this.setState({ [name]: val });
   }
 
-  clearForm(e) {
-
-  }
-
   onSubmit(e) {
     e.preventDefault();
-    const body = { userId };
-    fetch('/api/expenses', { method: 'POST', body });
+    const body = {
+      userId,
+      amount: `${this.state.amount}`,
+      spendingCategory: `${this.state.spendingCategory}`,
+      comment: `${this.state.comment}`,
+      paymentMethos: `${this.state.paymentMethod}`
+    };
+    const reqOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    };
+    fetch('/api/expenses', reqOptions)
+      .then(result => (result.ok)
+        ? window.alert('Thanks for entering in your transaction!')
+        : window.alert('Whoops! Something went wrong. Please try again. Make sure all of the fields are filled out.'))
+      .catch(new ClientError(400, 'An unexpected error occured.'));
   }
 
   render() {
@@ -120,29 +130,28 @@ export default class ExpenseForm extends React.Component {
           >
           <label htmlFor="amount" className="col form-label">
             <input
-              onChange={this.onChange.bind(this)}
+              onChange={this.change.bind(this)}
               className="form-input"
-              name="formAmount"
-              id="formAmount"
+              name="amount"
+              id="amount"
               placeholder={this.whichFormOption('placeHolderTxt', [this.state.expense])}
               type="number"></input>
                 </label>
             <label htmlFor="spending-category" className="col form-label">
               <h3 className="form-label-txt">Pick A Spending Category:</h3>
-              {/* make component from fetch req to category db */}
               <Dropdown
-              onChange={this.onChange.bind(this)}
-              name="formSpCat"
-              id="formSpCat"
+              handler={this.change.bind(this)}
+              name="spendingCategory"
+              id="spendingCategory"
               className="form-input"
               arr={this.state.spendingCategories}
               primaryKey="spendingCategoryId" />
             </label>
             <label htmlFor="comment" className="col form-input-extra-padding form-label">
             <input
-            onChange={this.onChange.bind(this)}
-            name="formComment"
-            id="formComment"
+            onChange={this.change.bind(this)}
+            name="comment"
+            id="comment"
             className="form-input"
             placeholder="What did you buy?"
             type="text"></input>
@@ -150,11 +159,11 @@ export default class ExpenseForm extends React.Component {
               <label htmlFor="payment-method" className="col form-label">
                 <h3 className="form-label-txt">Pick a Payment Method:</h3>
                 <Dropdown
-                onChange={this.onChange.bind(this)}
+                handler={this.change.bind(this)}
                 className="form-input"
                 arr={this.state.paymentMethods}
-                name="formPayMeth"
-                id="formPayMeth"
+                name="paymentMethod"
+                id="paymentMethod"
                 primaryKey="paymentMethodId" />
               </label>
               <div className="row button-cont">
