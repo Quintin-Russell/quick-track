@@ -1,11 +1,10 @@
 import React from 'react';
 import parseRoute from '../client/parse-route';
-// import Home from './pages/home';
+import Home from './pages/home';
 import Header from './components/header';
 import Footer from './components/footer';
 import pages from './pages';
 import Menu from './components/menu';
-import ExpenseForm from './components/exp-form';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -22,7 +21,7 @@ export default class App extends React.Component {
   renderPage() {
     const route = this.state.route.path;
     if (route === '') {
-      return <ExpenseForm route={this.state.route} />;
+      return <Home route={this.state.route} />;
     }
   }
 

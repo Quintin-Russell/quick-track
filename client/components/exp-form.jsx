@@ -3,7 +3,7 @@ import ClientError from '../../server/client-error';
 // import { sources } from 'webpack';
 // import { ContextExclusionPlugin } from 'webpack';
 import Dropdown from './dropdown';
-// import Toggle from './toggle';
+import Toggle from './toggle';
 
 const userId = 1;
 
@@ -37,8 +37,7 @@ export default class ExpenseForm extends React.Component {
       paymentMethod: null,
       comment: null,
       amount: null,
-
-      expense: true
+      expense: 'Expense'
     };
   }
 
@@ -90,17 +89,30 @@ export default class ExpenseForm extends React.Component {
     }
   }
 
+  handleToggleClick(e) {
+    (e.target.data === 'Expense')
+      ? this.setState({ expense: 'Deposit' })
+      : this.setState({ expense: 'Expense' });
+  }
+
   change(e) {
     const name = e.target.name;
     const val = e.target.value;
     this.setState({ [name]: val });
   }
 
+  findAmount(amount, expense) {
+    return (expense === 'Expense')
+      ? amount
+      : amount * -1;
+
+  }
+
   onSubmit(e) {
     e.preventDefault();
     const body = {
       userId,
-      amount: `${this.state.amount}`,
+      amount: `${this.findAmount(this.state.amount, this.state.expense)}`,
       spendingCategory: `${this.state.spendingCategory}`,
       comment: `${this.state.comment}`,
       paymentMethos: `${this.state.paymentMethod}`
@@ -122,7 +134,7 @@ export default class ExpenseForm extends React.Component {
   render() {
     return (
       <div className="exp-form-cont col">
-          {/* <Toggle handleToggleClick= /> */}
+          <Toggle handleToggleClick={this.handleToggleClick} route={this.state.route} funciton={this.state.expense} />
         <h2 className="menu-txt">{this.whichFormOption('header')}</h2>
         <form
           onSubmit={this.onSubmit.bind(this)}

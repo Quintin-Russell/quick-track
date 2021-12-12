@@ -1,46 +1,63 @@
-// import React, { Component } from 'react';
+import React from 'react';
 
-// const toggleOptions = {
-//   '#': {
-//     toggleOptions: ["Expense", "Deposit"]
-//   },
-//   '#pastExp': {
-//     toggleOptions: ["Expense", "Deposit"]
-//   },
-//   '#setBudget': {
-//     toggleOptions: ["Weekly", "Monthly", "Year"]
-//   }
-// }
+const toggleOptions = {
+  form: {
+    toggleOptions: ['Expense', 'Deposit']
+  },
+  setBudget: {
+    toggleOptions: ['Weekly', 'Monthly', 'Year']
+  }
+};
 
-// export default class Toggle extends React.Component {
+export default class Toggle extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      thisPage:
+        ((props.route.path === '') || (props.route.path === 'past-exp'))
+          ? toggleOptions.form
+          : toggleOptions.setBudget,
+      selected:
+        ((props.route.path === '') || (props.route.path === 'past-exp'))
+          ? toggleOptions.form.toggleOptions[0]
+          : props.defaultTimeFrame
+    };
+  }
 
-//   setHighlight(option) {
-//     if (this.props.function === null) {
+  toggleClick(e) {
+    this.props.handleToggleClick.bind(this);
+    this.setState({ selected: e.target.getAttribute('data') });
+  }
 
-//     }
-//     if (option === this.state.default)
-//   }
+  setHighlight(option) {
+    return option === this.state.selected
+      ? 'toggle-highlight exp-toggle-txt'
+      : 'exp-toggle-txt';
+  }
 
-//   render() {
-//     return (
-//       <span class="row padding-extra">
-//         {
-//           funct.options.map(option => {
-//             if (funct.options.findIndex(option) < (funct.options.length - 1)) {
-//               return (
-//                  <p onClick={this.props.handleToggleClick} class="toggle-highlight exp-toggle-txt">
-//                   {option}
-//                     </p>
-//                     <p class="exp-toggle-txt">
-//                   |
-//                     </p>
-//               )
-//             } else {
-//               return <p class="exp-toggle-txt">{option}</p>
-//             }
-//           })
-//         }
-//       </span>
-//     )
-//   }
-// }
+  render() {
+    return (
+      <span onClick={this.toggleClick.bind(this)} className="row padding-extra">
+        {
+          this.state.thisPage.toggleOptions.map(option => {
+            if (this.state.thisPage.toggleOptions.findIndex(index => index === option) < (this.state.thisPage.toggleOptions.length - 1)) {
+              return (
+                <div className='row' key={Math.random()}>
+                 <p data={option} className={this.setHighlight(option)}>
+                  {option}
+                    </p>
+                    <p className="exp-toggle-txt">
+                  |
+                    </p>
+                  </div>
+
+              );
+            } else {
+              return <p data={option} key={Math.random()} className={this.setHighlight(option)}>{option}</p>;
+            }
+          })
+        }
+      </span>
+    );
+  }
+}
