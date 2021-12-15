@@ -1,0 +1,62 @@
+.header-cont {
+  background-image: linear-gradient(rgb(68 170 68 / 58%), rgb(68 170 68 / 5%), rgb(68 170 68 / 0%));
+  padding: 0.5rem;
+}
+
+.header-bars {
+  color: #8a8a8a6e;
+  font-size: 2rem;
+}
+
+.pg-id-txt {
+  font-family: noto-sans, sans-serif;
+  font-weight: 700;
+  color: #29292960;
+  font-size: 0.75rem;
+  margin: 0 0.5rem;
+  text-decoration: none;
+}
+
+.pg-id-img {
+  width: 15%;
+  opacity: 60%;
+}
+
+.create-icon {
+  font-size: 2rem;
+  color: #29292960;
+}
+
+.footer-cont {
+  border: 0.15rem solid rgb(0 0 0 / 40%);
+  background-color: #d9cab345;
+}
+
+.indicator-circle {
+  border-radius: 50%;
+  background-color: #0e9aa745;
+}
+
+.menu-cont {
+  background-color: white;
+}
+
+.menu-txt {
+  font-family: Oswald, sans-serif;
+  font-weight: 300;
+}
+
+.menu-footer-cont {
+  font-size: 0.5rem;
+  background-color: white;
+}
+
+.fa-angle-double-left:hover,
+.sm-button:hover,
+.exp-toggle-txt,
+.form-input:hover,
+.header-bars:hover,
+.create-icon:hover,
+.header-logo-cont:hover {
+  cursor: pointer;
+}
