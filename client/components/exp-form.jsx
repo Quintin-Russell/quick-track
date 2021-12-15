@@ -100,10 +100,10 @@ export default class ExpenseForm extends React.Component {
   }
 
   findAmount(amount, expense) {
-    amount = parseInt(amount).toFixed(2);
+    amount = parseFloat(amount);
     return (expense === 'Expense')
-      ? amount
-      : amount * -1;
+      ? amount.toFixed(2)
+      : (amount * -1).toFixed(2);
 
   }
 
@@ -184,7 +184,8 @@ export default class ExpenseForm extends React.Component {
               name="amount"
               id="amount"
               placeholder={this.whichFormOption('placeHolderTxt', [this.state.expense])}
-              type="number"></input>
+              type="number"
+              step='0.01'></input>
                 </label>
             <label
             htmlFor="spending-category"

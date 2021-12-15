@@ -16,6 +16,19 @@ export default class PastExpenses extends React.Component {
       .then(resJson => this.setState({ pastExpenses: resJson }));
   }
 
+  // displayModal(Id) {
+  //   return (
+  //     <div className="menu-footer-cont just-cent overlay">
+
+  //     </div>
+  //   )
+  // }
+
+  // handleClick(e) {
+  //   const tarExpId = e.target.getAttribute('data');
+  //   displayModal(tarExpId);
+  // }
+
   render() {
     return (
       <>
@@ -24,9 +37,9 @@ export default class PastExpenses extends React.Component {
         userId={this.props.userId}
         hash={this.props.hash.hash} />
         <Table
+        handleClick={this.handleClick}
         tableInfo={this.props.tableInfo}
         arr={this.state.pastExpenses} />
-
       </>
     );
   }
@@ -43,7 +56,6 @@ function ReadFunct(props) {
             <i className="far fa-times-circle"></i>
           </a>
         <ExpenseForm
-          className= "z-index-1"
           userId={props.userId}
           route={props.route} />
       </div>

@@ -42,7 +42,7 @@ export default class Table extends React.Component {
                   <p className={`table-txt ${arr.className.text}`}>{this.convertTime(exp.date)}</p>
                   <p className={`table-txt ${arr.className.text}`}>{exp.amount}</p>
                   <p className={`table-txt ${arr.className.text}`}>{exp.comment}</p>
-                  <i className={`table-txt fas fa-ellipsis-v ${arr.className.icon}`}></i>
+                  <i data={exp.expenseId} onClick={this.props.handleClick} className={`table-txt fas fa-ellipsis-v ${arr.className.icon}`}></i>
               </div>);
               } else {
                 counter++;
@@ -51,7 +51,7 @@ export default class Table extends React.Component {
                       <p className={`table-txt ${arr.className.text}`}>{this.convertTime(exp.date)}</p>
                       <p className={`table-txt ${arr.className.text}`}>{exp.amount}</p>
                       <p className={`table-txt ${arr.className.text}`}>{exp.comment}</p>
-                      <i className={`table-txt fas fa-ellipsis-v ${arr.className.icon}`}></i>
+                    <i data={exp.expenseId} onClick={this.props.handleClick} className={`table-txt fas fa-ellipsis-v ${arr.className.icon}`}></i>
                     </div>
                 );
               }

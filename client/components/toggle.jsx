@@ -14,7 +14,7 @@ export default class Toggle extends React.Component {
     super(props);
     this.state = {
       thisPage:
-        ((props.route.path === '') || (props.route.path === 'past-exp'))
+        ((props.route.path === '') || (props.route.path === 'pastexpenses'))
           ? toggleOptions.form
           : toggleOptions.setBudget
     };
