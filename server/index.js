@@ -4,22 +4,28 @@ const db = require('./db');
 const errorMiddleware = require('./error-middleware');
 const staticMiddleware = require('./static-middleware');
 const ClientError = require('./client-error');
+const cors = require('cors');
 
 const app = express();
 const jsonMiddlerware = express.json();
+
+app.use(
+  cors({
+    origin: ['http://127.0.0.1:3000', 'http://localhost:3000']
+  })
+);
 
 app.use(staticMiddleware);
 
 app.use(jsonMiddlerware);
 
 app.get('/api/expenses/:userId', (req, res, next) => {
-  const { userId } = req.params.userId;
-
+  const userId = req.params.userId;
   const sql = `
   select *
   from "expenses"
   where "userId" = $1
-  order by "expenseId" ASC
+  order by "date" ASC
   `;
   const params = [userId];
 
@@ -44,6 +50,7 @@ app.get('/api/paymentMethods/:userId', (req, res, next) => {
   const params = [userId];
   db.query(sql, params)
     .then(result => {
+
       res.status(201).json(result.rows);
     })
     .catch(err => next(err));
@@ -67,26 +74,24 @@ app.get('/api/spendingCategories/:userId', (req, res, next) => {
 });
 
 app.post('/api/expenses', (req, res, next) => {
-  let { userId, amount, spendingCategory, comment, paymentMethod } = req.body;
-  amount = Number.parseFloat(amount).toFixed(2);
+  const { userId, date, amount, spendingCategory, comment, paymentMethod } = req.body;
+  // amount = Number.parseFloat(amount).toFixed(2);
 
-  if (!userId || !spendingCategory || !paymentMethod) {
-    throw new ClientError(400, 'UserId, Spending Caegory, and Payment Method are mandatory fields');
+  if (!userId || !date || !spendingCategory || !paymentMethod) {
+    throw new ClientError(400, 'UserId, Date, Spending Category, and Payment Method are mandatory fields');
   }
   if (!amount) {
     throw new ClientError(400, 'Amount must be a number.');
   }
 
   const sql = `
-  insert into "expenses" ("userId", "amount", "spendingCategoryId", "comment", "paymentMethodId")
-  values ($1, $2, $3, $4, $5)
+  insert into "expenses" ("userId", "date", "amount", "spendingCategoryId", "comment", "paymentMethodId")
+  values ($1, $2, $3, $4, $5, $6)
   returning *
   `;
-  const params = [userId, amount, spendingCategory, comment, paymentMethod];
+  const params = [userId, date, amount, spendingCategory, comment, paymentMethod];
   db.query(sql, params)
-    .then(result => {
-      res.status(201).json(result.rows);
-    })
+    .then(result => res.status(201).json(result.rows))
     .catch(err => next(err));
 });
 

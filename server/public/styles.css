@@ -51,6 +51,48 @@
   background-color: white;
 }
 
+.exp-form-cont {
+  border-radius: 3rem;
+  filter: drop-shadow(0 0 0.25rem black);
+  background-color: white;
+}
+
+.exp-toggle-txt {
+  font-family: noto-sans, sans-serif;
+  color: #292929c0;
+  font-weight: 700;
+  font-size: 0.5rem;
+  filter: drop-shadow(0 0 2rem rgb(0 0 0 / 15.1%));
+}
+
+.toggle-highlight {
+  background-color: #0e9aa765;
+  border: 0.05rem solid rgb(0 0 0 / 26.7%);
+}
+
+.form-input {
+  border: 0.01rem solid #0e9aa7;
+  filter: drop-shadow(0 0.1rem 0.1rem #29292960);
+  background-color: white;
+  border-radius: 5rem;
+}
+
+.form-label-txt {
+  font-family: noto-sans, sans-serif;
+  font-size: 0.5rem;
+}
+
+.sm-button {
+  background-color: #efe9df;
+  border-radius: 1.25rem;
+}
+
+.form-input::placeholder {
+  font-family: noto-sans, sans-serif;
+  font-weight: 700;
+  color: #29292960;
+}
+
 .fa-angle-double-left:hover,
 .sm-button:hover,
 .exp-toggle-txt,

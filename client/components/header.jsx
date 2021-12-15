@@ -14,10 +14,14 @@ export default class Header extends React.Component {
           <div className="row">
             <div className="pg-id-cont row">
               <section className="pg-id-img-cont">
-                <PgId pages={this.props.pages} route={this.props.route}/>
+                <PgId
+                pages={this.props.pages}
+                route={this.props.route}/>
             </section>
           </div>
-            <CreateIcon route={this.props.route} pages={this.props.pages}/>
+            <CreateIcon
+            route={this.props.route}
+            pages={this.props.pages}/>
             </div>
           </header>
     );
@@ -34,7 +38,10 @@ function CreateIcon(props) {
   });
   if (pg && pg.createQuery) {
     return (
-      <a onClick= {props.handleCreatIconClick} href={pg.createQuery} className="create-cont">
+      <a
+      onClick= {props.handleCreatIconClick}
+      href={pg.createQuery}
+      className="create-cont">
         <i className="fas fa-plus-circle create-icon"></i>
       </a>
     );
@@ -47,7 +54,10 @@ function PgId(props) {
   if (!props.route.path) {
     return (
       <>
-    <img src="images/home.png" alt="home-icon" className="pg-id-img"/>
+    <img
+    src="images/home.png"
+    alt="home-icon"
+    className="pg-id-img"/>
     <p className="pg-id-txt">Home</p>
     </>
     );
@@ -57,7 +67,10 @@ function PgId(props) {
     if (page.hash === route) {
       return (
         <>
-          <img src={page.imgSrc} alt={page.imgAlt} className="pg-id-img" />
+          <img
+          src={page.imgSrc}
+          alt={page.imgAlt}
+          className="pg-id-img" />
           <p className="pg-id-txt">{page.name}</p>
         </>
       );

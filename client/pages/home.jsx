@@ -4,7 +4,9 @@ import ExpenseForm from '../components/exp-form';
 export default function Home(props) {
   return (
     <>
-      <ExpenseForm route={props.route} />
+      <ExpenseForm
+      userId={props.userId}
+      route={props.route} />
     </>
   );
 }

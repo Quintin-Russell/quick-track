@@ -15,7 +15,15 @@ export default [
     imgAlt: 'past-exp-icon',
     footerIcon: true,
     menuIcon: true,
-    createQuery: '#past-expenses?funct=create'
+    createQuery: '#past-expenses?funct=create',
+    table: {
+      tableHeaders: ['Date', 'Amount', 'Comment'],
+      className: {
+        text: 'flex-30',
+        icon: 'flex-10',
+        divCont: 'flex-40'
+      }
+    }
   },
   {
     name: 'Summary',

@@ -1,3 +1,17 @@
+-- insert into "users" (
+--   "fullName",
+--   "email",
+--   "username",
+--   "hashedPassword",
+--   "monthlyBudget"
+-- ) values (
+--   'Bob Johnson',
+--   'BJohnson@example.com',
+--   'BJohnson',
+--   'nsjjndid88',
+--   '3000'
+-- )
+
 insert into "paymentMethods" (
   "userId",
   "name"
@@ -32,12 +46,14 @@ insert into "spendingCategories" (
 
 insert into "expenses" (
   "userId",
+  "date",
   "amount",
   "comment",
   "spendingCategoryId",
   "paymentMethodId"
 ) values (
   1,
+  now(),
   13.70,
   'sample',
   1,
