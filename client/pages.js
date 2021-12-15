@@ -10,12 +10,12 @@ export default [
   },
   {
     name: 'Past Expenses',
-    hash: '#past-expenses',
+    hash: '#pastexpenses',
     imgSrc: 'images/past-exp-logo.png',
     imgAlt: 'past-exp-icon',
     footerIcon: true,
     menuIcon: true,
-    createQuery: '#past-expenses?funct=create',
+    createQuery: '#pastexpenses?funct=create',
     table: {
       tableHeaders: ['Date', 'Amount', 'Comment'],
       className: {
@@ -36,7 +36,7 @@ export default [
   },
   {
     name: 'Account Settings',
-    hash: '#acc-setting',
+    hash: '#accsettings',
     imgSrc: 'images/acc-settings-logo.png',
     imgAlt: 'account-settings-icon',
     footerIcon: true,
@@ -45,11 +45,11 @@ export default [
   },
   {
     name: 'Set Your Budget',
-    hash: '#set-budget',
+    hash: '#setbudget',
     imgSrc: 'images/set-budget-icon.png',
     imgAlt: 'set-budget-icon',
     footerIcon: false,
     menuIcon: false,
-    createQuery: '#set-budget?funct=create'
+    createQuery: '#setbudget?funct=create'
   }
 ];

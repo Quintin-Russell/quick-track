@@ -32,7 +32,7 @@ function CreateIcon(props) {
   if (!props.route.path) {
     return <></>;
   }
-  const route = props.route.path;
+  const route = `#${props.route.path}`;
   const pg = props.pages.find(page => {
     return page.hash === route;
   });
@@ -62,7 +62,7 @@ function PgId(props) {
     </>
     );
   }
-  const route = props.route.path;
+  const route = `#${props.route.path}`;
   for (const page of props.pages) {
     if (page.hash === route) {
       return (

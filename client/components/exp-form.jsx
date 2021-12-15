@@ -13,7 +13,7 @@ const formOptions = {
     ],
     buttons: ['Start Over', 'Done']
   },
-  '#past-expenses': {
+  pastexpenses: {
     toggleOptions: ['Expense', 'Deposit'],
     placeHolderTxt: [
       { expense: 'How much did you spend?' },
@@ -69,18 +69,18 @@ export default class ExpenseForm extends React.Component {
             return formOptions.newExp.buttons[num];
           }
         }
-      } else if (this.state.route.path === '#pastExp') {
+      } else if (this.state.route.path === 'pastexpenses') {
         if (funct === 'header') {
-          return formOptions.pastExp.headerTxt;
+          return formOptions.pastexpenses.headerTxt;
         } else if (funct === 'placeHolderTxt') {
           if ((typeof (bool) === 'boolean') && (bool === true)) {
-            return formOptions.pastExp.placeHolderTxt.true;
+            return formOptions.pastexpenses.placeHolderTxt.true;
           } else if (bool === false) {
-            return formOptions.pastExp.placeHolderTxt.false;
+            return formOptions.pastexpenses.placeHolderTxt.false;
           }
         } else {
           if (typeof (num) === 'number') {
-            return formOptions.pastExp.buttons[num];
+            return formOptions.pastexpenses.buttons[num];
           }
         }
       }
@@ -172,7 +172,6 @@ export default class ExpenseForm extends React.Component {
               id="date"
               placeholder={this.whichFormOption('placeHolderTxt', [this.state.expense])}
               type="date"
-              value={new Date()}
               min="2000-01-01"
               max={new Date()}></input>
           </label>
@@ -226,10 +225,12 @@ export default class ExpenseForm extends React.Component {
                 <input type="reset"
                 className="sm-button"
                 value="Start Over"></input>
-                <input
-                type="submit"
-                className="sm-button"
-                value="Done"></input>
+                  <input
+                  onClick={this.props.close}
+                  type="submit"
+                  className="sm-button"
+                  value="Done">
+                  </input>
               </div>
               </form>
 

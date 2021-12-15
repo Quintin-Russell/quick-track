@@ -227,3 +227,11 @@
   display: none;
   color: #f2f2f200;
 }
+
+.x-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: #f2f2f2;
+  font-size: 2rem;
+}
