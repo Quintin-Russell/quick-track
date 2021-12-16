@@ -1,3 +1,8 @@
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
 .row {
   display: flex;
   flex-direction: row;
@@ -11,7 +16,6 @@
   display: flex;
   flex-direction: column;
   margin-bottom: -3rem;
-  overflow-y: scroll;
 }
 
 .col {
@@ -51,6 +55,7 @@
   justify-content: space-between;
   align-items: center;
   min-height: 3rem;
+  display: flex;
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -235,4 +240,19 @@
   right: 1rem;
   color: #f2f2f2;
   font-size: 2rem;
+}
+
+.modal-icon-cont {
+  text-align: center;
+  flex-direction: row;
+  background-color: white;
+  border: 0.1rem solid #0e9aa7;
+}
+
+.fa-trash-alt {
+  color: #ff532f;
+}
+
+.fa-edit {
+  color: #0e9aa7;
 }

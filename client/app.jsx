@@ -63,9 +63,9 @@ export default class App extends React.Component {
       <div className="whole-pg-cont">
         {this.renderPage()}
       </div>
-      <Footer
-      pages={pages}
-      route={this.state.route} />
+        <Footer
+        pages={pages}
+        route={this.state.route} />
       </>
     );
   }

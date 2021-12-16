@@ -16,19 +16,6 @@ export default class PastExpenses extends React.Component {
       .then(resJson => this.setState({ pastExpenses: resJson }));
   }
 
-  // displayModal(Id) {
-  //   return (
-  //     <div className="menu-footer-cont just-cent overlay">
-
-  //     </div>
-  //   )
-  // }
-
-  // handleClick(e) {
-  //   const tarExpId = e.target.getAttribute('data');
-  //   displayModal(tarExpId);
-  // }
-
   render() {
     return (
       <>
