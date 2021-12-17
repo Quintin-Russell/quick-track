@@ -22,10 +22,12 @@ export default class PastExpenses extends React.Component {
       <ReadFunct
         route={this.props.route}
         userId={this.props.userId}
-        hash={this.props.hash.hash} />
+        page={this.props.page} />
         <Table
+        route={this.props.route}
+        userId={this.props.userId}
         handleClick={this.handleClick}
-        tableInfo={this.props.tableInfo}
+        page={this.props.page}
         arr={this.state.pastExpenses} />
       </>
     );
@@ -37,9 +39,8 @@ function ReadFunct(props) {
   if (funct === 'create') {
     return (
       <>
-
         <div className="overlay">
-          <a href={props.hash} className="x-button">
+          <a href={props.page.hash} className="x-button">
             <i className="far fa-times-circle"></i>
           </a>
         <ExpenseForm
@@ -53,9 +54,4 @@ function ReadFunct(props) {
     return <>
     </>;
   }
-  // else if (funct === 'edit') {
-
-  // } else if (funct === 'delete') {
-
-  // }
 }

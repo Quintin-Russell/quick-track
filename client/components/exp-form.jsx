@@ -1,27 +1,7 @@
 import React from 'react';
 import ClientError from '../../server/client-error';
-// import { sources, ContextExclusionPlugin } from 'webpack';
 import Dropdown from './dropdown';
 import Toggle from './toggle';
-
-const formOptions = {
-  newExp: {
-    headerTxt: 'Enter a New Expense',
-    placeHolderTxt: [
-      { true: 'How much did you spend?' },
-      { false: 'How much did you deposit?' }
-    ],
-    buttons: ['Start Over', 'Done']
-  },
-  pastexpenses: {
-    toggleOptions: ['Expense', 'Deposit'],
-    placeHolderTxt: [
-      { expense: 'How much did you spend?' },
-      { deposit: 'How much did you deposit?' }
-    ],
-    buttons: ['Cancel', 'Done']
-  }
-};
 
 export default class ExpenseForm extends React.Component {
   constructor(props) {
@@ -46,57 +26,48 @@ export default class ExpenseForm extends React.Component {
       .then(spendingCategories => {
         fetch(payMethFetchUrl)
           .then(payMethRes => payMethRes.json())
-          .then(paymentMethods => this.setState({ spendingCategories, paymentMethods, spendingCategory: spendingCategories[0].spendingCategoryId, paymentMethod: paymentMethods[0].paymentMethodId }));
+          .then(paymentMethods => {
+            const expense =
+              (this.props.editObj.amount)
+                ? parseFloat(this.props.editObj.amount) < 0
+                  ? 'Deposit'
+                  : 'Expense'
+                : 'Expense';
+            this.setState({ expense, spendingCategories, paymentMethods, spendingCategory: spendingCategories[0].spendingCategoryId, paymentMethod: paymentMethods[0].paymentMethodId });
+          });
       });
   }
 
-  whichFormOption(funct, bool, num) {
-    // console.log('props.route in exp-form:', this.state.route);
-    if (Object.keys(formOptions).includes(this.state.route.path)) {
-      return null;
-    } else {
-      if (this.state.route.path === '') {
-        if (funct === 'header') {
-          return formOptions.newExp.headerTxt;
-        } else if (funct === 'placeHolderTxt') {
-          if ((typeof (bool) === 'string') && (bool === 'Expense')) {
-            return formOptions.newExp.placeHolderTxt.true;
-          } else if (bool === 'Deposit') {
-            return formOptions.newExp.placeHolderTxt.false;
-          }
-        } else {
-          if (typeof (num) === 'number') {
-            return formOptions.newExp.buttons[num];
-          }
+  whichFormOption(funct, exp) {
+    const formOptions = this.props.page.formOptions;
+
+    if (this.state.route.path === '') {
+      if (funct === 'header') {
+        return formOptions.headerTxt;
+      } else if (funct === 'placeHolderTxt') {
+        if (exp === 'Expense') {
+          return formOptions.placeHolderTxt.Expense;
+        } else if (exp === 'Deposit') {
+          return formOptions.placeHolderTxt.Deposit;
         }
-      } else if (this.state.route.path === 'pastexpenses') {
-        if (funct === 'header') {
-          return formOptions.pastexpenses.headerTxt;
-        } else if (funct === 'placeHolderTxt') {
-          if ((typeof (bool) === 'boolean') && (bool === true)) {
-            return formOptions.pastexpenses.placeHolderTxt.true;
-          } else if (bool === false) {
-            return formOptions.pastexpenses.placeHolderTxt.false;
-          }
-        } else {
-          if (typeof (num) === 'number') {
-            return formOptions.pastexpenses.buttons[num];
-          }
+      }
+    } else if (this.state.route.path === 'pastexpenses') {
+      if (funct === 'header') {
+        return formOptions.headerTxt;
+      } else if (funct === 'placeHolderTxt') {
+        if (exp === 'Expense') {
+          return formOptions.placeHolderTxt.Expense;
+        } else if (exp === 'Deposit') {
+          return formOptions.placeHolderTxt.Deposit;
         }
       }
     }
   }
 
-  handleToggleClick(e) {
-    (e.target.getAttribute('data') === 'Expense')
-      ? this.setState({ expense: 'Expense' })
-      : this.setState({ expense: 'Deposit' });
-  }
-
-  change(e) {
-    const name = e.target.name;
-    const val = e.target.value;
-    this.setState({ [name]: val });
+  showDate(route) {
+    return ((route.params.get('funct') === 'create') || (route.params.get('funct') === 'edit'))
+      ? ''
+      : 'disp-none';
   }
 
   findAmount(amount, expense) {
@@ -112,6 +83,27 @@ export default class ExpenseForm extends React.Component {
     return (this.state.route.path === '')
       ? new Date().toISOString()
       : dateFieldVal.value;
+  }
+
+  addEditValues() {
+    if (this.props.editObj) {
+      const vals = {
+        date: document.getElementById('date'),
+        amount: document.getElementById('amount'),
+        spendingCategory: document.getElementById('spendingCategory'),
+        comment: document.getElementById('comment'),
+        paymentMethod: document.getElementById('paymentMethod')
+      };
+      for (const item in this.props.editObj) {
+        if (vals[item]) {
+          if (item === 'date') {
+            const dt = new Date(this.props.editObj[item]);
+            vals[item].value = dt.toISOString().substr('T', 10);
+          } else { vals[item].value = this.props.editObj[item]; }
+
+        }
+      }
+    }
   }
 
   onSubmit(e) {
@@ -143,16 +135,24 @@ export default class ExpenseForm extends React.Component {
       .catch(new ClientError(400, 'An unexpected error occured.'));
   }
 
-  showDate(route) {
-    return ((route.params.get('funct') === 'create') || (route.params.get('funct') === 'edit'))
-      ? ''
-      : 'disp-none';
+  handleToggleClick(e) {
+    (e.target.getAttribute('data') === 'Expense')
+      ? this.setState({ expense: 'Expense' })
+      : this.setState({ expense: 'Deposit' });
+  }
+
+  change(e) {
+    const name = e.target.name;
+    const val = e.target.value;
+    this.setState({ [name]: val });
   }
 
   render() {
+    this.addEditValues();
     return (
       <div className="exp-form-cont col">
           <Toggle
+          page={this.props.page}
           handleToggleClick={this.handleToggleClick.bind(this)}
           route={this.state.route}
           function={this.state.expense} />
@@ -170,7 +170,6 @@ export default class ExpenseForm extends React.Component {
               className={`${this.showDate(this.state.route)} form-input`}
               name="date"
               id="date"
-              placeholder={this.whichFormOption('placeHolderTxt', [this.state.expense])}
               type="date"
               min="2000-01-01"
               max={new Date()}></input>
@@ -227,7 +226,6 @@ export default class ExpenseForm extends React.Component {
                 className="sm-button"
                 value="Start Over"></input>
                   <input
-                  onClick={this.props.close}
                   type="submit"
                   className="sm-button"
                   value="Done">

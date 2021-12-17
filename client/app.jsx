@@ -14,6 +14,7 @@ export default class App extends React.Component {
     this.state = {
       userId: 1,
       route: parseRoute(window.location.hash),
+      page: pages.find(pg => pg.name === 'Home'),
       showMenu: false,
       defaultTimeFrame: 'Monthly',
       pastExpenses: []
@@ -24,6 +25,7 @@ export default class App extends React.Component {
     const path = this.state.route.path;
     if (path === '') {
       return <Home
+      page={this.state.page}
       userId={this.state.userId}
       route={this.state.route} />;
     } else if (path === 'pastexpenses') {
@@ -31,9 +33,8 @@ export default class App extends React.Component {
       <PastExpenses
       route={this.state.route}
       userId={this.state.userId}
-      tableInfo={pages.find(elm => (elm.name === 'Past Expenses'))}
       pastExpenses={this.state.pastExpenses}
-      hash={pages.find(pg => pg.hash === '#pastexpenses')}
+      page={this.state.page}
      />
       );
     }
@@ -42,7 +43,8 @@ export default class App extends React.Component {
   componentDidMount() {
     window.addEventListener('hashchange', e => {
       const route = parseRoute(window.location.hash);
-      this.setState({ route });
+      const page = pages.find(pg => pg.path === route.path);
+      this.setState({ route, page });
     });
   }
 
@@ -60,7 +62,7 @@ export default class App extends React.Component {
       pages={pages}/>
       {/* place Menu here; add if(props.route.params.get('funct')==='menu') to render() */}
       { this.state.showMenu && <Menu toggleMenu={this.toggleMenu} pages={pages}/> }
-      <div className="whole-pg-cont">
+      <div className={this.state.page.wholepagecont}>
         {this.renderPage()}
       </div>
         <Footer

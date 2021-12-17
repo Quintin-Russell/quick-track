@@ -15,7 +15,12 @@
 .whole-pg-cont {
   display: flex;
   flex-direction: column;
-  margin-bottom: -3rem;
+}
+
+.scroll {
+  height: 85vh;
+  overflow: scroll;
+  margin-bottom: 3rem;
 }
 
 .col {
@@ -54,7 +59,6 @@
 .footer-cont {
   justify-content: space-between;
   align-items: center;
-  min-height: 3rem;
   display: flex;
   position: fixed;
   bottom: 0;
@@ -86,6 +90,7 @@
   right: 0;
   display: flex;
   justify-content: flex-start;
+  height: 116%;
 }
 
 .menu-cont {
