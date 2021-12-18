@@ -137,7 +137,7 @@ app.post('/api/spendingCategories', (req, res, next) => {
 });
 
 app.patch('/api/expenses', (req, res, next) => {
-  let { expenseId, amount, spendingCategory, comment, paymentMethod } = req.body;
+  let { userId, date, expenseId, amount, spendingCategory, comment, paymentMethod } = req.body;
   amount = Number.parseFloat(amount).toFixed(2);
 
   if (!expenseId || !spendingCategory || !paymentMethod) {
@@ -149,11 +149,11 @@ app.patch('/api/expenses', (req, res, next) => {
 
   const sql = `
   update "expenses"
-  set "amount" = $2, "spendingCategoryId" = $3, "comment" = $4, "paymentMethodId" = $5
-  where "expenseId" = $1
+  set "userId"=$1, "date"= $2, "amount" = $4, "spendingCategoryId" = $5, "comment" = $6, "paymentMethodId" = $7
+  where "expenseId" = $3
   returning *
   `;
-  const params = [expenseId, amount, spendingCategory, comment, paymentMethod];
+  const params = [userId, date, expenseId, amount, spendingCategory, comment, paymentMethod];
 
   db.query(sql, params)
     .then(result => {
@@ -197,6 +197,26 @@ app.patch('/api/paymentMethods', (req, res, next) => {
   returning *
   `;
   const params = [paymentMethodId, name];
+
+  db.query(sql, params)
+    .then(result => {
+      res.status(201).json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
+app.delete('/api/expenses', (req, res, next) => {
+  const { expenseId } = req.body;
+
+  if (!expenseId) {
+    throw new ClientError(400, 'ExpenseId is a mandatory field');
+  }
+
+  const sql = `
+  delete from "expenses"
+  where "expenseId" = $1
+  `;
+  const params = [expenseId];
 
   db.query(sql, params)
     .then(result => {

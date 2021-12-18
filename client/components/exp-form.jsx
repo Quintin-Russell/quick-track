@@ -1,5 +1,4 @@
 import React from 'react';
-import ClientError from '../../server/client-error';
 import Dropdown from './dropdown';
 import Toggle from './toggle';
 
@@ -7,7 +6,6 @@ export default class ExpenseForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      route: props.route,
       spendingCategories: [],
       paymentMethods: [],
       spendingCategory: null,
@@ -27,21 +25,26 @@ export default class ExpenseForm extends React.Component {
         fetch(payMethFetchUrl)
           .then(payMethRes => payMethRes.json())
           .then(paymentMethods => {
-            const expense =
+            let expense = 'Expense';
+            if (this.props.editObj) {
+              expense =
               (this.props.editObj.amount)
                 ? parseFloat(this.props.editObj.amount) < 0
                   ? 'Deposit'
                   : 'Expense'
                 : 'Expense';
-            this.setState({ expense, spendingCategories, paymentMethods, spendingCategory: spendingCategories[0].spendingCategoryId, paymentMethod: paymentMethods[0].paymentMethodId });
+              this.addEditValues();
+              this.setState({ expense, spendingCategories, paymentMethods });
+            } else {
+              this.setState({ newExp: false, expense, spendingCategories, paymentMethods, spendingCategory: spendingCategories[0].spendingCategoryId, paymentMethod: paymentMethods[0].paymentMethodId });
+            }
           });
       });
   }
 
   whichFormOption(funct, exp) {
     const formOptions = this.props.page.formOptions;
-
-    if (this.state.route.path === '') {
+    if (this.props.route.path === '') {
       if (funct === 'header') {
         return formOptions.headerTxt;
       } else if (funct === 'placeHolderTxt') {
@@ -51,9 +54,11 @@ export default class ExpenseForm extends React.Component {
           return formOptions.placeHolderTxt.Deposit;
         }
       }
-    } else if (this.state.route.path === 'pastexpenses') {
+    } else if (this.props.route.path === 'pastexpenses') {
       if (funct === 'header') {
-        return formOptions.headerTxt;
+        return (this.props.route.params.get('funct') === 'create')
+          ? formOptions.headerTxt.create
+          : formOptions.headerTxt.edit;
       } else if (funct === 'placeHolderTxt') {
         if (exp === 'Expense') {
           return formOptions.placeHolderTxt.Expense;
@@ -80,13 +85,15 @@ export default class ExpenseForm extends React.Component {
 
   generateDate() {
     const dateFieldVal = document.querySelector('#date');
-    return (this.state.route.path === '')
+    return (this.props.route.path === '')
       ? new Date().toISOString()
       : dateFieldVal.value;
   }
 
   addEditValues() {
     if (this.props.editObj) {
+      const update = {
+      };
       const vals = {
         date: document.getElementById('date'),
         amount: document.getElementById('amount'),
@@ -99,10 +106,33 @@ export default class ExpenseForm extends React.Component {
           if (item === 'date') {
             const dt = new Date(this.props.editObj[item]);
             vals[item].value = dt.toISOString().substr('T', 10);
-          } else { vals[item].value = this.props.editObj[item]; }
-
+            update[item] = dt.toISOString().substr('T', 10);
+          } else if (item === 'amount') {
+            let itemNum = parseFloat(this.props.editObj[item]).toFixed(2);
+            if (itemNum < 0) {
+              update.expense = 'Deposit';
+              itemNum = itemNum * -1;
+            } else {
+              update.expense = 'Expense';
+            }
+            update.amount = itemNum;
+            vals[item].value = itemNum.toString();
+          } else {
+            vals[item].value = this.props.editObj[item];
+            update[item] = this.props.editObj[item];
+          }
+        } else if (item === 'paymentMethodId') {
+          const paymentMethod = this.props.editObj[item];
+          update.paymentMethod = paymentMethod;
+          vals.paymentMethod.value = paymentMethod;
+        } else if (item === 'spendingCategoryId') {
+          // const spendingCategory = this.props.editObj[item];
+          update.spendingCategory = this.props.editObj[item];
+          vals.spendingCategory.selected = true;
+          // vals.spendingCategory.value = this.props.editObj[item];
         }
       }
+      this.setState(update);
     }
   }
 
@@ -116,13 +146,23 @@ export default class ExpenseForm extends React.Component {
       comment: `${this.state.comment}`,
       paymentMethod: `${this.state.paymentMethod}`
     };
-    const reqOptions = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body)
-    };
+    if (this.props.editObj) body.expenseId = this.props.editObj.expenseId;
+    const reqOptions =
+    (!this.props.route.params.get('funct') || this.props.route.params.get('funct') === 'create')
+      ? {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(body)
+        }
+      : {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(body)
+        };
     fetch('/api/expenses', reqOptions)
       .then(result => {
         if (result.ok) {
@@ -131,8 +171,7 @@ export default class ExpenseForm extends React.Component {
         } else {
           window.alert('Whoops! Something went wrong. Please try again. Make sure all of the fields are filled out.');
         }
-      })
-      .catch(new ClientError(400, 'An unexpected error occured.'));
+      });
   }
 
   handleToggleClick(e) {
@@ -148,13 +187,12 @@ export default class ExpenseForm extends React.Component {
   }
 
   render() {
-    this.addEditValues();
     return (
       <div className="exp-form-cont col">
           <Toggle
           page={this.props.page}
           handleToggleClick={this.handleToggleClick.bind(this)}
-          route={this.state.route}
+          route={this.props.route}
           function={this.state.expense} />
         <h2 className="menu-txt">{this.whichFormOption('header')}</h2>
         <form
@@ -163,11 +201,11 @@ export default class ExpenseForm extends React.Component {
           >
           <label
             htmlFor="date"
-            className={`col form-label ${this.showDate(this.state.route)}`}>
-            <h3 className={`form-label-txt ${this.showDate(this.state.route)}`}>Date:</h3>
+            className={`col form-label ${this.showDate(this.props.route)}`}>
+            <h3 className={`form-label-txt ${this.showDate(this.props.route)}`}>Date:</h3>
             <input
               onChange={this.change.bind(this)}
-              className={`${this.showDate(this.state.route)} form-input`}
+              className={`${this.showDate(this.props.route)} form-input`}
               name="date"
               id="date"
               type="date"
@@ -191,6 +229,7 @@ export default class ExpenseForm extends React.Component {
             className="col form-label">
               <h3 className="form-label-txt">Pick A Spending Category:</h3>
               <Dropdown
+              selectedVal={this.state.spendingCategory}
               handler={this.change.bind(this)}
               name="spendingCategory"
               id="spendingCategory"
@@ -214,6 +253,7 @@ export default class ExpenseForm extends React.Component {
               className="col form-label">
                 <h3 className="form-label-txt">Pick a Payment Method:</h3>
                 <Dropdown
+              selectedVal={this.state.paymentMethod}
                 handler={this.change.bind(this)}
                 className="form-input"
                 arr={this.state.paymentMethods}
@@ -222,14 +262,18 @@ export default class ExpenseForm extends React.Component {
                 primaryKey="paymentMethodId" />
               </label>
               <div className="row button-cont">
-                <input type="reset"
-                className="sm-button"
-                value="Start Over"></input>
-                  <input
-                  type="submit"
+                  <input type="reset"
                   className="sm-button"
-                  value="Done">
-                  </input>
+                  value="Start Over"></input>
+
+            <a href={this.props.page.hash}>
+                    <button
+                    type="submit"
+                    className="sm-button"
+                    value="Done">
+                      Done
+                    </button>
+                </a>
               </div>
               </form>
 

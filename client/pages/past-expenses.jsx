@@ -6,7 +6,8 @@ export default class PastExpenses extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      pastExpenses: []
+      pastExpenses: [],
+      newExp: false
     };
   }
 
@@ -14,6 +15,7 @@ export default class PastExpenses extends React.Component {
     fetch(`/api/expenses/${this.props.userId.toString()}`)
       .then(result => result.json())
       .then(resJson => this.setState({ pastExpenses: resJson }));
+    this.setState({ newExp: false });
   }
 
   render() {
@@ -44,6 +46,7 @@ function ReadFunct(props) {
             <i className="far fa-times-circle"></i>
           </a>
         <ExpenseForm
+          page={props.page}
           userId={props.userId}
           route={props.route} />
       </div>

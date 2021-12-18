@@ -39,7 +39,10 @@ export default [
       }
     },
     formOptions: {
-      headerTxt: 'Edit an Expense',
+      headerTxt: {
+        edit: 'Edit an Expense',
+        create: 'Enter a New Expense'
+      },
       toggleOptions: ['Expense', 'Deposit'],
       placeHolderTxt: {
         Expense: 'How much did you spend?',

@@ -16,8 +16,7 @@ export default class App extends React.Component {
       route: parseRoute(window.location.hash),
       page: pages.find(pg => pg.name === 'Home'),
       showMenu: false,
-      defaultTimeFrame: 'Monthly',
-      pastExpenses: []
+      defaultTimeFrame: 'Monthly'
     };
   }
 
