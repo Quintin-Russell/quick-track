@@ -75,7 +75,6 @@ app.get('/api/spendingCategories/:userId', (req, res, next) => {
 
 app.post('/api/expenses', (req, res, next) => {
   const { userId, date, amount, spendingCategory, comment, paymentMethod } = req.body;
-  // amount = Number.parseFloat(amount).toFixed(2);
 
   if (!userId || !date || !spendingCategory || !paymentMethod) {
     throw new ClientError(400, 'UserId, Date, Spending Category, and Payment Method are mandatory fields');

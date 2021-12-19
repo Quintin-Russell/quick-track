@@ -59,7 +59,6 @@ export default class App extends React.Component {
       toggleMenu={this.toggleMenu}
       route={this.state.route}
       pages={pages}/>
-      {/* place Menu here; add if(props.route.params.get('funct')==='menu') to render() */}
       { this.state.showMenu && <Menu toggleMenu={this.toggleMenu} pages={pages}/> }
       <div className={this.state.page.wholepagecont}>
         {this.renderPage()}

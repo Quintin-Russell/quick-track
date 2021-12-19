@@ -6,7 +6,7 @@ export default [
     imgSrc: 'images/home.png',
     imgAlt: 'home-icon',
     footerIcon: false,
-    meunIcon: true,
+    menuIcon: true,
     createQuery: null,
     wholepagecont: 'whole-pg-cont',
     formOptions: {

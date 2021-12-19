@@ -82,7 +82,6 @@
 }
 
 .overlay {
-  background: linear-gradient(transparent, rgb(0 0 0 / 75%));
   position: absolute;
   top: 0;
   bottom: 0;
@@ -143,6 +142,7 @@
 .exp-form-cont {
   width: 90%;
   margin: auto;
+  z-index: 1;
 }
 
 .exp-form {
@@ -187,28 +187,18 @@
 }
 
 .table-header {
-  font-size: 0.85rem;
   margin: 0 1rem;
   display: flex;
   justify-content: space-between;
 }
 
-.shaded {
-  background-color: #f2f2f275;
-}
-
 .table-txt {
-  font-family: noto-sans, sans-serif;
-  font-size: 0.75rem;
-  font-weight: 100;
-  padding: 0 0.5rem;
   text-align: center;
 }
 
 .table-item {
   justify-content: space-between;
   margin: 0 1rem;
-  border-radius: 1rem;
   align-items: center;
 }
 
@@ -236,28 +226,15 @@
 
 .disp-none {
   display: none;
-  color: #f2f2f200;
 }
 
 .x-button {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  color: #f2f2f2;
-  font-size: 2rem;
 }
 
 .modal-icon-cont {
   text-align: center;
   flex-direction: row;
-  background-color: white;
-  border: 0.1rem solid #0e9aa7;
-}
-
-.fa-trash-alt {
-  color: #ff532f;
-}
-
-.fa-edit {
-  color: #0e9aa7;
 }

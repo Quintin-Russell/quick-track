@@ -45,11 +45,11 @@ function ReadFunct(props) {
           <a href={props.page.hash} className="x-button">
             <i className="far fa-times-circle"></i>
           </a>
-        <ExpenseForm
-          page={props.page}
-          userId={props.userId}
-          route={props.route} />
-      </div>
+          <ExpenseForm
+            page={props.page}
+            userId={props.userId}
+            route={props.route} />
+        </div>
       </>
 
     );

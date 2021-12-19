@@ -187,11 +187,9 @@ function Modal(props) {
 
   } else if (props.route.params.get('funct') === 'delete') {
     return (
-    //  whole entry container div
     <div className="exp-form-cont exp-form col">
 
-      <h2 className='menu-txt'>Are You Sure?</h2>;
-        {/* headers container div */}
+      <h2 className='menu-txt'>Are You Sure?</h2>
       <div className="table-header menu-icon-cont">
         {
           props.page.table.tableHeaders.map(item => {
@@ -207,14 +205,12 @@ function Modal(props) {
           })
         }
       </div>
-      {/* content container div */}
       <div className='table-item shaded row'>
         <p className={`table-txt ${props.page.table.className.text}`}>{props.convertTime(props.exp.date)}</p>
         <p className={`table-txt ${props.page.table.className.text}`}>{`$${props.exp.amount}`}</p>
         <p className={`table-txt ${props.page.table.className.text}`}>{props.exp.comment}</p>
         <i className={`disp-none table-txt fas fa-ellipsis-v ${props.page.table.className.icon}`}></i>
       </div>
-      {/* buttons div */}
       <div className="row button-cont">
         <a href={props.page.hash}>
             <button className="sm-button">No</button>

@@ -1,14 +1,5 @@
 import React from 'react';
 
-// const toggleOptions = {
-//   form: {
-//     toggleOptions: ['Expense', 'Deposit']
-//   },
-//   setBudget: {
-//     toggleOptions: ['Weekly', 'Monthly', 'Year']
-//   }
-// };
-
 export default class Toggle extends React.Component {
 
   setHighlight(option) {
