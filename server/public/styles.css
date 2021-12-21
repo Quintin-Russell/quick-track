@@ -37,6 +37,10 @@
   background-color: #0e9aa745;
 }
 
+.overlay {
+  background: linear-gradient(transparent, rgb(0 0 0 / 75%));
+}
+
 .menu-cont {
   background-color: white;
 }
@@ -51,12 +55,96 @@
   background-color: white;
 }
 
-.fa-angle-double-left:hover,
+.exp-form-cont {
+  border-radius: 3rem;
+  filter: drop-shadow(0 0 0.25rem black);
+  background-color: white;
+}
+
+.exp-toggle-txt {
+  font-family: noto-sans, sans-serif;
+  color: #292929c0;
+  font-weight: 700;
+  font-size: 0.5rem;
+  filter: drop-shadow(0 0 2rem rgb(0 0 0 / 15.1%));
+}
+
+.toggle-highlight {
+  background-color: #0e9aa765;
+  border: 0.05rem solid rgb(0 0 0 / 26.7%);
+}
+
+.form-input {
+  border: 0.01rem solid #0e9aa7;
+  filter: drop-shadow(0 0.1rem 0.1rem #29292960);
+  background-color: white;
+  border-radius: 5rem;
+}
+
+.form-label-txt {
+  font-family: noto-sans, sans-serif;
+  font-size: 0.5rem;
+}
+
+.sm-button {
+  background-color: #efe9df;
+  border-radius: 1.25rem;
+}
+
+.form-input::placeholder {
+  font-family: noto-sans, sans-serif;
+  font-weight: 700;
+  color: #29292960;
+}
+
+.shaded {
+  background-color: #f2f2f275;
+}
+
+.table-header {
+  font-size: 0.85rem;
+}
+
+.table-txt {
+  font-family: noto-sans, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 100;
+  padding: 0 0.5rem;
+}
+
+.table-item {
+  border-radius: 1rem;
+}
+
+.disp-none {
+  color: #f2f2f200;
+}
+
+.x-button {
+  color: #f2f2f2;
+  font-size: 2rem;
+}
+
+.modal-icon-cont {
+  background-color: white;
+  border: 0.1rem solid #0e9aa7;
+}
+
+.fa-trash-alt {
+  color: #ff532f;
+}
+
+.fa-edit {
+  color: #0e9aa7;
+}
+
+i:hover,
 .sm-button:hover,
 .exp-toggle-txt,
 .form-input:hover,
 .header-bars:hover,
 .create-icon:hover,
+.x-button,
 .header-logo-cont:hover {
   cursor: pointer;
 }

@@ -15,6 +15,7 @@ CREATE TABLE "users" (
 CREATE TABLE "expenses" (
 	"expenseId" serial NOT NULL,
 	"userId" integer NOT NULL,
+  "date" TEXT NOT NULL,
 	"amount" decimal NOT NULL,
 	"comment" TEXT,
 	"spendingCategoryId" integer NOT NULL,
