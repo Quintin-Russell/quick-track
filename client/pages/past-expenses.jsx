@@ -25,6 +25,7 @@ export default class PastExpenses extends React.Component {
         route={this.props.route}
         userId={this.props.userId}
         page={this.props.page} />
+
         <Table
         route={this.props.route}
         userId={this.props.userId}
