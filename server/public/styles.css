@@ -138,6 +138,11 @@
   color: #0e9aa7;
 }
 
+.white-bkgrd {
+  background-color: white;
+  border: none;
+}
+
 i:hover,
 .sm-button:hover,
 .exp-toggle-txt,
