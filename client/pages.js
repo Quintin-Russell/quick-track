@@ -8,7 +8,11 @@ export default [
     footerIcon: false,
     menuIcon: true,
     createQuery: null,
+    editQuery: null,
+    deleteQuery: null,
+    fetchReqs: {},
     wholepagecont: 'whole-pg-cont',
+    table: {},
     formOptions: {
       headerTxt: 'Enter a New Expense',
       toggleOptions: ['Expense', 'Deposit'],
@@ -29,6 +33,14 @@ export default [
     createQuery: '#pastexpenses?funct=create',
     editQuery: '#pastexpenses?funct=edit',
     deleteQuery: '#pastexpenses?funct=delete',
+    fetchReqs: {
+      delete: {
+        type: 'DELETE',
+        successMessage: 'Your expense was deleted!',
+        bodyParameter: 'expenseId',
+        url: '/api/expenses'
+      }
+    },
     wholepagecont: 'whole-pg-cont scroll',
     table: {
       tableHeaders: ['Date', 'Amount', 'Comment'],

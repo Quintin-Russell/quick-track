@@ -14,13 +14,16 @@ export default class Footer extends React.Component {
 
   render() {
     return (
-      <footer className="footer-cont row">
+      <div className="footer-cont white-bkgrd">
+             <footer className="footer-cont row">
         {
           this.props.pages.map(page => (
             <FooterIcons key={page.hash} page={page} footerIndincator={this.footerIndincator(this.props.route.path, page.hash)}/>
           ))
         }
       </footer>
+      </div>
+
     );
   }
 }
