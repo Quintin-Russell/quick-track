@@ -1,5 +1,5 @@
 import React from 'react';
-import ExpenseForm from './exp-form';
+// import ExpenseForm from './exp-form';
 
 export default class Table extends React.Component {
   constructor(props) {
@@ -7,12 +7,6 @@ export default class Table extends React.Component {
     this.state = {
       showOptions: null
     };
-  }
-
-  convertTime(createdAt) {
-    const time = new Date(createdAt);
-    const yr = time.getYear();
-    return `${time.getMonth()}-${time.getDate()}-${yr - 100}`;
   }
 
   handleClick(e) {
@@ -51,7 +45,7 @@ export default class Table extends React.Component {
                 counter++;
                 return (
                   <div key={exp.expenseId.toString()} className='table-item shaded row'>
-                  <p className={`table-txt ${arr.className.text}`}>{this.convertTime(exp.date)}</p>
+                  <p className={`table-txt ${arr.className.text}`}>{this.props.convertTime(exp.date)}</p>
                   <p className={`table-txt ${arr.className.text}`}>{`$${exp.amount}`}</p>
                   <p className={`table-txt ${arr.className.text}`}>{exp.comment}</p>
                     <RenderIcon
@@ -61,17 +55,17 @@ export default class Table extends React.Component {
                     userId={this.props.userId}
                     data={exp.expenseId}
                     showOptions={this.state.showOptions}
-                    onClick={this.handleClick}
-                    className={`${arr.className.icon}`}
                     handleClick={this.handleClick.bind(this)}
+                    className={`${arr.className.icon}`}
+                    setEditOrDeleteObj={this.props.setEditOrDeleteObj}
                     convertTime= {this.convertTime} />
               </div>);
               } else {
                 counter++;
                 return (
           <div key={exp.expenseId.toString()} className='table-item row'>
-                      <p className={`table-txt ${arr.className.text}`}>{this.convertTime(exp.date)}</p>
-                    <p className={`table-txt ${arr.className.text}`}>{`$${exp.amount}`}</p>
+                      <p className={`table-txt ${arr.className.text}`}>{this.props.convertTime(exp.date)}</p>
+                      <p className={`table-txt ${arr.className.text}`}>{`$${exp.amount}`}</p>
                       <p className={`table-txt ${arr.className.text}`}>{exp.comment}</p>
                     {/* <i data={exp.expenseId} onClick={this.props.handleClick} className={`table-txt fas fa-ellipsis-v ${arr.className.icon}`}></i> */}
                     <RenderIcon
@@ -81,9 +75,8 @@ export default class Table extends React.Component {
                     userId={this.props.userId}
                     data={exp.expenseId}
                     showOptions={this.state.showOptions}
-                    onClick={this.handleClick}
-                    className={`${arr.className.icon}`}
                     handleClick={this.handleClick.bind(this)}
+                    className={`${arr.className.icon}`}
                     convertTime={this.convertTime} />
                     </div>
                 );
@@ -104,22 +97,22 @@ function RenderIcon(props) {
   if (props.showOptions === props.exp.expenseId) {
     return (
       <>
-      <EditDeleteModal
+      {/* <EditDeleteModal
       route={props.route}
       page={props.page}
       exp={props.exp}
       userId={props.userId}
-      editOrDelete={props.editOrDelete}
+      // editOrDelete={props.editOrDelete}
       handleClick={props.handleClick}
-      convertTime={props.convertTime} />
-      <div onClick={props.handleClick} className={`row menu-icon-cont ${props.className}`}>
-          <a href={props.page.deleteQuery} function='delete' data={props.exp.expenseId} className="menu-header-cont ">
-            <i function='delete' data={props.exp.expenseId} className="far fa-trash-alt"></i>
-            <p function='delete' data={props.exp.expenseId} className="form-label-txt">Delete</p>
-        </a>
-          <a href={props.page.editQuery} function='edit' data={props.exp.expenseId} className="menu-header-cont">
-            <i function='edit' data={props.exp.expenseId} className="far fa-edit"></i>
-            <p function='edit' data={props.exp.expenseId} className="form-label-txt">Edit</p>
+      convertTime={props.convertTime} /> */}
+        <div className={`row menu-icon-cont ${props.className}`}>
+          <a onClick={props.setEditOrDeleteObj} href={props.page.deleteQuery} data={props.exp.expenseId} className="menu-header-cont ">
+            <i data={props.exp.expenseId} className="far fa-trash-alt"></i>
+            <p data={props.exp.expenseId} className="form-label-txt">Delete</p>
+          </a>
+          <a onClick={props.setEditOrDeleteObj} href={props.page.editQuery} data={props.exp.expenseId} className="menu-header-cont">
+            <i onClick={props.setEditOrDeleteObj} data={props.exp.expenseId} className="far fa-edit"></i>
+            <p onClick={props.setEditOrDeleteObj} data={props.exp.expenseId} className="form-label-txt">Edit</p>
         </a>
       </div>
       </>
@@ -133,94 +126,93 @@ function RenderIcon(props) {
   }
 }
 
-class EditDeleteModal extends React.Component {
+// class EditDeleteModal extends React.Component {
 
-  sendDeleteReq(e) {
-    const body = {
-      expenseId: `${this.props.exp.expenseId}`
-    };
-    const reqOptions = {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body)
-    };
+//   sendDeleteReq(e) {
+//     const body = {
+//       expenseId: `${this.props.exp.expenseId}`
+//     };
+//     const reqOptions = {
+//       method: 'DELETE',
+//       headers: {
+//         'Content-Type': 'application/json'
+//       },
+//       body: JSON.stringify(body)
+//     };
 
-    fetch('/api/expenses', reqOptions)
-      .then(result => {
-        if (result.ok) {
-          window.alert('Your expense was deleted!');
-          e.target.reset();
-        } else {
-          window.alert('Whoops! Something went wrong. Please try again.');
-        }
-      });
-  }
+//     fetch('/api/expenses', reqOptions)
+//       .then(result => {
+//         if (result.ok) {
+//           window.alert('Your expense was deleted!');
+//           e.target.reset();
+//         } else {
+//           window.alert('Whoops! Something went wrong. Please try again.');
+//         }
+//       });
+//   }
 
-  render() {
-    return (
-    <div className={(this.props.route.params.get('funct')) ? 'overlay' : 'disp-none'}>
-      <a href={this.props.page.hash} className="x-button">
-        <i className="far fa-times-circle"></i>
-      </a>
-          <Modal
-          route={this.props.route}
-          page={this.props.page}
-          userId={this.props.userId}
-          editObj={this.props.exp}
-          sendDeleteReq={this.sendDeleteReq.bind(this)}
-          exp={this.props.exp}
-          convertTime={this.props.convertTime} />
-    </div>
-    );
-  }
-}
+//   render() {
+//     return (
+//     <div className={(this.props.route.params.get('funct')) ? 'overlay' : 'disp-none'}>
+//       <a href={this.props.page.hash} className="x-button">
+//         <i className="far fa-times-circle"></i>
+//       </a>
+//           <Modal
+//           route={this.props.route}
+//           page={this.props.page}
+//           userId={this.props.userId}
+//           editObj={this.props.exp}
+//           sendDeleteReq={this.sendDeleteReq.bind(this)}
+//           convertTime={this.props.convertTime} />
+//     </div>
+//     );
+//   }
+// }
 
-function Modal(props) {
-  if (props.route.params.get('funct') === 'edit') {
-    return <ExpenseForm
-      route={props.route}
-      page={props.page}
-      userId={props.userId}
-      editObj={props.exp} />;
+// function Modal(props) {
+//   if (props.route.params.get('funct') === 'edit') {
+//     return <ExpenseForm
+//       route={props.route}
+//       page={props.page}
+//       userId={props.userId}
+//       editObj={props.editObj} />;
 
-  } else if (props.route.params.get('funct') === 'delete') {
-    return (
-    <div className="exp-form-cont exp-form col">
+//   } else if (props.route.params.get('funct') === 'delete') {
+//     return (
+//     <div className="exp-form-cont exp-form col">
 
-      <h2 className='menu-txt'>Are You Sure?</h2>
-      <div className="table-header menu-icon-cont">
-        {
-          props.page.table.tableHeaders.map(item => {
-            if (props.page.table.tableHeaders.findIndex(index => index === item) < props.page.table.tableHeaders.length - 1) {
-              return <h2 key={item} className={`menu-txt ${props.page.table.className.text}`}>{item}</h2>;
-            } else {
-              return (
-                <div className={`row ${props.page.table.className.divCont}`} key={item}>
-                  <h2 className={`menu-txt ${props.page.table.className.text}`}>{item}</h2>
-                  <i className={`${props.page.table.className.icon} fas fa-ellipsis-v disp-none`}></i>
-                </div>);
-            }
-          })
-        }
-      </div>
-      <div className='table-item shaded row'>
-        <p className={`table-txt ${props.page.table.className.text}`}>{props.convertTime(props.exp.date)}</p>
-        <p className={`table-txt ${props.page.table.className.text}`}>{`$${props.exp.amount}`}</p>
-        <p className={`table-txt ${props.page.table.className.text}`}>{props.exp.comment}</p>
-        <i className={`disp-none table-txt fas fa-ellipsis-v ${props.page.table.className.icon}`}></i>
-      </div>
-      <div className="row button-cont">
-        <a href={props.page.hash}>
-            <button className="sm-button">No</button>
-        </a>
-        <a onClick={props.sendDeleteReq} href={props.page.hash}>
-            <button className="sm-button">Delete</button>
-        </a>
-      </div>
-    </div>);
-  } else {
-    return <></>;
-  }
-}
+//       <h2 className='menu-txt'>Are You Sure?</h2>
+//       <div className="table-header menu-icon-cont">
+//         {
+//           props.page.table.tableHeaders.map(item => {
+//             if (props.page.table.tableHeaders.findIndex(index => index === item) < props.page.table.tableHeaders.length - 1) {
+//               return <h2 key={item} className={`menu-txt ${props.page.table.className.text}`}>{item}</h2>;
+//             } else {
+//               return (
+//                 <div className={`row ${props.page.table.className.divCont}`} key={item}>
+//                   <h2 className={`menu-txt ${props.page.table.className.text}`}>{item}</h2>
+//                   <i className={`${props.page.table.className.icon} fas fa-ellipsis-v disp-none`}></i>
+//                 </div>);
+//             }
+//           })
+//         }
+//       </div>
+//       <div className='table-item shaded row'>
+//         <p className={`table-txt ${props.page.table.className.text}`}>{props.convertTime(props.editObj.date)}</p>
+//         <p className={`table-txt ${props.page.table.className.text}`}>{`$${props.editObj.amount}`}</p>
+//         <p className={`table-txt ${props.page.table.className.text}`}>{props.editObj.comment}</p>
+//         <i className={`disp-none table-txt fas fa-ellipsis-v ${props.page.table.className.icon}`}></i>
+//       </div>
+//       <div className="row button-cont">
+//         <a href={props.page.hash}>
+//             <button className="sm-button">No</button>
+//         </a>
+//         <a onClick={props.sendDeleteReq} href={props.page.hash}>
+//             <button className="sm-button">Delete</button>
+//         </a>
+//       </div>
+//     </div>);
+//   } else {
+//     return <></>;
+//   }
+// }
