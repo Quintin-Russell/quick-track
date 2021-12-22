@@ -44,8 +44,7 @@ export default class App extends React.Component {
       pastExpenses={this.state.pastExpenses}
       page={this.state.page}
       convertTime={this.convertTime}
-      setEditOrDeleteObj={this.setEditOrDeleteObj.bind(this)}
-     />
+      setEditOrDeleteObj={this.setEditOrDeleteObj.bind(this)} />
       );
     }
   }
