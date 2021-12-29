@@ -13,7 +13,9 @@ export default class SetBudget extends React.Component {
 
   convertBudget(timeFrame, val) {
     let monthlyBudget;
+
     val = parseFloat(val);
+
     (timeFrame === 'Month')
       ? monthlyBudget = val.toFixed(2)
       : (timeFrame === 'Week')
