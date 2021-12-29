@@ -7,6 +7,7 @@ CREATE TABLE "users" (
 	"username" TEXT NOT NULL UNIQUE,
 	"hashedPassword" TEXT NOT NULL,
 	"monthlyBudget" decimal NOT NULL,
+  "timeFrame" TEXT NOT NULL,
 	"createdAt" timestamptz NOT NULL default now(),
 	CONSTRAINT "users_pk" PRIMARY KEY ("userId")
 ) WITH (

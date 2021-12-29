@@ -3,14 +3,19 @@ import React from 'react';
 export default class Toggle extends React.Component {
 
   setHighlight(option) {
-    return option === this.props.function
+    const funct = (typeof (this.props.function) === 'object')
+      ? this.props.function[0]
+      : this.props.function;
+    return option === funct
       ? 'toggle-highlight exp-toggle-txt'
       : 'exp-toggle-txt';
   }
 
   render() {
     return (
-      <span className="row padding-extra">
+      <span className={(this.props.page.name === 'Set Your Budget')
+        ? 'row'
+        : 'row padding-extra'}>
         {
           this.props.page.formOptions.toggleOptions.map(option => {
             if (this.props.page.formOptions.toggleOptions.findIndex(index => (index === option)) < (this.props.page.formOptions.toggleOptions.length - 1)) {

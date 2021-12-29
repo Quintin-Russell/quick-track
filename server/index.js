@@ -73,11 +73,29 @@ app.get('/api/spendingCategories/:userId', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.get('/api/users/:userId', (req, res, next) => {
+  const userId = req.params.userId;
+
+  if (!userId) {
+    throw new ClientError(400, 'User Id is mandatory field');
+  }
+
+  const sql = `
+  select "monthlyBudget", "timeFrame"
+  from "users"
+  where "userId" = $1
+  `;
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => res.status(201).json(result.rows[0]))
+    .catch(err => next(err));
+});
+
 app.post('/api/expenses', (req, res, next) => {
   const { userId, date, amount, spendingCategory, comment, paymentMethod } = req.body;
 
   if (!userId || !date || !spendingCategory || !paymentMethod) {
-    throw new ClientError(400, 'UserId, Date, Spending Category, and Payment Method are mandatory fields');
+    throw new ClientError(400, 'User Id, Date, Spending Category, and Payment Method are mandatory fields');
   }
   if (!amount) {
     throw new ClientError(400, 'Amount must be a number.');
@@ -98,7 +116,7 @@ app.post('/api/paymentMethods', (req, res, next) => {
   const { userId, name } = req.body;
 
   if (!userId || !name) {
-    throw new ClientError(400, 'UserId and name are mandatory fields');
+    throw new ClientError(400, 'User Id and Name are mandatory fields');
   }
 
   const sql = `
@@ -118,7 +136,7 @@ app.post('/api/spendingCategories', (req, res, next) => {
   const { userId, name } = req.body;
 
   if (!userId || !name) {
-    throw new ClientError(400, 'UserId and name are mandatory fields');
+    throw new ClientError(400, 'User Id and Name are mandatory fields');
   }
 
   const sql = `
@@ -135,12 +153,36 @@ app.post('/api/spendingCategories', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.patch('/api/users', (req, res, next) => {
+  let { userId, monthlyBudget, timeFrame } = req.body;
+  monthlyBudget = Number.parseFloat(monthlyBudget).toFixed(2);
+  if (!userId || !timeFrame) {
+    throw new ClientError(400, 'User Id, Budget and Time Frame are mandatory fields');
+  }
+  if (!monthlyBudget) {
+    throw new ClientError(400, 'Budget must be a number');
+  }
+
+  const sql = `
+  update "users"
+  set "monthlyBudget"= $2, "timeFrame"=$3
+  where "userId" = $1
+  returning *
+  `;
+
+  const params = [userId, monthlyBudget, timeFrame];
+  db.query(sql, params)
+    .then(result => {
+      res.status(201).json(result.rows);
+    });
+});
+
 app.patch('/api/expenses', (req, res, next) => {
   let { userId, date, expenseId, amount, spendingCategory, comment, paymentMethod } = req.body;
   amount = Number.parseFloat(amount).toFixed(2);
 
   if (!expenseId || !spendingCategory || !paymentMethod) {
-    throw new ClientError(400, 'ExpenseId, Spending Category, and Payment Method are mandatory fields');
+    throw new ClientError(400, 'Expense Id, Spending Category, and Payment Method are mandatory fields');
   }
   if (!amount) {
     throw new ClientError(400, 'Amount must be a number.');
@@ -165,7 +207,7 @@ app.patch('/api/spendingCategories', (req, res, next) => {
   const { spendingCategoryId, name } = req.body;
 
   if (!spendingCategoryId || !name) {
-    throw new ClientError(400, 'SpendingCategoryId and Name are mandatory fields');
+    throw new ClientError(400, 'Spending Category Id and Name are mandatory fields');
   }
   const sql = `
   update "spendingCategories"
@@ -186,7 +228,7 @@ app.patch('/api/paymentMethods', (req, res, next) => {
   const { paymentMethodId, name } = req.body;
 
   if (!name || !paymentMethodId) {
-    throw new ClientError(400, 'Name and PaymentMethodId are mandatory fields');
+    throw new ClientError(400, 'Name and Payment Method Id are mandatory fields');
   }
 
   const sql = `
@@ -208,7 +250,7 @@ app.delete('/api/expenses', (req, res, next) => {
   const { expenseId } = req.body;
 
   if (!expenseId) {
-    throw new ClientError(400, 'ExpenseId is a mandatory field');
+    throw new ClientError(400, 'Expense Id is a mandatory field');
   }
 
   const sql = `

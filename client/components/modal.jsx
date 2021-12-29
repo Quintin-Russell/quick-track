@@ -20,6 +20,7 @@ export default class Modal extends React.Component {
     fetch(`${this.props.page.fetchReqs.delete.url}`, reqOptions)
       .then(result => {
         if (result.ok) {
+          this.props.resetEditOrDeleteObj();
           window.alert(`${this.props.page.fetchReqs.delete.successMessage}`);
         } else {
           window.alert('Whoops! Something went wrong. Please try again.');
@@ -35,15 +36,11 @@ export default class Modal extends React.Component {
       if (funct === 'create') {
         return (
       <>
-        <div className="overlay">
-          <a href={this.props.page.hash} className="x-button">
-            <i className="far fa-times-circle"></i>
-          </a>
           <ExpenseForm
             page={this.props.page}
             userId={this.props.userId}
-            route={this.props.route} />
-        </div>
+            route={this.props.route}
+            resetEditOrDeleteObj={this.props.resetEditOrDeleteObj} />
       </>
 
         );
@@ -52,7 +49,8 @@ export default class Modal extends React.Component {
                   route={this.props.route}
                   page={this.props.page}
                   userId={this.props.userId}
-                  editObj={this.props.editOrDeleteObj} />;
+                  editObj={this.props.editOrDeleteObj}
+                  resetEditOrDeleteObj={this.props.resetEditOrDeleteObj} />;
 
       } else if (this.props.route.params.get('funct') === 'delete') {
         return (
@@ -96,11 +94,11 @@ export default class Modal extends React.Component {
   }
 
   render() {
-    if (!this.props.route.params.get('funct')) {
+    if (!this.props.route.params.get('funct') || !this.props.editOrDeleteObj) {
       return <></>;
     } else {
       return (
-      <div className="overlay">
+        <div onClick={this.props.resetEditOrDeleteObj} className="overlay just-align-center">
         <a href={this.props.page.hash} className="x-button">
           <i className="far fa-times-circle"></i>
         </a>
