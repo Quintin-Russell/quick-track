@@ -53,6 +53,9 @@ export default class App extends React.Component {
         <AccountSettings
         route={this.state.route}
         page={this.state.page} />
+      convertTime={this.convertTime}
+      setEditOrDeleteObj={this.setEditOrDeleteObj.bind(this)}
+      />
       );
 
     } else if (path === 'accsettings-setbudget') {
