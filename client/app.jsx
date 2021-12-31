@@ -38,29 +38,24 @@ export default class App extends React.Component {
 
     } else if (path === 'pastexpenses') {
       return (
-
       <PastExpenses
       route={this.state.route}
       userId={this.state.userId}
+      editOrDeleteObj={this.state.editOrDeleteObj}
+      resetEditOrDeleteObj={this.resetEditOrDeleteObj.bind(this)}
       setEditOrDeleteObj={this.setEditOrDeleteObj.bind(this)}
       page={this.state.page}
       />
-
       );
     } else if (path === 'accsettings') {
-
       return (
         <AccountSettings
         route={this.state.route}
         page={this.state.page} />
-      convertTime={this.convertTime}
-      setEditOrDeleteObj={this.setEditOrDeleteObj.bind(this)}
-      />
       );
 
     } else if (path === 'accsettings-setbudget') {
       return (
-
       <SetBudget
       setTimeFrame={this.setTimeFrame.bind(this)}
       timeFrame={this.state.timeFrame}
@@ -70,20 +65,26 @@ export default class App extends React.Component {
       );
 
     } else if (path === 'accsettings-managepaymentmethods') {
-
+      return (
       <PaymentMethods
       route={this.state.route}
       userId={this.state.userId}
+      editOrDeleteObj={this.state.editOrDeleteObj}
       setEditOrDeleteObj={this.setEditOrDeleteObj.bind(this)}
-      page={this.state.page} />;
+      resetEditOrDeleteObj={this.resetEditOrDeleteObj.bind(this)}
+      page={this.state.page} />
+      );
 
     } else if (path === 'accsettings-managespendingcategories') {
-
+      return (
       <SpendingCategories
       route={this.state.route}
       userId={this.state.userId}
+      editOrDeleteObj={this.state.editOrDeleteObj}
       setEditOrDeleteObj={this.setEditOrDeleteObj.bind(this)}
-      page={this.state.page} />;
+      resetEditOrDeleteObj={this.resetEditOrDeleteObj.bind(this)}
+      page={this.state.page} />
+      );
 
     }
   }
@@ -122,6 +123,7 @@ export default class App extends React.Component {
   }
 
   render() {
+    // console.log('this.state.editOr... in app.jsx:', this.state.editOrDeleteObj);
     return (
     <>
       <Modal

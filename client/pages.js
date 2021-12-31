@@ -163,14 +163,14 @@ export default [
     imgAlt: 'manage-payment-icon',
     footerIcon: false,
     menuIcon: false,
-    id: null,
+    id: 'paymentMethodId',
     createQuery: '#accsettings-managepaymentmethods?funct=create',
     editQuery: '#accsettings-managepaymentmethods?funct=edit',
     deleteQuery: '#accsettings-managepaymentmethods?funct=delete',
     fetchReqs: {
       get: {
         type: 'GET',
-        url: '/api/paymentMethods/:userId'
+        url: '/api/paymentMethods'
       },
       delete: {
         type: 'DELETE',
@@ -183,9 +183,9 @@ export default [
     table: {
       tableHeaders: ['Payment Methods'],
       className: {
-        text: 'flex-30',
+        text: 'flex-90',
         icon: 'flex-10',
-        divCont: 'flex-40'
+        divCont: 'flex-100'
       }
     },
     formOptions: {
