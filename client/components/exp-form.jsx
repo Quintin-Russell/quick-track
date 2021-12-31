@@ -36,7 +36,7 @@ export default class ExpenseForm extends React.Component {
               this.addEditValues();
               this.setState({ expense, spendingCategories, paymentMethods });
             } else {
-              this.setState({ newExp: false, expense, spendingCategories, paymentMethods, spendingCategory: spendingCategories[0].spendingCategoryId, paymentMethod: paymentMethods[0].paymentMethodId });
+              this.setState({ expense, spendingCategories, paymentMethods, spendingCategory: spendingCategories[0].spendingCategoryId, paymentMethod: paymentMethods[0].paymentMethodId });
             }
           });
       });
@@ -91,9 +91,9 @@ export default class ExpenseForm extends React.Component {
   }
 
   addEditValues() {
+
     if (this.props.editObj) {
-      const update = {
-      };
+      const update = {};
       const vals = {
         date: document.getElementById('date'),
         amount: document.getElementById('amount'),
@@ -138,6 +138,9 @@ export default class ExpenseForm extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
+    if (!this.state.amount) {
+      return window.alert('Please enter an amount, payment method, spending category and comment');
+    }
     const body = {
       userId: `${this.props.userId}`,
       date: this.generateDate(),
@@ -166,6 +169,9 @@ export default class ExpenseForm extends React.Component {
     fetch('/api/expenses', reqOptions)
       .then(result => {
         if (result.ok) {
+          if (this.props.resetEditOrDeleteObj) {
+            this.props.resetEditOrDeleteObj();
+          }
           window.alert('Thanks for entering in your transaction!');
           e.target.reset();
         } else {
@@ -192,7 +198,6 @@ export default class ExpenseForm extends React.Component {
           <Toggle
           page={this.props.page}
           handleToggleClick={this.handleToggleClick.bind(this)}
-          route={this.props.route}
           function={this.state.expense} />
         <h2 className="menu-txt">{this.whichFormOption('header')}</h2>
         <form
@@ -268,6 +273,7 @@ export default class ExpenseForm extends React.Component {
 
             <a href={this.props.page.hash}>
                     <button
+                    onClick={(this.props.resetEditOrDeleteObj) ? this.props.resetEditOrDeleteObj : null}
                     type="submit"
                     className="sm-button"
                     value="Done">

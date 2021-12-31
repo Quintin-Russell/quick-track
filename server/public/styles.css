@@ -20,6 +20,7 @@
 .pg-id-img {
   width: 15%;
   opacity: 60%;
+  max-width: 4rem;
 }
 
 .create-icon {

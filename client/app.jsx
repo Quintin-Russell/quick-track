@@ -1,12 +1,19 @@
 import React from 'react';
+
 import parseRoute from '../client/parse-route';
-import Home from './pages/home';
-import PastExpenses from './pages/past-expenses';
+import pages from './pages';
+
 import Header from './components/header';
 import Footer from './components/footer';
-import pages from './pages';
 import Menu from './components/menu';
 import Modal from './components/modal';
+
+import Home from './pages/home';
+import PastExpenses from './pages/past-expenses';
+import AccountSettings from './pages/acc-settings';
+import SetBudget from './pages/set-budget';
+import PaymentMethods from './pages/payment-methods';
+import SpendingCategories from './pages/spending-categories';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -17,16 +24,8 @@ export default class App extends React.Component {
       route: parseRoute(window.location.hash),
       page: pages.find(pg => pg.path === ''),
       showMenu: false,
-      editOrDeleteObj: null,
-      defaultTimeFrame: 'Monthly',
-      pastExpenses: []
+      editOrDeleteObj: null
     };
-  }
-
-  setEditOrDeleteObj(e) {
-    const tar = e.target.getAttribute('data');
-    const editOrDeleteObj = this.state.pastExpenses.find(obj => obj.expenseId === parseInt(tar));
-    this.setState({ editOrDeleteObj });
   }
 
   renderPage() {
@@ -36,36 +35,75 @@ export default class App extends React.Component {
       page={this.state.page}
       userId={this.state.userId}
       route={this.state.route} />;
+
     } else if (path === 'pastexpenses') {
       return (
+
       <PastExpenses
       route={this.state.route}
       userId={this.state.userId}
-      pastExpenses={this.state.pastExpenses}
+      setEditOrDeleteObj={this.setEditOrDeleteObj.bind(this)}
       page={this.state.page}
+      />
+
+      );
+    } else if (path === 'accsettings') {
+
+      return (
+        <AccountSettings
+        route={this.state.route}
+        page={this.state.page} />
       convertTime={this.convertTime}
       setEditOrDeleteObj={this.setEditOrDeleteObj.bind(this)}
       />
       );
+
+    } else if (path === 'accsettings-setbudget') {
+      return (
+
+      <SetBudget
+      setTimeFrame={this.setTimeFrame.bind(this)}
+      timeFrame={this.state.timeFrame}
+      userId ={this.state.userId}
+      page={this.state.page}
+      route={this.state.route} />
+      );
+
+    } else if (path === 'accsettings-managepaymentmethods') {
+
+      <PaymentMethods
+      route={this.state.route}
+      userId={this.state.userId}
+      setEditOrDeleteObj={this.setEditOrDeleteObj.bind(this)}
+      page={this.state.page} />;
+
+    } else if (path === 'accsettings-managespendingcategories') {
+
+      <SpendingCategories
+      route={this.state.route}
+      userId={this.state.userId}
+      setEditOrDeleteObj={this.setEditOrDeleteObj.bind(this)}
+      page={this.state.page} />;
+
     }
   }
 
   componentDidMount() {
-    fetch(`/api/expenses/${this.state.userId.toString()}`)
-      .then(result => result.json())
-      .then(resJson => {
-        window.addEventListener('hashchange', e => {
-          const route = parseRoute(window.location.hash);
-          const page = pages.find(pg => pg.path === route.path);
-          this.setState({ route, page, pastExpenses: resJson });
-        });
-      }
-      );
+
+    window.addEventListener('hashchange', e => {
+      const route = parseRoute(window.location.hash);
+      const page = pages.find(pg => pg.path === route.path);
+      this.setState({ route, page });
+    });
+
   }
 
-  toggleMenu(e) {
-    const curentShowMenu = this.state.showMenu;
-    this.setState({ showMenu: !curentShowMenu });
+  setEditOrDeleteObj(editOrDeleteObj) {
+    this.setState({ editOrDeleteObj });
+  }
+
+  resetEditOrDeleteObj() {
+    this.setState({ editOrDeleteObj: null });
   }
 
   convertTime(dt) {
@@ -74,15 +112,25 @@ export default class App extends React.Component {
     return `${time.getMonth()}-${time.getDate()}-${yr - 100}`;
   }
 
+  toggleMenu(e) {
+    const curentShowMenu = this.state.showMenu;
+    this.setState({ showMenu: !curentShowMenu });
+  }
+
+  setTimeFrame(val) {
+    this.setState({ timeFrame: [val] });
+  }
+
   render() {
     return (
-      <>
+    <>
       <Modal
       route={this.state.route}
       page={this.state.page}
       convertTime={this.convertTime}
       userId={this.state.userId}
-      editOrDeleteObj={this.state.editOrDeleteObj} />
+      editOrDeleteObj={this.state.editOrDeleteObj}
+      resetEditOrDeleteObj={this.resetEditOrDeleteObj.bind(this)} />
 
       <Header
       toggleMenu={this.toggleMenu}
@@ -98,7 +146,6 @@ export default class App extends React.Component {
        <Footer
         pages={pages}
         route={this.state.route} />
-      </>
-    );
+      </>);
   }
 }
