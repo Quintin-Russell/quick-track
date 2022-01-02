@@ -5,12 +5,10 @@ export default class Table extends React.Component {
     super(props);
     this.state = {
       arr: []
-      // editOrDeleteObj: null
     };
   }
 
   componentDidMount() {
-    // const editOrDeleteObj = this.props.editOrDeleteObj;
     fetch(`${this.props.page.fetchReqs.get.url}/${this.props.userId.toString()}`)
       .then(result => result.json())
       .then(resJson => this.setState({ arr: resJson }));
@@ -33,7 +31,6 @@ export default class Table extends React.Component {
     const tar = e.target.getAttribute('data');
     const editOrDeleteObj = this.state.arr.find(obj => obj[id] === parseInt(tar));
     this.props.setEditOrDeleteObj(editOrDeleteObj);
-    // this.setState({ editOrDeleteObj });
   }
 
   resetEditOrDeleteObj(e) {

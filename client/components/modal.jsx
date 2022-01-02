@@ -9,31 +9,6 @@ export default class Modal extends React.Component {
     };
   }
 
-  // sendDeleteReq(e) {
-  //   const delBodyParameter = this.props.page.id;
-  //   const delBodyValue = this.props.editOrDeleteObj[delBodyParameter];
-  //   const body = {
-  //     [delBodyParameter]: `${delBodyValue}`
-  //   };
-  //   const reqOptions = {
-  //     method: 'DELETE',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify(body)
-  //   };
-
-  //   fetch(`${this.props.page.fetchReqs.delete.url}`, reqOptions)
-  //     .then(result => {
-  //       if (result.ok) {
-  //         this.props.resetEditOrDeleteObj();
-  //         window.alert(`${this.props.page.fetchReqs.delete.successMessage}`);
-  //       } else {
-  //         window.alert('Whoops! Something went wrong. Please try again.');
-  //       }
-  //     });
-  // }
-
   sendFetchReq(e) {
     const bodyParameter = this.props.page.id;
     const funct = this.props.route.params.get('funct');
@@ -114,19 +89,44 @@ export default class Modal extends React.Component {
         </div>
             );
       } else if (funct === 'edit') {
-        return <ExpenseForm
-                  route={this.props.route}
-                  page={this.props.page}
-                  userId={this.props.userId}
-                  editObj={this.props.editOrDeleteObj}
-                  resetEditOrDeleteObj={this.props.resetEditOrDeleteObj} />;
+        return (this.props.route.path === 'pastexpenses')
+          ? <ExpenseForm
+            route={this.props.route}
+            page={this.props.page}
+            userId={this.props.userId}
+            editObj={this.props.editOrDeleteObj}
+            resetEditOrDeleteObj={this.props.resetEditOrDeleteObj} />
+          : (
+            <div className="just-align-center exp-form-cont exp-form col" >
+              <h2 className='menu-txt'>{
+                (this.props.route.path === 'accsettings-managepaymentmethods')
+                  ? 'Edit Payment Method'
+                  : 'Edit Spending Category'
+              }</h2>
+              <label className='budget-width just-cent' htmlFor="edit-payment-method">
+                <input
+                  id="edit-payment-method"
+                  name="edit-payment-method"
+                  defaultValue={(!this.props.editOrDeleteObj)
+                    ? this.state.newEntry
+                    : this.props.editOrDeleteObj.name}
+                  onChange={this.handleNewEntryChange.bind(this)}
+                  placeholder={(this.props.route.path === 'accsettings-managepaymentmethods') ? 'Enter the a payment method here' : 'Enter the a category here'}
+                  className='form-input'></input>
+              </label>
+              <div className="row budget-width button-cont">
+                <a onClick={this.props.resetEditOrDeleteObj} href={this.props.page.hash}>
+                  <button className="sm-button">Go Back</button>
+                </a>
+                <a href={this.props.page.hash}>
+                  <button onClick={this.sendFetchReq.bind(this)} className="sm-button">Submit</button>
+                </a>
+              </div>
 
+            </div>
+            );
       } else if (funct === 'delete') {
         return (
-        // !this.props.editOrDeleteObj)
-        // ? <></>
-        // : (
-
         <div className="exp-form-cont exp-form col">
 
           <h2 className='menu-txt'>Are You Sure?</h2>
@@ -157,13 +157,19 @@ export default class Modal extends React.Component {
                 )
               : (
               <div className='table-item shaded row'>
-                <p className={`table-txt ${this.props.page.table.className.text}`}>{`${this.props.editOrDeleteObj.name}`}</p>
+                <p className={`table-txt ${this.props.page.table.className.text}`}>
+                  {
+                  (!this.props.editOrDeleteObj)
+                    ? ''
+                    : this.props.editOrDeleteObj.name
+                    }
+                  </p>
               </div>
                 )
           }
 
           <div className="row button-cont">
-            <a href={this.props.page.hash}>
+            <a onClick={this.props.resetEditOrDeleteObj} href={this.props.page.hash}>
               <button className="sm-button">No</button>
             </a>
             <a href={this.props.page.hash}>
