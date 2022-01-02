@@ -81,7 +81,16 @@ export default [
     createQuery: null,
     editQuery: null,
     deleteQuery: null,
-    fetchReqs: {},
+    fetchReqs: {
+      get: {
+        budget: {
+          url: '/api/users'
+        },
+        expenses: {
+
+        }
+      }
+    },
     wholepagecont: 'whole-pg-cont',
     table: {},
     formOptions: {},

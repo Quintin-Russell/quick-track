@@ -14,6 +14,7 @@ import AccountSettings from './pages/acc-settings';
 import SetBudget from './pages/set-budget';
 import PaymentMethods from './pages/payment-methods';
 import SpendingCategories from './pages/spending-categories';
+import Summary from './pages/summary';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -86,6 +87,12 @@ export default class App extends React.Component {
       page={this.state.page} />
       );
 
+    } else if (path === 'summary') {
+      return (
+        <Summary
+        page={this.state.page}
+        userId={this.state.userId} />
+      );
     }
   }
 
