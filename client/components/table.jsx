@@ -4,16 +4,16 @@ export default class Table extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      arr: [],
-      editOrDeleteObj: null
+      arr: []
+      // editOrDeleteObj: null
     };
   }
 
   componentDidMount() {
-    const editOrDeleteObj = this.props.editOrDeleteObj;
+    // const editOrDeleteObj = this.props.editOrDeleteObj;
     fetch(`${this.props.page.fetchReqs.get.url}/${this.props.userId.toString()}`)
       .then(result => result.json())
-      .then(resJson => this.setState({ arr: resJson, editOrDeleteObj }));
+      .then(resJson => this.setState({ arr: resJson }));
   }
 
   convertTime(dt) {
@@ -22,13 +22,13 @@ export default class Table extends React.Component {
     return `${time.getMonth()}-${time.getDate()}-${yr - 100}`;
   }
 
-  // setEditOrDeleteObj(e) {
-  //   const id = this.props.page.id;
-  //   const tar = e.target.getAttribute('data');
-  //   const editOrDeleteObj = this.state.arr.find(obj => obj[id] === parseInt(tar));
-  //   this.props.setEditOrDeleteObj(editOrDeleteObj);
-  //   // this.setState({ editOrDeleteObj });
-  // }
+  setEditOrDeleteObj(e) {
+    const id = this.props.page.id;
+    const tar = e.target.getAttribute('data');
+    const editOrDeleteObj = this.state.arr.find(obj => obj[id] === parseInt(tar));
+    this.props.setEditOrDeleteObj(editOrDeleteObj);
+    // this.setState({ editOrDeleteObj });
+  }
 
   resetEditOrDeleteObj(e) {
     this.props.resetEditOrDeleteObj();
@@ -70,9 +70,9 @@ export default class Table extends React.Component {
                     exp={exp}
                     userId={this.props.userId}
                     data={exp[id]}
-                    setEditOrDeleteObj={this.props.setEditOrDeleteObj}
+                    setEditOrDeleteObj={this.setEditOrDeleteObj.bind(this)}
                     className={`${table.className.icon}`}
-                    editOrDeleteObj={this.state.editOrDeleteObj}
+                    editOrDeleteObj={this.props.editOrDeleteObj}
                     convertTime= {this.convertTime} />
               </div>);
         } else {
@@ -88,8 +88,8 @@ export default class Table extends React.Component {
                     exp={exp}
                     userId={this.props.userId}
                     data={exp[id]}
-                    setEditOrDeleteObj={this.props.setEditOrDeleteObj}
-                    editOrDeleteObj={this.state.editOrDeleteObj}
+                    setEditOrDeleteObj={this.setEditOrDeleteObj.bind(this)}
+                    editOrDeleteObj={this.props.editOrDeleteObj}
                     className={`${table.className.icon}`}
                     convertTime={this.convertTime} />
                     </div>
@@ -112,9 +112,9 @@ export default class Table extends React.Component {
                 exp={item}
                 userId={this.props.userId}
                 data={item[id]}
-                setEditOrDeleteObj={this.props.setEditOrDeleteObj}
+                setEditOrDeleteObj={this.setEditOrDeleteObj.bind(this)}
                 className={`${table.className.icon}`}
-                editOrDeleteObj={this.state.editOrDeleteObj}
+                editOrDeleteObj={this.props.editOrDeleteObj}
                 convertTime={this.convertTime} />
             </div>);
         } else {
@@ -128,8 +128,8 @@ export default class Table extends React.Component {
                 exp={item}
                 userId={this.props.userId}
                 data={item[id]}
-                setEditOrDeleteObj={this.props.setEditOrDeleteObj}
-                editOrDeleteObj={this.state.editOrDeleteObj}
+                setEditOrDeleteObj={this.setEditOrDeleteObj.bind(this)}
+                editOrDeleteObj={this.props.editOrDeleteObj}
                 className={`${table.className.icon}`}
                 convertTime={this.convertTime} />
             </div>
@@ -147,7 +147,7 @@ export default class Table extends React.Component {
     } else {
       return (
         <>
-      <div className="table-header">
+          <div className={(this.props.route.path === 'pastexpenses') ? 'table-header' : 'just-cent'}>
         { this.renderHeaders() }
         </div>
 

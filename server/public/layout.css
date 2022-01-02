@@ -79,11 +79,6 @@
   margin: 0.5rem;
 }
 
-.just-cent {
-  display: flex;
-  justify-content: center;
-}
-
 .indicator-circle {
   height: 3rem;
 }
@@ -339,4 +334,9 @@ ul.no-bullets > li > a {
   margin: 2rem auto;
   min-width: 18rem;
   max-width: 25rem;
+}
+
+.just-cent {
+  display: flex;
+  justify-content: center;
 }

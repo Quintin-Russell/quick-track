@@ -185,7 +185,7 @@ export default [
       className: {
         text: 'flex-90',
         icon: 'flex-10',
-        divCont: 'flex-100'
+        divCont: 'flex-90'
       }
     },
     formOptions: {
@@ -229,9 +229,9 @@ export default [
     table: {
       tableHeaders: [],
       className: {
-        text: null,
-        icon: null,
-        divCont: null
+        text: 'flex-90',
+        icon: 'flex-10',
+        divCont: 'flex-90'
       }
     },
     formOptions: {
