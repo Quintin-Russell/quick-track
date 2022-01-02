@@ -35,7 +35,7 @@
 }
 
 .header-cont {
-  height: 20vh;
+  height: 23vh;
 }
 
 .header-logo-cont {
@@ -77,11 +77,6 @@
 .footer-icon {
   width: 2rem;
   margin: 0.5rem;
-}
-
-.just-cent {
-  display: flex;
-  justify-content: center;
 }
 
 .indicator-circle {
@@ -219,21 +214,25 @@
   align-items: center;
 }
 
+.flex-10 {
+  flex-basis: 10%;
+}
+
 .flex-30 {
   flex-basis: 30%;
 }
 
-.flex-10 {
-  flex-basis: 10%;
+.flex-40 {
+  flex-basis: 40%;
+  justify-content: space-evenly;
 }
 
 .flex-90 {
   flex-basis: 90%;
 }
 
-.flex-40 {
-  flex-basis: 40%;
-  justify-content: space-evenly;
+.flex-100 {
+  flex-basis: 100%;
 }
 
 .fa-ellipsis-v {
@@ -277,20 +276,8 @@
   display: flex;
   align-items: center;
   flex-basis: 100%;
-  border-radius: 1rem;
-  background-color: #0e9aa745;
   max-height: 2.75rem;
-}
-
-.lrg-button-txt {
-  font-family: noto-sans, sans-serif;
-  font-weight: 600;
-  font-size: 1rem;
-  text-decoration: none;
-}
-
-ul.no-bullets {
-  list-style-type: none;
+  min-width: 18rem;
 }
 
 ul.no-bullets > li {
@@ -298,13 +285,6 @@ ul.no-bullets > li {
   display: flex;
   justify-content: center;
   height: 3rem;
-}
-
-ul.no-bullets > li > a {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  text-decoration: none;
 }
 
 .budget-width {
@@ -316,27 +296,17 @@ ul.no-bullets > li > a {
   align-items: center;
 }
 
-.oswald-semi-bld {
-  font-family: Oswald, sans-serif;
-  font-weight: 600;
-  font-size: 0.75rem;
-}
-
-.oswald-norm {
-  font-family: Oswald, sans-serif;
-  font-weight: 200;
-  font-size: 0.5rem;
-}
-
 .budget-info-cont {
   align-items: center;
   height: 25vh;
   justify-content: space-evenly;
-  border-radius: 1rem;
-  filter: drop-shadow(0 0 0.25rem black);
-  background-color: white;
   width: 80%;
   margin: 2rem auto;
   min-width: 18rem;
   max-width: 25rem;
+}
+
+.just-cent {
+  display: flex;
+  justify-content: center;
 }

@@ -144,6 +144,38 @@
   border: none;
 }
 
+.lrg-button {
+  border-radius: 1rem;
+  background-color: #0e9aa745;
+}
+
+.lrg-button-txt {
+  font-family: noto-sans, sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+}
+
+ul.no-bullets {
+  list-style-type: none;
+}
+
+ul.no-bullets > li > a {
+  text-decoration: none;
+}
+
+.oswald-semi-bld {
+  font-family: Oswald, sans-serif;
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+.budget-info-cont {
+  border-radius: 1rem;
+  filter: drop-shadow(0 0 0.25rem black);
+  background-color: white;
+}
+
 i:hover,
 .sm-button:hover,
 .exp-toggle-txt,

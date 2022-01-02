@@ -32,14 +32,12 @@ function CreateIcon(props) {
   if (!props.route.path) {
     return <></>;
   }
-  const route = `#${props.route.path}`;
   const pg = props.pages.find(page => {
-    return page.hash === route;
+    return page.path === props.route.path;
   });
   if (pg && pg.createQuery) {
     return (
       <a
-      onClick= {props.handleCreatIconClick}
       href={pg.createQuery}
       className="create-cont">
         <i className="fas fa-plus-circle create-icon"></i>
@@ -62,9 +60,8 @@ function PgId(props) {
     </>
     );
   }
-  const route = `#${props.route.path}`;
   for (const page of props.pages) {
-    if (page.hash === route) {
+    if (page.path === props.route.path) {
       return (
         <>
           <img
