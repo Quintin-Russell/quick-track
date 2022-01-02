@@ -44,7 +44,6 @@ export default [
       delete: {
         type: 'DELETE',
         successMessage: 'Your expense was deleted!',
-        bodyParameter: 'expenseId',
         url: '/api/expenses'
       }
     },
@@ -124,7 +123,6 @@ export default [
       },
       delete: {
         successMessage: null,
-        bodyParameter: null,
         url: null
       },
       patch: {
@@ -174,9 +172,18 @@ export default [
       },
       delete: {
         type: 'DELETE',
-        successMessage: null,
-        bodyParameter: null,
-        url: null
+        successMessage: 'Your Payment Method was successfully deleted!',
+        url: 'api/paymentMethods'
+      },
+      edit: {
+        type: 'PATCH',
+        successMessage: 'Your Payment Method was successfully updated!',
+        url: 'api/paymentMethods'
+      },
+      create: {
+        type: 'POST',
+        successMessage: 'Your Payment Method was successfully added!',
+        url: 'api/paymentMethods'
       }
     },
     wholepagecont: 'whole-pg-cont',
@@ -185,7 +192,7 @@ export default [
       className: {
         text: 'flex-90',
         icon: 'flex-10',
-        divCont: 'flex-90'
+        divCont: 'flex-100'
       }
     },
     formOptions: {
@@ -209,29 +216,38 @@ export default [
     imgAlt: 'manage-spending-icon',
     footerIcon: false,
     menuIcon: false,
-    id: null,
-    createQuery: null,
-    editQuery: null,
-    deleteQuery: null,
+    id: 'spendingCategoryId',
+    createQuery: '#accsettings-managespendingcategories?funct=create',
+    editQuery: '#accsettings-managespendingcategories?funct=edit',
+    deleteQuery: '#accsettings-managespendingcategories?funct=delete',
     fetchReqs: {
       get: {
         type: 'GET',
-        url: null
+        url: '/api/spendingCategories'
       },
       delete: {
         type: 'DELETE',
-        successMessage: null,
-        bodyParameter: null,
-        url: null
+        successMessage: 'Your Spending Category was successfully deleted!',
+        url: 'api/spendingCategories'
+      },
+      edit: {
+        type: 'PATCH',
+        successMessage: 'Your Spending Category was successfully updated!',
+        url: 'api/spendingCategories'
+      },
+      create: {
+        type: 'POST',
+        successMessage: 'Your Spending Category was successfully added!',
+        url: 'api/spendingCategories'
       }
     },
     wholepagecont: 'whole-pg-cont',
     table: {
-      tableHeaders: [],
+      tableHeaders: ['Spending Categories'],
       className: {
         text: 'flex-90',
         icon: 'flex-10',
-        divCont: 'flex-90'
+        divCont: 'flex-100'
       }
     },
     formOptions: {

@@ -16,6 +16,12 @@ export default class Table extends React.Component {
       .then(resJson => this.setState({ arr: resJson }));
   }
 
+  componentDidUpdate() {
+    fetch(`${this.props.page.fetchReqs.get.url}/${this.props.userId.toString()}`)
+      .then(result => result.json())
+      .then(resJson => this.setState({ arr: resJson }));
+  }
+
   convertTime(dt) {
     const time = new Date(dt);
     const yr = time.getYear();

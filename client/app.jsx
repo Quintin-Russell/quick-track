@@ -22,7 +22,7 @@ export default class App extends React.Component {
     this.state = {
       userId: 1,
       route: parseRoute(window.location.hash),
-      page: pages.find(pg => pg.path === ''),
+      page: pages.find(pg => pg.path === parseRoute(window.location.hash).path),
       showMenu: false,
       editOrDeleteObj: null
     };
@@ -123,8 +123,8 @@ export default class App extends React.Component {
   }
 
   render() {
-    // console.log('this.state.editOr... in app.jsx:', this.state.editOrDeleteObj);
-    return (
+    return (this.state.page)
+      ? (
     <>
       <Modal
       route={this.state.route}
@@ -148,6 +148,12 @@ export default class App extends React.Component {
        <Footer
         pages={pages}
         route={this.state.route} />
-      </>);
+      </>)
+
+      : (
+        <div className="just-cent">
+          <h2 className="menu-txt">Loading...</h2>
+        </div>
+        );
   }
 }

@@ -266,6 +266,46 @@ app.delete('/api/expenses', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.delete('/api/paymentMethods', (req, res, next) => {
+  const { paymentMethodId } = req.body;
+
+  if (!paymentMethodId) {
+    throw new ClientError(400, 'Payment Method Id is a mandatory field');
+  }
+
+  const sql = `
+  delete from "paymentMethods"
+  where "paymentMethodId" = $1
+  `;
+  const params = [paymentMethodId];
+
+  db.query(sql, params)
+    .then(result => {
+      res.status(201).json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
+app.delete('/api/spendingCategories', (req, res, next) => {
+  const { spendingCategoryId } = req.body;
+
+  if (!spendingCategoryId) {
+    throw new ClientError(400, 'Spending Category Id is a mandatory field');
+  }
+
+  const sql = `
+  delete from "spendingCategories"
+  where "spendingCategoryId" = $1
+  `;
+  const params = [spendingCategoryId];
+
+  db.query(sql, params)
+    .then(result => {
+      res.status(201).json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {
