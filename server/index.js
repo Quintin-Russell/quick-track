@@ -274,14 +274,23 @@ app.delete('/api/paymentMethods', (req, res, next) => {
   }
 
   const sql = `
-  delete from "paymentMethods"
-  where "paymentMethodId" = $1
-  `;
+        update "expenses"
+        set "paymentMethodId" = null
+        where "paymentMethodId" = $1
+        returning *
+      `;
+
   const params = [paymentMethodId];
 
   db.query(sql, params)
     .then(result => {
-      res.status(201).json(result.rows);
+      const sql1 = `
+  delete from "paymentMethods"
+  where "paymentMethodId" = $1
+  `;
+
+      db.query(sql1, params)
+        .then(result1 => res.status(201).json(result.rows));
     })
     .catch(err => next(err));
 });
@@ -293,15 +302,35 @@ app.delete('/api/spendingCategories', (req, res, next) => {
     throw new ClientError(400, 'Spending Category Id is a mandatory field');
   }
 
+  // const sql = `
+  // delete from "spendingCategories"
+  // where "spendingCategoryId" = $1
+  // `;
+  // const params = [spendingCategoryId];
+
+  // db.query(sql, params)
+  //   .then(result => {
+  //     res.status(201).json(result.rows);
+  //   })
   const sql = `
-  delete from "spendingCategories"
-  where "spendingCategoryId" = $1
-  `;
+        update "expenses"
+        set "spendingCategoryId" = null
+        where "spendingCategoryId" = $1
+        returning *
+      `;
+
   const params = [spendingCategoryId];
 
   db.query(sql, params)
     .then(result => {
-      res.status(201).json(result.rows);
+
+      const sql1 = `
+        delete from "spendingCategories"
+        where "spendingCategoryId" = $1
+        `;
+
+      db.query(sql1, params)
+        .then(result1 => res.status(201).json(result.rows));
     })
     .catch(err => next(err));
 });

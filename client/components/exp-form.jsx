@@ -141,6 +141,10 @@ export default class ExpenseForm extends React.Component {
     if (!this.state.amount) {
       return window.alert('Please enter an amount, payment method, spending category and comment');
     }
+    if (!this.state.paymentMethod || !this.state.spendingCategory) {
+      return window.alert('We can\'t find the Payment Method or Spending Category you originally used. Please choose another one from the list');
+    }
+
     const body = {
       userId: `${this.props.userId}`,
       date: this.generateDate(),

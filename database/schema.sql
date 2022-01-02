@@ -19,8 +19,8 @@ CREATE TABLE "expenses" (
   "date" TEXT NOT NULL,
 	"amount" decimal NOT NULL,
 	"comment" TEXT,
-	"spendingCategoryId" integer NOT NULL,
-	"paymentMethodId" integer NOT NULL,
+	"spendingCategoryId" integer,
+	"paymentMethodId" integer,
 	"createdAt" timestamptz NOT NULL default now(),
 	CONSTRAINT "expenses_pk" PRIMARY KEY ("expenseId")
 ) WITH (
