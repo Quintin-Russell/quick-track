@@ -87,7 +87,7 @@ export default [
           url: '/api/users'
         },
         expenses: {
-
+          url: '/api/expenses'
         }
       }
     },
