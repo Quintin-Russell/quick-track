@@ -182,6 +182,10 @@ ul.no-bullets > li > a {
   background-color: white;
 }
 
+.summary-dropdown-title {
+  font-size: 0.75rem;
+}
+
 i:hover,
 .sm-button:hover,
 .exp-toggle-txt,

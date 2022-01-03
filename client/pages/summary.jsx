@@ -1,168 +1,144 @@
-// import React from 'react';
-// import ApexCharts from 'apexcharts';
+import React from 'react';
+import ApexCharts from 'apexcharts';
+import { findBudgetPercent } from '../summary-funct';
 
-// export default class Summary extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       monthlyBudget: null,
-//       timeFrame: 'Month',
-//       arr: []
-//     };
-//   }
+import Dropdown from '../components/dropdown';
+import Toggle from '../components/toggle';
 
-//   convertBudget(timeFrame, monthlyBudget) {
-//     return (timeFrame === 'Month')
-//       ? parseFloat(monthlyBudget).toFixed(2)
-//       : (timeFrame === 'Year')
-//           ? (parseFloat(monthlyBudget).toFixed(2)) * 12
-//           : (parseFloat(monthlyBudget).toFixed(2)) / 4.33;
-//   }
+export default class Summary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      monthlyBudget: null,
+      timeFrame: 'Month',
+      arr: [],
+      spendingCategories: []
+    };
+  }
 
-//   findWkNum(date) {
-//     date = new Date(date);
-//     const oneJan = new Date(date.getFullYear(), 0, 1);
-//     const numberOfDays = Math.floor((date - oneJan) / (24 * 60 * 60 * 1000));
-//     return Math.ceil((date.getDay() + 1 + numberOfDays) / 7);
-//   }
+  componentDidMount() {
+    fetch(`${this.props.page.fetchReqs.get.budget.url}/${this.props.userId}`)
+      .then(result => result.json())
+      .then(resultJson => {
+        const { monthlyBudget, timeFrame } = resultJson;
+        fetch(`${this.props.page.fetchReqs.get.expenses.url}/${this.props.userId}`)
+          .then(result1 => result1.json())
+          .then(arr => {
+            fetch(`${this.props.page.fetchReqs.get.spendingCategories.url}/${this.props.userId}`)
+              .then(result2 => result2.json())
+              .then(spendingCategories => this.setState({ spendingCategories, arr, monthlyBudget, timeFrame }));
+          });
 
-//   findWkExpSum(arr) {
-//     if (arr) {
-//       const wkExpSum = 0;
-//       const wkNum = this.findWkNum(new Date());
-//       for (const exp of arr) {
-//         if (this.findWkNum(exp.date) === wkNum) {
-//           return wkExpSum + (parseFloat(exp.amount).toFixed(2));
-//         }
-//       }
-//       return wkExpSum;
-//     }
-//   }
+      });
+  }
 
-//   componentDidMount() {
-//     fetch(`${this.props.page.fetchReqs.get.budget.url}/${this.props.userId}`)
-//       .then(result => result.json())
-//       .then(resultJson => {
-//         const { monthlyBudget, timeFrame } = resultJson;
-//         fetch(`${this.props.page.fetchReqs.get.expenses.url}/${this.props.userId}`)
-//           .then(result1 => result1.json())
-//           .then(arr => this.setState({ arr, monthlyBudget, timeFrame }));
-//       });
-//     const options = {
-//       chart: {
-//         height: 300,
-//         type: 'radialBar'
-//       },
+  componentDidUpdate(oldProps, oldState) {
+    if (oldState !== this.state) {
 
-//       series: [],
-//       colors: ['#20E647'],
-//       plotOptions: {
-//         radialBar: {
-//           hollow: {
-//             margin: 0,
-//             size: '70%',
-//             background: '#293450'
-//           },
-//           track: {
-//             dropShadow: {
-//               enabled: true,
-//               top: 2,
-//               left: 0,
-//               blur: 4,
-//               opacity: 0.15
-//             }
-//           },
-//           dataLabels: {
-//             name: {
-//               offsetY: -10,
-//               color: '#fff',
-//               fontSize: '13px'
-//             },
-//             value: {
-//               color: '#fff',
-//               fontSize: '30px',
-//               show: true
-//             }
-//           }
-//         }
-//       },
-//       fill: {
-//         type: 'gradient',
-//         gradient: {
-//           shade: 'dark',
-//           type: 'vertical',
-//           gradientToColors: ['#87D4F9'],
-//           stops: [0, 100]
-//         }
-//       },
-//       stroke: {
-//         lineCap: 'round'
-//       },
-//       labels: [`${this.state.timeFrame}ly Budget Spent`]
-//     };
+      const series = (this.state.arr)
+        ? findBudgetPercent(this.state.arr, this.state.timeFrame, this.state.monthlyBudget)
+        : 0;
 
-//     const series = (this.state.timeFrame === 'Week')
-//       ? findWkExpSum(this.state.arr) / this.convertBudget(this.state.timeFrame, this.state.monthlyBudget)
-//       : (this.state.timeFrame === 'Year')
-//           ? findYrExpSum(this.state.arr) / this.convertBudget(this.state.timeFrame, this.state.monthlyBudget)
-//           : findMnExpSum(this.state.arr) / this.convertBudget(this.state.timeFrame, this.state.monthlyBudget);
+      const options = {
+        chart: {
+          height: 300,
+          type: 'radialBar'
+        },
 
-//     const chart = new ApexCharts(document.querySelector('#chart'), options);
+        series: [series],
+        colors: ['#20E647'],
+        plotOptions: {
+          radialBar: {
+            hollow: {
+              margin: 0,
+              size: '70%',
+              background: '#293450'
+            },
+            track: {
+              dropShadow: {
+                enabled: true,
+                top: 2,
+                left: 0,
+                blur: 4,
+                opacity: 0.15
+              }
+            },
+            dataLabels: {
+              name: {
+                offsetY: -10,
+                color: '#fff',
+                fontSize: '13px'
+              },
+              value: {
+                color: '#fff',
+                fontSize: '30px',
+                show: true
+              }
+            }
+          }
+        },
+        fill: {
+          type: 'gradient',
+          gradient: {
+            shade: 'dark',
+            type: 'vertical',
+            gradientToColors: ['#87D4F9'],
+            stops: [0, 100]
+          }
+        },
+        stroke: {
+          lineCap: 'round'
+        },
+        labels: [`${this.state.timeFrame}ly Budget Spent`]
+      };
 
-//     chart.render();
-//     // const options1 = {
-//     //   chart: {
-//     //     height: 280,
-//     //     type: 'radialBar'
-//     //   },
-//     //   series: [67],
-//     //   colors: ['#20E647'],
-//     //   plotOptions: {
-//     //     radialBar: {
-//     //       startAngle: -135,
-//     //       endAngle: 135,
-//     //       track: {
-//     //         background: '#333',
-//     //         startAngle: -135,
-//     //         endAngle: 135
-//     //       },
-//     //       dataLabels: {
-//     //         name: {
-//     //           show: false
-//     //         },
-//     //         value: {
-//     //           fontSize: '30px',
-//     //           show: true
-//     //         }
-//     //       }
-//     //     }
-//     //   },
-//     //   fill: {
-//     //     type: 'gradient',
-//     //     gradient: {
-//     //       shade: 'dark',
-//     //       type: 'horizontal',
-//     //       gradientToColors: ['#87D4F9'],
-//     //       stops: [0, 100]
-//     //     }
-//     //   },
-//     //   stroke: {
-//     //     lineCap: 'butt'
-//     //   },
-//     //   labels: ['Progress']
-//     // };
+      const chart = new ApexCharts(document.querySelector('#chart'), options);
 
-//     // new ApexCharts(document.querySelector('#chart'), options1).render();
-//   }
+      chart.render();
+    }
+  }
 
-//   render() {
-//     console.log('this.state in Summary.jsx:', this.state);
-//     console.log('findWkExpSum(arr) in summary.jsx:', this.findWkExpSum(this.state.arr));
-//     return (
-//       <div className="exp-form-cont col">
-//         <h1 className="menu-txt">Summary Quick View</h1>
-//         <div id="chart"></div>
-//       </div>
-//     );
-//   }
-// }
+  handleToggleClick(e) {
+    const timeFrame = e.target.getAttribute('data');
+    this.setState({ timeFrame });
+  }
+
+  change(e) {
+    const name = e.target.name;
+    const val = e.target.value;
+    this.setState({ [name]: val });
+  }
+
+  render() {
+    return (
+      <>
+      <div className="row just-align-center">
+          <div className="col just-align-center">
+          <Toggle
+            page={this.props.page}
+            handleToggleClick={this.handleToggleClick.bind(this)}
+            route={this.props.route}
+            function={this.state.timeFrame} />
+          <div className="col">
+            <h5 className='summary-dropdown-title oswald-semi-bld'>Spending Categories</h5>
+            <Dropdown
+              selectedVal=''
+              handler={this.change.bind(this)}
+              name="spendingCategory"
+              id="spendingCategory"
+              className="form-input"
+              arr={this.state.spendingCategories}
+              primaryKey="spendingCategoryId" />
+          </div>
+        </div>
+        <i className="fas fa-th"></i>
+      </div>
+      <div className="exp-form-cont col">
+        <h1 className="menu-txt">Summary Quick View</h1>
+        <div id="chart"></div>
+      </div>
+      </>
+
+    );
+  }
+}

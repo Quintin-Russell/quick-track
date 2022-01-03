@@ -91,6 +91,7 @@ export default class App extends React.Component {
       return (
         <Summary
         page={this.state.page}
+        route={this.state.route}
         userId={this.state.userId} />
       );
     }

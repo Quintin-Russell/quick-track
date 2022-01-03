@@ -88,12 +88,17 @@ export default [
         },
         expenses: {
           url: '/api/expenses'
+        },
+        spendingCategories: {
+          url: '/api/spendingCategories'
         }
       }
     },
     wholepagecont: 'whole-pg-cont',
     table: {},
-    formOptions: {},
+    formOptions: {
+      toggleOptions: ['Week', 'Month', 'Year']
+    },
     subPageHash: []
   },
   {
