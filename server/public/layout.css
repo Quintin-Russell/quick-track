@@ -314,3 +314,11 @@ ul.no-bullets > li {
 .summary-dropdown-title {
   margin: 0;
 }
+
+.text-center {
+  text-align: center;
+}
+
+.padding-1rem {
+  padding: 1rem;
+}

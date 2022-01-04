@@ -1,6 +1,6 @@
 import React from 'react';
 import ApexCharts from 'apexcharts';
-import { findBudgetPercent } from '../summary-funct';
+import funct from '../summary-funct';
 
 import Dropdown from '../components/dropdown';
 import Toggle from '../components/toggle';
@@ -36,7 +36,7 @@ export default class Summary extends React.Component {
     if (oldState !== this.state) {
 
       const series = (this.state.arr)
-        ? findBudgetPercent(this.state.arr, this.state.timeFrame, this.state.monthlyBudget)
+        ? funct.budgetPercent(this.state.arr, this.state.timeFrame, this.state.monthlyBudget)
         : 0;
 
       const options = {
@@ -46,13 +46,12 @@ export default class Summary extends React.Component {
         },
 
         series: [series],
-        colors: ['#20E647'],
+        colors: ['#20c3e660'],
         plotOptions: {
           radialBar: {
             hollow: {
               margin: 0,
-              size: '70%',
-              background: '#293450'
+              size: '70%'
             },
             track: {
               dropShadow: {
@@ -66,11 +65,11 @@ export default class Summary extends React.Component {
             dataLabels: {
               name: {
                 offsetY: -10,
-                color: '#fff',
+                color: '#292929',
                 fontSize: '13px'
               },
               value: {
-                color: '#fff',
+                color: '#292929',
                 fontSize: '30px',
                 show: true
               }
@@ -82,7 +81,7 @@ export default class Summary extends React.Component {
           gradient: {
             shade: 'dark',
             type: 'vertical',
-            gradientToColors: ['#87D4F9'],
+            gradientToColors: ['#44aa4490'],
             stops: [0, 100]
           }
         },
@@ -112,15 +111,21 @@ export default class Summary extends React.Component {
   render() {
     return (
       <>
-      <div className="row just-align-center">
-          <div className="col just-align-center">
+      <div className="disp-none">
+        <a href={this.props.page.hash} className="x-button">
+          <i className="far fa-times-circle"></i>
+        </a>
+        {/* <StatisticsModal /> */}
+      </div>
+        <div className="padding-1rem row just-align-center">
+          <div className="col just-align-center budget-width">
           <Toggle
             page={this.props.page}
             handleToggleClick={this.handleToggleClick.bind(this)}
             route={this.props.route}
             function={this.state.timeFrame} />
-          <div className="col">
-            <h5 className='summary-dropdown-title oswald-semi-bld'>Spending Categories</h5>
+          <div className="col budget-width">
+            <h5 className='text-center summary-dropdown-title oswald-semi-bld'>Spending Categories</h5>
             <Dropdown
               selectedVal=''
               handler={this.change.bind(this)}
@@ -142,3 +147,7 @@ export default class Summary extends React.Component {
     );
   }
 }
+
+// function StatisticsModal(props) {
+
+// }
