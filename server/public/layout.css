@@ -322,3 +322,17 @@ ul.no-bullets > li {
 .padding-1rem {
   padding: 1rem;
 }
+
+.z-2 {
+  z-index: 2;
+}
+
+.margin-0-cent {
+  margin: 0 auto;
+}
+
+.summary-info-cont {
+  align-items: center;
+  min-width: 18rem;
+  max-width: 25rem;
+}

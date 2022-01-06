@@ -15,6 +15,7 @@ import SetBudget from './pages/set-budget';
 import PaymentMethods from './pages/payment-methods';
 import SpendingCategories from './pages/spending-categories';
 import Summary from './pages/summary';
+// import SummaryModal from './components/summary-modal';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -107,6 +108,12 @@ export default class App extends React.Component {
 
   }
 
+  // setSummaryStatistics(e) {
+  //   const newStat = e.target.getAttribute('data');
+  //   const summaryStatistics = [...this.state.summaryStatistics, newStat];
+  //   this.setState({ summaryStatistics });
+  // }
+
   setEditOrDeleteObj(editOrDeleteObj) {
     this.setState({ editOrDeleteObj });
   }
@@ -134,6 +141,10 @@ export default class App extends React.Component {
     return (this.state.page)
       ? (
     <>
+      {/* <SummaryModal
+      route={this.state.route}
+      setSummaryStatistics={this.setSummaryStatistics.bind(this)} /> */}
+
       <Modal
       route={this.state.route}
       page={this.state.page}

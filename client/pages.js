@@ -81,6 +81,7 @@ export default [
     createQuery: null,
     editQuery: null,
     deleteQuery: null,
+    showModalQuery: '#summary?funct=statistics',
     fetchReqs: {
       get: {
         budget: {
@@ -94,7 +95,7 @@ export default [
         }
       }
     },
-    wholepagecont: 'whole-pg-cont',
+    wholepagecont: 'whole-pg-cont scroll',
     table: {},
     formOptions: {
       toggleOptions: ['Week', 'Month', 'Year']

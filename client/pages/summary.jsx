@@ -1,6 +1,6 @@
 import React from 'react';
 import ApexCharts from 'apexcharts';
-import funct from '../summary-funct';
+import { convertBudget, functList } from '../summary-funct';
 
 import Dropdown from '../components/dropdown';
 import Toggle from '../components/toggle';
@@ -34,10 +34,17 @@ export default class Summary extends React.Component {
 
   componentDidUpdate(oldProps, oldState) {
     if (oldState !== this.state) {
+      const budgetPercent = functList.find(fun => fun.name === '% of Budget Spent');
 
       const series = (this.state.arr)
-        ? funct.budgetPercent(this.state.arr, this.state.timeFrame, this.state.monthlyBudget)
+        ? budgetPercent.funct(this.state.arr, this.state.timeFrame, this.state.monthlyBudget)
         : 0;
+
+      const quickViewColor = (series >= 100)
+        ? { startFade: ['#C3326F'], endFade: ['#FF532F'] }
+        : (series > 90 && series < 100)
+            ? { startFade: ['#F2BF6C'], endFade: ['#EDE342'] }
+            : { startFade: ['#20c3e660'], endFade: ['#44aa4490'] };
 
       const options = {
         chart: {
@@ -46,7 +53,7 @@ export default class Summary extends React.Component {
         },
 
         series: [series],
-        colors: ['#20c3e660'],
+        colors: quickViewColor.startFade,
         plotOptions: {
           radialBar: {
             hollow: {
@@ -81,7 +88,7 @@ export default class Summary extends React.Component {
           gradient: {
             shade: 'dark',
             type: 'vertical',
-            gradientToColors: ['#44aa4490'],
+            gradientToColors: quickViewColor.endFade,
             stops: [0, 100]
           }
         },
@@ -111,12 +118,6 @@ export default class Summary extends React.Component {
   render() {
     return (
       <>
-      <div className="disp-none">
-        <a href={this.props.page.hash} className="x-button">
-          <i className="far fa-times-circle"></i>
-        </a>
-        {/* <StatisticsModal /> */}
-      </div>
         <div className="padding-1rem row just-align-center">
           <div className="col just-align-center budget-width">
           <Toggle
@@ -136,18 +137,27 @@ export default class Summary extends React.Component {
               primaryKey="spendingCategoryId" />
           </div>
         </div>
-        <i className="fas fa-th"></i>
+        {/* <a href={this.props.page.showModalQuery}>
+          <i className="fas fa-th"></i>
+        </a> */}
+
       </div>
-      <div className="exp-form-cont col">
+        <div className="exp-form-cont margin-0-cent col">
         <h1 className="menu-txt">Summary Quick View</h1>
         <div id="chart"></div>
+          <div className=" col summary-info-cont">
+            <p className="text-center oswald-norm">
+              {`Your ${this.state.timeFrame}ly Budget: $${convertBudget(this.state.timeFrame, this.state.monthlyBudget)}`}
+            </p>
+            {functList.map(funct => {
+              return (<p key={funct.name} className="text-center oswald-norm">
+               {funct.name}: {funct.funct(this.state.arr, this.state.timeFrame, this.state.monthlyBudget)}
+              </p>);
+            })}
+          </div>
       </div>
       </>
 
     );
   }
 }
-
-// function StatisticsModal(props) {
-
-// }
