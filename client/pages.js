@@ -81,10 +81,25 @@ export default [
     createQuery: null,
     editQuery: null,
     deleteQuery: null,
-    fetchReqs: {},
-    wholepagecont: 'whole-pg-cont',
+    showModalQuery: '#summary?funct=statistics',
+    fetchReqs: {
+      get: {
+        budget: {
+          url: '/api/users'
+        },
+        expenses: {
+          url: '/api/expenses'
+        },
+        spendingCategories: {
+          url: '/api/spendingCategories'
+        }
+      }
+    },
+    wholepagecont: 'whole-pg-cont scroll',
     table: {},
-    formOptions: {},
+    formOptions: {
+      toggleOptions: ['Week', 'Month', 'Year']
+    },
     subPageHash: []
   },
   {

@@ -310,3 +310,29 @@ ul.no-bullets > li {
   display: flex;
   justify-content: center;
 }
+
+.summary-dropdown-title {
+  margin: 0;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.padding-1rem {
+  padding: 1rem;
+}
+
+.z-2 {
+  z-index: 2;
+}
+
+.margin-0-cent {
+  margin: 0 auto;
+}
+
+.summary-info-cont {
+  align-items: center;
+  min-width: 18rem;
+  max-width: 25rem;
+}
