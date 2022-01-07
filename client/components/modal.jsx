@@ -1,4 +1,5 @@
 import React from 'react';
+
 import ExpenseForm from './exp-form';
 
 export default class Modal extends React.Component {
@@ -188,7 +189,7 @@ export default class Modal extends React.Component {
       return <></>;
     } else {
       return (
-        <div className="overlay just-align-center">
+        <div className="overlay z-2 just-align-center">
         <a href={this.props.page.hash} className="x-button">
           <i className="far fa-times-circle"></i>
         </a>

@@ -13,7 +13,7 @@ export default class Toggle extends React.Component {
 
   render() {
     return (
-      <span className={(this.props.page.name === 'Set Your Budget')
+      <span className={(this.props.page.name === 'Set Your Budget' || this.props.page.name === 'Summary')
         ? 'row'
         : 'row padding-extra'}>
         {
