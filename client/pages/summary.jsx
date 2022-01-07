@@ -1,6 +1,6 @@
 import React from 'react';
 import ApexCharts from 'apexcharts';
-import { convertBudget, functList } from '../summary-funct';
+import { convertBudget, functList, budgetPercent, setGraphInfo } from '../summary-funct';
 
 import Dropdown from '../components/dropdown';
 import Toggle from '../components/toggle';
@@ -37,10 +37,9 @@ export default class Summary extends React.Component {
     if (oldState !== this.state) {
       let options;
       if (!this.state.graph || this.state.graph === 'a') {
-        const budgetPercent = functList.find(fun => fun.name === '% of Budget Spent');
 
         const series = (this.state.arr)
-          ? budgetPercent.funct(this.state.arr, this.state.timeFrame, this.state.monthlyBudget)
+          ? budgetPercent(this.state.arr, this.state.timeFrame, this.state.monthlyBudget)
           : 0;
 
         const quickViewColor = (series >= 100)
@@ -119,12 +118,12 @@ export default class Summary extends React.Component {
             {
               name: nameVal,
               type: 'column',
-              data: [21.1, 23, 33.1, 34, 44.1, 44.9, 56.5, 58.5]
+              data: setGraphInfo(this.state.arr, this.state.timeFrame, this.state.graph).unitSpending
             },
             {
               name: 'Total Spending',
               type: 'line',
-              data: [1.4, 2, 2.5, 1.5, 2.5, 2.8, 3.8, 4.6]
+              data: setGraphInfo(this.state.arr, this.state.timeFrame, this.state.graph).totalSpending
             },
             {
               name: 'Budget',
@@ -141,11 +140,11 @@ export default class Summary extends React.Component {
             }
           },
           xaxis: {
-            categories: [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016]
+            categories: setGraphInfo(this.state.arr, this.state.timeFrame, this.state.graph).xaxis
           },
           yaxis: [
             {
-              seriesName: 'Column A',
+              seriesName: nameVal,
               axisTicks: {
                 show: true
               },
@@ -157,11 +156,11 @@ export default class Summary extends React.Component {
               }
             },
             {
-              seriesName: 'Column A',
+              seriesName: 'Total Spending',
               show: false
             }, {
               opposite: true,
-              seriesName: 'Line C',
+              seriesName: 'Budget',
               axisTicks: {
                 show: true
               },
@@ -169,7 +168,7 @@ export default class Summary extends React.Component {
                 show: true
               },
               title: {
-                text: 'Line'
+                text: 'Total Spending'
               }
             }
           ],

@@ -7,13 +7,13 @@ const findWkNum = date => {
 
 const findWkExpSum = arr => {
   if (arr) {
-    const wkExpSum = 0;
+    let wkExpSum = 0;
     const glbDate = new Date();
     const wkNum = findWkNum(glbDate) - 1;
     for (const exp of arr) {
       const expDate = new Date(exp.date);
       if (findWkNum(expDate) === wkNum && glbDate.getFullYear() === expDate.getFullYear()) {
-        return wkExpSum + (parseFloat(exp.amount).toFixed(2));
+        wkExpSum += (parseFloat(exp.amount).toFixed(2));
       }
     }
     return wkExpSum;
@@ -22,13 +22,14 @@ const findWkExpSum = arr => {
 
 const findMnExpSum = arr => {
   if (arr) {
-    const mnExpSum = 0;
+    let mnExpSum = 0;
     const glbDate = new Date();
 
     for (const exp of arr) {
       const expDate = new Date(exp.date);
       if (expDate.getMonth() === glbDate.getMonth() && glbDate.getFullYear() === expDate.getFullYear()) {
-        return mnExpSum + (parseFloat(exp.amount).toFixed(2));
+        mnExpSum += (parseFloat(exp.amount).toFixed(2));
+
       }
     }
     return mnExpSum;
@@ -37,13 +38,13 @@ const findMnExpSum = arr => {
 
 const findYrExpSum = arr => {
   if (arr) {
-    const yrExpSum = 0;
+    let yrExpSum = 0;
     const glbDate = new Date();
 
     for (const exp of arr) {
       const expDate = new Date(exp.date);
       if (glbDate.getFullYear() === expDate.getFullYear()) {
-        return yrExpSum + (parseFloat(exp.amount).toFixed(2));
+        yrExpSum += (parseFloat(exp.amount).toFixed(2));
       }
     }
     return yrExpSum;
@@ -72,6 +73,37 @@ const totalSpending = (arr, timeFrame, monthlyBudget) => {
     : sum;
 };
 
+export const setGraphInfo = (arr, timeFrame, graph) => {
+  const graphObj = {
+    unitSpending: [],
+    totalSpending: [0],
+    xaxis: []
+  };
+  let totalSpendingSum = 0;
+  if (graph === 'b') {
+    if (timeFrame === 'Month') {
+      const glbDate = new Date();
+
+      for (const exp of arr) {
+        const expDate = new Date(exp.date);
+        if (expDate.getMonth() === glbDate.getMonth() && glbDate.getFullYear() === expDate.getFullYear()) {
+          const amount = parseFloat(exp.amount).toFixed(2);
+          graphObj.unitSpending.push(amount);
+          totalSpendingSum += amount;
+          graphObj.totalSpending.push(totalSpendingSum);
+          graphObj.xaxis.push(exp.date);
+        }
+      }
+
+    }
+  }
+  return graphObj;
+};
+
+export const budgetPercent = (arr, timeFrame, monthlyBudget) => {
+  return parseInt((totalSpending(arr, timeFrame, monthlyBudget) / convertBudget(timeFrame, monthlyBudget)) * 100);
+};
+
 export const functList = [
   {
     name: 'Total Spending (In Your Time Frame)',
@@ -85,12 +117,6 @@ export const functList = [
       return (sum[0] == 0)
         ? sum.slice(1)
         : sum;
-    }
-  },
-  {
-    name: '% of Budget Spent',
-    funct: (arr, timeFrame, monthlyBudget) => {
-      return parseInt((totalSpending(arr, timeFrame, monthlyBudget) / convertBudget(timeFrame, monthlyBudget)) * 100);
     }
   }
 
