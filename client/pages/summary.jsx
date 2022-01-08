@@ -36,10 +36,11 @@ export default class Summary extends React.Component {
   componentDidUpdate(oldProps, oldState) {
     if (oldState !== this.state) {
       let options;
+      const percentBudget = budgetPercent(this.state.arr, this.state.timeFrame, this.state.monthlyBudget);
       if (!this.state.graph || this.state.graph === 'a') {
 
         const series = (this.state.arr)
-          ? budgetPercent(this.state.arr, this.state.timeFrame, this.state.monthlyBudget)
+          ? percentBudget
           : 0;
 
         const quickViewColor = (series >= 100)
@@ -103,6 +104,13 @@ export default class Summary extends React.Component {
         const nameVal = (this.state.timeFrame === 'Year')
           ? 'Monthly Spending'
           : 'Daily Spending';
+
+        const lineColor = (percentBudget >= 100)
+          ? '#FF532F'
+          : (percentBudget > 90 && percentBudget < 100)
+              ? '#EDE342'
+              : '#C5EDAC';
+
         options = {
           chart: {
             height: 350,
@@ -112,23 +120,23 @@ export default class Summary extends React.Component {
           dataLabels: {
             enabled: false
           },
-          colors: ['#99C2A2', '#C5EDAC', '#66C7F4'],
+          colors: ['#99C2A2', lineColor, '#66C7F4'],
           series: [
 
             {
               name: nameVal,
               type: 'column',
-              data: setGraphInfo(this.state.arr, this.state.timeFrame, this.state.graph).unitSpending
+              data: setGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget, this.state.graph).unitSpending
             },
             {
               name: 'Total Spending',
               type: 'line',
-              data: setGraphInfo(this.state.arr, this.state.timeFrame, this.state.graph).totalSpending
+              data: setGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget, this.state.graph).totalSpending
             },
             {
               name: 'Budget',
               type: 'line',
-              data: [convertBudget(this.state.timeFrame, this.state.monthlyBudget)]
+              data: setGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget, this.state.graph).budgetArr
             }
           ],
           stroke: {
@@ -156,11 +164,8 @@ export default class Summary extends React.Component {
               }
             },
             {
-              seriesName: 'Total Spending',
-              show: false
-            }, {
               opposite: true,
-              seriesName: 'Budget',
+              seriesName: 'Total Spending',
               axisTicks: {
                 show: true
               },
@@ -170,6 +175,10 @@ export default class Summary extends React.Component {
               title: {
                 text: 'Total Spending'
               }
+            },
+            {
+              seriesName: 'Total Spending',
+              show: false
             }
           ],
           tooltip: {
@@ -219,6 +228,10 @@ export default class Summary extends React.Component {
   }
 
   render() {
+    const header =
+    (this.state.graph === 'a' || !this.state.graph)
+      ? 'Summary Quick View'
+      : 'Categorical Summary';
     return (
       <>
         <div className="padding-1rem row just-align-center">
@@ -246,7 +259,7 @@ export default class Summary extends React.Component {
 
       </div>
         <div className="exp-form-cont margin-0-cent col">
-        <h1 className="menu-txt">Summary Quick View</h1>
+        <h1 className="menu-txt">{header}</h1>
         <div id="chart"></div>
           <div className=" col summary-info-cont">
             <p className="text-center oswald-norm">
@@ -254,7 +267,7 @@ export default class Summary extends React.Component {
             </p>
             {functList.map(funct => {
               return (<p key={funct.name} className="text-center oswald-norm">
-               {funct.name}: {funct.funct(this.state.arr, this.state.timeFrame, this.state.monthlyBudget)}
+               {funct.name}: {`$${funct.funct(this.state.arr, this.state.timeFrame, this.state.monthlyBudget)}`}
               </p>);
             })}
           </div>
