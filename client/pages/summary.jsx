@@ -1,6 +1,6 @@
 import React from 'react';
 import ApexCharts from 'apexcharts';
-import { convertBudget, functList, budgetPercent, setGraphInfo } from '../summary-funct';
+import { convertBudget, functList, budgetPercent, setColGraphInfo } from '../summary-funct';
 
 import Dropdown from '../components/dropdown';
 import Toggle from '../components/toggle';
@@ -51,7 +51,8 @@ export default class Summary extends React.Component {
 
         options = {
           chart: {
-            height: 300,
+            // height: 300,
+            height: '375vh',
             type: 'radialBar'
           },
 
@@ -100,6 +101,30 @@ export default class Summary extends React.Component {
           },
           labels: [`${this.state.timeFrame}ly Budget Spent`]
         };
+      } else if (this.state.graph === 'c') {
+        options = {
+          chart: {
+            type: 'donut'
+          },
+          series: [44, 55, 41, 17, 15],
+          plotOptions: {
+            pie: {
+              donut: {
+                size: '70%'
+              }
+            }
+          },
+          chartOptions: {
+            labels: ['Apple', 'Mango', 'Orange', 'Watermelon']
+          },
+
+          dataLabels: {
+            enabled: true,
+            formatter: function (val) {
+              return val + '%';
+            }
+          }
+        };
       } else if (this.state.graph === 'b') {
         const nameVal = (this.state.timeFrame === 'Year')
           ? 'Monthly Spending'
@@ -126,17 +151,17 @@ export default class Summary extends React.Component {
             {
               name: nameVal,
               type: 'column',
-              data: setGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget, this.state.graph).unitSpending
+              data: setColGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget, this.state.graph).unitSpending
             },
             {
               name: 'Total Spending',
               type: 'line',
-              data: setGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget, this.state.graph).totalSpending
+              data: setColGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget, this.state.graph).totalSpending
             },
             {
               name: 'Budget',
               type: 'line',
-              data: setGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget, this.state.graph).budgetArr
+              data: setColGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget, this.state.graph).budgetArr
             }
           ],
           stroke: {
@@ -148,7 +173,7 @@ export default class Summary extends React.Component {
             }
           },
           xaxis: {
-            categories: setGraphInfo(this.state.arr, this.state.timeFrame, this.state.graph).xaxis
+            categories: setColGraphInfo(this.state.arr, this.state.timeFrame, this.state.graph).xaxis
           },
           yaxis: [
             {

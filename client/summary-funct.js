@@ -74,7 +74,7 @@ const totalSpending = (arr, timeFrame, monthlyBudget) => {
     : sum;
 };
 
-export const setGraphInfo = (arr, timeFrame, budget, graph) => {
+export const setColGraphInfo = (arr, timeFrame, budget, graph) => {
   const graphObj = {
     unitSpending: [],
     totalSpending: [0],
@@ -146,6 +146,22 @@ export const setGraphInfo = (arr, timeFrame, budget, graph) => {
   }
   return graphObj;
 };
+
+// export const setDonutInfo = (categoryArr, categoryId, expArr, timeFrame) => {
+//   const graphObj = {
+//     categories: [],
+//     values: []
+//   };
+//   for (const cat of categoryArr) {
+//     let categorySum = 0;
+//     const categoryArr = [];
+//     for (const exp of expArr) {
+//       if (timeFrame === 'Month') {
+
+//       }
+//     }
+//   }
+// }
 
 export const budgetPercent = (arr, timeFrame, monthlyBudget) => {
   return parseInt((totalSpending(arr, timeFrame, monthlyBudget) / convertBudget(timeFrame, monthlyBudget)) * 100);
