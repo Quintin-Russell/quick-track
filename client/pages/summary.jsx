@@ -1,6 +1,6 @@
 import React from 'react';
 import ApexCharts from 'apexcharts';
-import { convertBudget, functList, budgetPercent, setColGraphInfo } from '../summary-funct';
+import { convertBudget, functList, budgetPercent, setColGraphInfo, setDonutInfo } from '../summary-funct';
 
 import Dropdown from '../components/dropdown';
 import Toggle from '../components/toggle';
@@ -106,22 +106,24 @@ export default class Summary extends React.Component {
           chart: {
             type: 'donut'
           },
-          series: [44, 55, 41, 17, 15],
+          series: setDonutInfo(this.state.spendingCategories, 'spendingCategoryId', this.state.arr, this.state.timeFrame).values,
           plotOptions: {
             pie: {
               donut: {
                 size: '70%'
+              },
+              labels: {
+                show: true
               }
             }
           },
-          chartOptions: {
-            labels: ['Apple', 'Mango', 'Orange', 'Watermelon']
+          labels: setDonutInfo(this.state.spendingCategories, 'spendingCategoryId', this.state.arr, this.state.timeFrame).categories,
+          title: {
+            text: 'Spending Breakdown By Spending Category'
           },
-
-          dataLabels: {
-            enabled: true,
-            formatter: function (val) {
-              return val + '%';
+          states: {
+            hover: {
+              filter: 'none'
             }
           }
         };
@@ -253,8 +255,7 @@ export default class Summary extends React.Component {
   }
 
   render() {
-    const header =
-    (this.state.graph === 'a' || !this.state.graph)
+    const header = (this.state.graph === 'a' || !this.state.graph)
       ? 'Summary Quick View'
       : 'Categorical Summary';
     return (

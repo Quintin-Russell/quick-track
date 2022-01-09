@@ -1,18 +1,29 @@
-const findWkNum = date => {
-  date = new Date(date);
-  const oneJan = new Date(date.getFullYear(), 0, 1);
-  const numberOfDays = Math.floor((date - oneJan) / (24 * 60 * 60 * 1000));
-  return Math.ceil((date.getDay() + 1 + numberOfDays) / 7);
+import dayjs from 'dayjs';
+
+const sameWeek = exp => {
+  const glbDate = new Date();
+  const expDate = new Date(exp.date);
+  return !!((dayjs(glbDate.toString()).isSame(exp.date, 'week') && glbDate.getFullYear() === expDate.getFullYear()));
+};
+
+const sameMonth = exp => {
+  const glbDate = new Date();
+  const expDate = new Date(exp.date);
+  return !!((expDate.getMonth() === glbDate.getMonth() && glbDate.getFullYear() === expDate.getFullYear()));
+};
+
+const sameYear = exp => {
+  const glbDate = new Date();
+  const expDate = new Date(exp.date);
+  return !!(glbDate.getFullYear() === expDate.getFullYear());
+
 };
 
 const findWkExpSum = arr => {
   if (arr) {
     let wkExpSum = 0;
-    const glbDate = new Date();
-    const wkNum = findWkNum(glbDate) - 1;
     for (const exp of arr) {
-      const expDate = new Date(exp.date);
-      if (findWkNum(expDate) === wkNum && glbDate.getFullYear() === expDate.getFullYear()) {
+      if (sameWeek(exp)) {
         const wkAmt = parseFloat(exp.amount);
         wkExpSum += wkAmt;
       }
@@ -24,13 +35,9 @@ const findWkExpSum = arr => {
 const findMnExpSum = arr => {
   if (arr) {
     let mnExpSum = 0;
-    const glbDate = new Date();
-
     for (const exp of arr) {
-      const expDate = new Date(exp.date);
-      if (expDate.getMonth() === glbDate.getMonth() && glbDate.getFullYear() === expDate.getFullYear()) {
+      if (sameMonth(exp)) {
         mnExpSum += (parseFloat(exp.amount));
-
       }
     }
     return mnExpSum;
@@ -40,11 +47,8 @@ const findMnExpSum = arr => {
 const findYrExpSum = arr => {
   if (arr) {
     let yrExpSum = 0;
-    const glbDate = new Date();
-
     for (const exp of arr) {
-      const expDate = new Date(exp.date);
-      if (glbDate.getFullYear() === expDate.getFullYear()) {
+      if (sameYear(exp)) {
         yrExpSum += (parseFloat(exp.amount));
       }
     }
@@ -90,8 +94,7 @@ export const setColGraphInfo = (arr, timeFrame, budget, graph) => {
         graphObj.budgetArr.push(convertBudget(timeFrame, budget));
       }
       for (const exp of arr) {
-        const expDate = new Date(exp.date);
-        if (expDate.getMonth() === glbDate.getMonth() && glbDate.getFullYear() === expDate.getFullYear()) {
+        if (sameMonth(exp)) {
           const amount = parseFloat(exp.amount);
           graphObj.unitSpending.push(amount);
           totalSpendingSum += amount;
@@ -106,10 +109,7 @@ export const setColGraphInfo = (arr, timeFrame, budget, graph) => {
       }
       graphObj.xaxis = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
       for (const exp of arr) {
-        const expDate = new Date(exp.date);
-        const wkNum = findWkNum(exp.date);
-        const glbWkNum = findWkNum(glbDate) - 1;
-        if (wkNum === glbWkNum && glbDate.getFullYear() === expDate.getFullYear()) {
+        if (sameWeek(exp)) {
           const amount = parseFloat(exp.amount);
           graphObj.unitSpending.push(amount);
           totalSpendingSum += amount;
@@ -126,7 +126,7 @@ export const setColGraphInfo = (arr, timeFrame, budget, graph) => {
       for (const exp of arr) {
         const expDate = new Date(exp.date);
         const amount = parseFloat(exp.amount);
-        if (expDate.getFullYear === glbDate.getFullYear) {
+        if (sameYear(exp)) {
           if (mnArr[expDate.getMonth()]) {
             mnArr[expDate.getMonth()].push(amount);
           } else {
@@ -147,21 +147,30 @@ export const setColGraphInfo = (arr, timeFrame, budget, graph) => {
   return graphObj;
 };
 
-// export const setDonutInfo = (categoryArr, categoryId, expArr, timeFrame) => {
-//   const graphObj = {
-//     categories: [],
-//     values: []
-//   };
-//   for (const cat of categoryArr) {
-//     let categorySum = 0;
-//     const categoryArr = [];
-//     for (const exp of expArr) {
-//       if (timeFrame === 'Month') {
-
-//       }
-//     }
-//   }
-// }
+export const setDonutInfo = (categoryArr, categoryId, expArr, timeFrame) => {
+  const graphObj = {
+    categories: [],
+    values: []
+  };
+  for (const cat of categoryArr) {
+    let categorySum = 0;
+    const catId = cat[categoryId];
+    for (const exp of expArr) {
+      if (parseInt(exp[categoryId]) === catId) {
+        if ((timeFrame === 'Month') && (sameMonth(exp))) {
+          categorySum += parseFloat(exp.amount);
+        } else if ((timeFrame === 'Year') && (sameYear(exp))) {
+          categorySum += parseFloat(exp.amount);
+        } else if ((timeFrame === 'Week') && (sameWeek(exp))) {
+          categorySum += parseFloat(exp.amount);
+        }
+      }
+    }
+    graphObj.categories.push(cat.name);
+    graphObj.values.push(categorySum);
+  }
+  return graphObj;
+};
 
 export const budgetPercent = (arr, timeFrame, monthlyBudget) => {
   return parseInt((totalSpending(arr, timeFrame, monthlyBudget) / convertBudget(timeFrame, monthlyBudget)) * 100);
