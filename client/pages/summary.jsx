@@ -1,6 +1,6 @@
 import React from 'react';
 import ApexCharts from 'apexcharts';
-import { convertBudget, functList, budgetPercent, setColGraphInfo, setDonutInfo } from '../summary-funct';
+import { convertBudget, setCategoryGraphInfo, functList, budgetPercent, setAllCategoryColGraphInfo, setDonutInfo } from '../summary-funct';
 
 import Dropdown from '../components/dropdown';
 import Toggle from '../components/toggle';
@@ -127,7 +127,7 @@ export default class Summary extends React.Component {
             }
           }
         };
-      } else if (this.state.graph === 'b') {
+      } else {
         const nameVal = (this.state.timeFrame === 'Year')
           ? 'Monthly Spending'
           : 'Daily Spending';
@@ -153,17 +153,23 @@ export default class Summary extends React.Component {
             {
               name: nameVal,
               type: 'column',
-              data: setColGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget, this.state.graph).unitSpending
+              data: (this.state.graph === 'b')
+                ? setAllCategoryColGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget).unitSpending
+                : setCategoryGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget, this.state.graph).unitSpending
             },
             {
               name: 'Total Spending',
               type: 'line',
-              data: setColGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget, this.state.graph).totalSpending
+              data: (this.state.graph === 'b')
+                ? setAllCategoryColGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget).totalSpending
+                : setCategoryGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget, this.state.graph).totalSpending
             },
             {
               name: 'Budget',
               type: 'line',
-              data: setColGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget, this.state.graph).budgetArr
+              data: (this.state.graph === 'b')
+                ? setAllCategoryColGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget).budgetArr
+                : setCategoryGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget, this.state.graph).budgetArr
             }
           ],
           stroke: {
@@ -174,8 +180,17 @@ export default class Summary extends React.Component {
               columnWidth: '20%'
             }
           },
+          // labels: (this.state.graph === 'b')
+          //   ? setAllCategoryColGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget).xaxis
+          //   : setCategoryGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget).xaxis,
           xaxis: {
-            categories: setColGraphInfo(this.state.arr, this.state.timeFrame, this.state.graph).xaxis
+            categories: (this.state.graph === 'b')
+              ? setAllCategoryColGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget).xaxis
+              : setCategoryGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget, this.state.graph).xaxis
+            //   ,
+            // labels: (this.state.graph === 'b')
+            //   ? setAllCategoryColGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget).xaxis
+            //   : setCategoryGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget).xaxis
           },
           yaxis: [
             {
@@ -192,7 +207,7 @@ export default class Summary extends React.Component {
             },
             {
               opposite: true,
-              seriesName: 'Total Spending',
+              seriesName: (this.state.timeFrame === 'Week') ? nameVal : 'Total Spending',
               axisTicks: {
                 show: true
               },
@@ -204,7 +219,7 @@ export default class Summary extends React.Component {
               }
             },
             {
-              seriesName: 'Total Spending',
+              seriesName: (this.state.timeFrame === 'Week') ? nameVal : 'Total Spending',
               show: false
             }
           ],

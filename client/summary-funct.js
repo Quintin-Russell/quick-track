@@ -78,7 +78,7 @@ const totalSpending = (arr, timeFrame, monthlyBudget) => {
     : sum;
 };
 
-export const setColGraphInfo = (arr, timeFrame, budget, graph) => {
+export const setAllCategoryColGraphInfo = (arr, timeFrame, budget) => {
   const graphObj = {
     unitSpending: [],
     totalSpending: [0],
@@ -86,65 +86,74 @@ export const setColGraphInfo = (arr, timeFrame, budget, graph) => {
     xaxis: []
   };
   let totalSpendingSum = 0;
-  if (graph === 'b') {
-    const glbDate = new Date();
-    if (timeFrame === 'Month') {
-      const budgetRepeat = glbDate.getDate();
-      for (let x = 1; x <= budgetRepeat; x++) {
-        graphObj.budgetArr.push(convertBudget(timeFrame, budget));
-      }
-      for (const exp of arr) {
-        if (sameMonth(exp)) {
-          const amount = parseFloat(exp.amount);
-          graphObj.unitSpending.push(amount);
-          totalSpendingSum += amount;
-          graphObj.totalSpending.push(totalSpendingSum);
-          graphObj.xaxis.push(exp.date);
-        }
-      }
-    } else if (timeFrame === 'Week') {
-      const budgetRepeat = glbDate.getDay();
-      for (let x = 0; x <= budgetRepeat; x++) {
-        graphObj.budgetArr.push(convertBudget(timeFrame, budget));
-      }
-      graphObj.xaxis = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
-      for (const exp of arr) {
-        if (sameWeek(exp)) {
-          const amount = parseFloat(exp.amount);
-          graphObj.unitSpending.push(amount);
-          totalSpendingSum += amount;
-          graphObj.totalSpending.push(totalSpendingSum);
-        }
-      }
-    } else if (timeFrame === 'Year') {
-      for (let x = 0; x <= 11; x++) {
-        graphObj.budgetArr.push(convertBudget(timeFrame, budget));
-      }
-      graphObj.xaxis = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-      const mnArr = [];
-      let yrTotalSpending = 0;
-      for (const exp of arr) {
-        const expDate = new Date(exp.date);
+  const glbDate = new Date();
+  if (timeFrame === 'Month') {
+    const budgetRepeat = glbDate.getDate();
+    for (let x = 1; x <= budgetRepeat; x++) {
+      graphObj.budgetArr.push(convertBudget(timeFrame, budget));
+    }
+    for (const exp of arr) {
+      if (sameMonth(exp)) {
         const amount = parseFloat(exp.amount);
-        if (sameYear(exp)) {
-          if (mnArr[expDate.getMonth()]) {
-            mnArr[expDate.getMonth()].push(amount);
-          } else {
-            mnArr.push([amount]);
-          }
+        graphObj.unitSpending.push(amount);
+        totalSpendingSum += amount;
+        graphObj.totalSpending.push(totalSpendingSum);
+        graphObj.xaxis.push(exp.date);
+      }
+    }
+  } else if (timeFrame === 'Week') {
+    const dailySpendingArr = [0, 0, 0, 0, 0, 0, 0];
+    for (let x = 0; x < dailySpendingArr.length; x++) {
+      graphObj.budgetArr.push(convertBudget(timeFrame, budget));
+    }
+    graphObj.xaxis = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
+    for (const exp of arr) {
+      if (sameWeek(exp)) {
+        const expDay = new Date(exp.date).getDay();
+        const amount = parseFloat(exp.amount);
+        dailySpendingArr[expDay] += amount;
+      }
+    }
+    for (const day of dailySpendingArr) {
+      totalSpendingSum += day;
+      graphObj.totalSpending.push(totalSpendingSum);
+    }
+    graphObj.unitSpending = dailySpendingArr;
+  } else if (timeFrame === 'Year') {
+    for (let x = 0; x <= 11; x++) {
+      graphObj.budgetArr.push(convertBudget(timeFrame, budget));
+    }
+    graphObj.xaxis = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const mnArr = [];
+    let yrTotalSpending = 0;
+    for (const exp of arr) {
+      const expDate = new Date(exp.date);
+      const amount = parseFloat(exp.amount);
+      if (sameYear(exp)) {
+        if (mnArr[expDate.getMonth()]) {
+          mnArr[expDate.getMonth()].push(amount);
         } else {
-          continue;
+          mnArr.push([amount]);
         }
+      } else {
+        continue;
       }
-      for (const mn of mnArr) {
-        const mnSum = findMnExpSum(mn);
-        graphObj.unitSpending.push(mnSum);
-        yrTotalSpending += mnSum;
-        graphObj.totalSpending.push(yrTotalSpending);
-      }
+    }
+    for (const mn of mnArr) {
+      const mnSum = findMnExpSum(mn);
+      graphObj.unitSpending.push(mnSum);
+      yrTotalSpending += mnSum;
+      graphObj.totalSpending.push(yrTotalSpending);
     }
   }
   return graphObj;
+};
+
+export const setCategoryGraphInfo = (expArr, timeFrame, budget, graph) => {
+  const graphArr = expArr.filter(exp => exp.spendingCategoryId === parseInt(graph));
+  if (graphArr) {
+    return setAllCategoryColGraphInfo(graphArr, timeFrame, budget);
+  }
 };
 
 export const setDonutInfo = (categoryArr, categoryId, expArr, timeFrame) => {
