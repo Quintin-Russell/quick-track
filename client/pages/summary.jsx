@@ -180,17 +180,10 @@ export default class Summary extends React.Component {
               columnWidth: '20%'
             }
           },
-          // labels: (this.state.graph === 'b')
-          //   ? setAllCategoryColGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget).xaxis
-          //   : setCategoryGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget).xaxis,
           xaxis: {
             categories: (this.state.graph === 'b')
               ? setAllCategoryColGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget).xaxis
               : setCategoryGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget, this.state.graph).xaxis
-            //   ,
-            // labels: (this.state.graph === 'b')
-            //   ? setAllCategoryColGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget).xaxis
-            //   : setCategoryGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget).xaxis
           },
           yaxis: [
             {
@@ -294,9 +287,6 @@ export default class Summary extends React.Component {
               primaryKey="spendingCategoryId" />
           </div>
         </div>
-        {/* <a href={this.props.page.showModalQuery}>
-          <i className="fas fa-th"></i>
-        </a> */}
 
       </div>
         <div className="exp-form-cont margin-0-cent col">
