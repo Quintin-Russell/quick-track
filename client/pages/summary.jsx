@@ -35,8 +35,11 @@ export default class Summary extends React.Component {
 
   componentDidUpdate(oldProps, oldState) {
     if (oldState !== this.state) {
+
       let options;
+
       const percentBudget = budgetPercent(this.state.arr, this.state.timeFrame, this.state.monthlyBudget);
+
       if (!this.state.graph || this.state.graph === 'a') {
 
         const series = (this.state.arr)
@@ -102,6 +105,7 @@ export default class Summary extends React.Component {
           labels: [`${this.state.timeFrame}ly Budget Spent`]
         };
       } else if (this.state.graph === 'c') {
+
         options = {
           chart: {
             type: 'donut'
@@ -128,6 +132,7 @@ export default class Summary extends React.Component {
           }
         };
       } else {
+
         const nameVal = (this.state.timeFrame === 'Year')
           ? 'Monthly Spending'
           : 'Daily Spending';
@@ -247,25 +252,31 @@ export default class Summary extends React.Component {
   }
 
   setDropdownArr() {
+
     const obj1 = {
       name: 'Quick View',
       spendingCategoryId: 'a'
     };
+
     const obj2 = {
       name: 'All Categories',
       spendingCategoryId: 'b'
     };
+
     const obj3 = {
       name: 'By Category',
       spendingCategoryId: 'c'
     };
+
     return [...this.state.spendingCategories, obj1, obj2, obj3];
   }
 
   render() {
+
     const header = (this.state.graph === 'a' || !this.state.graph)
       ? 'Summary Quick View'
       : 'Categorical Summary';
+
     return (
       <>
         <div className="padding-1rem row just-align-center">
@@ -296,11 +307,13 @@ export default class Summary extends React.Component {
             <p className="text-center oswald-norm">
               {`Your ${this.state.timeFrame}ly Budget: $${convertBudget(this.state.timeFrame, this.state.monthlyBudget)}`}
             </p>
+
             {functList.map(funct => {
               return (<p key={funct.name} className="text-center oswald-norm">
                {funct.name}: {`$${funct.funct(this.state.arr, this.state.timeFrame, this.state.monthlyBudget)}`}
               </p>);
             })}
+
           </div>
       </div>
       </>

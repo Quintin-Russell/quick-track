@@ -30,7 +30,9 @@ export default class App extends React.Component {
   }
 
   renderPage() {
+
     const path = this.state.route.path;
+
     if (path === '') {
       return <Home
       page={this.state.page}
@@ -38,6 +40,7 @@ export default class App extends React.Component {
       route={this.state.route} />;
 
     } else if (path === 'pastexpenses') {
+
       return (
       <PastExpenses
       route={this.state.route}
@@ -49,6 +52,7 @@ export default class App extends React.Component {
       />
       );
     } else if (path === 'accsettings') {
+
       return (
         <AccountSettings
         route={this.state.route}
@@ -56,6 +60,7 @@ export default class App extends React.Component {
       );
 
     } else if (path === 'accsettings-setbudget') {
+
       return (
       <SetBudget
       setTimeFrame={this.setTimeFrame.bind(this)}
@@ -66,6 +71,7 @@ export default class App extends React.Component {
       );
 
     } else if (path === 'accsettings-managepaymentmethods') {
+
       return (
       <PaymentMethods
       route={this.state.route}
@@ -77,6 +83,7 @@ export default class App extends React.Component {
       );
 
     } else if (path === 'accsettings-managespendingcategories') {
+
       return (
       <SpendingCategories
       route={this.state.route}
@@ -88,6 +95,7 @@ export default class App extends React.Component {
       );
 
     } else if (path === 'summary') {
+
       return (
         <Summary
         page={this.state.page}
@@ -116,8 +124,11 @@ export default class App extends React.Component {
   }
 
   convertTime(dt) {
+
     const time = new Date(dt);
+
     const yr = time.getYear();
+
     return `${time.getMonth()}-${time.getDate()}-${yr - 100}`;
   }
 
@@ -131,6 +142,7 @@ export default class App extends React.Component {
   }
 
   render() {
+
     return (this.state.page)
       ? (
     <>
