@@ -315,7 +315,6 @@ export default class Summary extends React.Component {
            </div>
          </div>
       </>
-
     );
   }
 }
