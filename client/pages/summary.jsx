@@ -1,5 +1,6 @@
 import React from 'react';
 import ApexCharts from 'apexcharts';
+
 import { convertBudget, setCategoryGraphInfo, functList, budgetPercent, setAllCategoryColGraphInfo, setDonutInfo } from '../summary-funct';
 
 import Dropdown from '../components/dropdown';
@@ -234,11 +235,75 @@ export default class Summary extends React.Component {
           }
         };
       }
+      const budgetPercent = functList.find(fun => fun.name === '% of Budget Spent');
+
+      const series = (this.state.arr)
+        ? budgetPercent.funct(this.state.arr, this.state.timeFrame, this.state.monthlyBudget)
+        : 0;
+
+      const quickViewColor = (series >= 100)
+        ? { startFade: ['#C3326F'], endFade: ['#FF532F'] }
+        : (series > 90 && series < 100)
+            ? { startFade: ['#F2BF6C'], endFade: ['#EDE342'] }
+            : { startFade: ['#20c3e660'], endFade: ['#44aa4490'] };
+
+      const options = {
+        chart: {
+          height: 300,
+          type: 'radialBar'
+        },
+
+        series: [series],
+        colors: quickViewColor.startFade,
+        plotOptions: {
+          radialBar: {
+            hollow: {
+              margin: 0,
+              size: '70%'
+            },
+            track: {
+              dropShadow: {
+                enabled: true,
+                top: 2,
+                left: 0,
+                blur: 4,
+                opacity: 0.15
+              }
+            },
+            dataLabels: {
+              name: {
+                offsetY: -10,
+                color: '#292929',
+                fontSize: '13px'
+              },
+              value: {
+                color: '#292929',
+                fontSize: '30px',
+                show: true
+              }
+            }
+          }
+        },
+        fill: {
+          type: 'gradient',
+          gradient: {
+            shade: 'dark',
+            type: 'vertical',
+            gradientToColors: quickViewColor.endFade,
+            stops: [0, 100]
+          }
+        },
+        stroke: {
+          lineCap: 'round'
+        },
+        labels: [`${this.state.timeFrame}ly Budget Spent`]
+      };
+
+
       const chart = new ApexCharts(document.querySelector('#chart'), options);
 
       chart.render();
     }
-
   }
 
   handleToggleClick(e) {
@@ -276,7 +341,6 @@ export default class Summary extends React.Component {
     const header = (this.state.graph === 'a' || !this.state.graph)
       ? 'Summary Quick View'
       : 'Categorical Summary';
-
     return (
       <>
         <div className="padding-1rem row just-align-center">
@@ -302,12 +366,12 @@ export default class Summary extends React.Component {
       </div>
         <div className="exp-form-cont margin-0-cent col">
         <h1 className="menu-txt">{header}</h1>
+
         <div id="chart"></div>
           <div className=" col summary-info-cont">
             <p className="text-center oswald-norm">
               {`Your ${this.state.timeFrame}ly Budget: $${convertBudget(this.state.timeFrame, this.state.monthlyBudget)}`}
             </p>
-
             {functList.map(funct => {
               return (<p key={funct.name} className="text-center oswald-norm">
                {funct.name}: {`$${funct.funct(this.state.arr, this.state.timeFrame, this.state.monthlyBudget)}`}

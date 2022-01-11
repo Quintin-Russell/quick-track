@@ -16,7 +16,6 @@ const sameYear = exp => {
   const glbDate = new Date();
   const expDate = new Date(exp.date);
   return !!(glbDate.getFullYear() === expDate.getFullYear());
-
 };
 
 const findWkExpSum = arr => {
@@ -200,5 +199,4 @@ export const functList = [
         : sum;
     }
   }
-
 ];

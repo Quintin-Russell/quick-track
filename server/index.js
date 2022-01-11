@@ -302,16 +302,6 @@ app.delete('/api/spendingCategories', (req, res, next) => {
     throw new ClientError(400, 'Spending Category Id is a mandatory field');
   }
 
-  // const sql = `
-  // delete from "spendingCategories"
-  // where "spendingCategoryId" = $1
-  // `;
-  // const params = [spendingCategoryId];
-
-  // db.query(sql, params)
-  //   .then(result => {
-  //     res.status(201).json(result.rows);
-  //   })
   const sql = `
         update "expenses"
         set "spendingCategoryId" = null

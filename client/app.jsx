@@ -95,7 +95,6 @@ export default class App extends React.Component {
       );
 
     } else if (path === 'summary') {
-
       return (
         <Summary
         page={this.state.page}
@@ -114,6 +113,12 @@ export default class App extends React.Component {
     });
 
   }
+
+  // setSummaryStatistics(e) {
+  //   const newStat = e.target.getAttribute('data');
+  //   const summaryStatistics = [...this.state.summaryStatistics, newStat];
+  //   this.setState({ summaryStatistics });
+  // }
 
   setEditOrDeleteObj(editOrDeleteObj) {
     this.setState({ editOrDeleteObj });
