@@ -85,9 +85,15 @@ export default class ExpenseForm extends React.Component {
 
   generateDate() {
     const dateFieldVal = document.querySelector('#date');
-    return (this.props.route.path === '')
-      ? new Date().toISOString()
-      : dateFieldVal.value;
+    let time;
+    if (this.props.route.path === '') {
+      time = Date.now() + (new Date().getTimezoneOffset() * 60 * 1000);
+    } else {
+      const inputDate = Date.parse(dateFieldVal.value) + (new Date().getTimezoneOffset() * 60 * 1000);
+      time = new Date(inputDate);
+    }
+    const dt = new Date(time);
+    return `${((dt.getMonth() + 1) < 10) ? `0${dt.getMonth() + 1}` : dt.getMonth() + 1}-${(dt.getDate() < 10) ? `0${dt.getDate()}` : dt.getDate()}-${dt.getFullYear()}`;
   }
 
   addEditValues() {

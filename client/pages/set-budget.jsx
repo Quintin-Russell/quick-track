@@ -54,11 +54,13 @@ export default class SetBudget extends React.Component {
     if (!this.state.monthlyBudget) {
       return window.alert('You haven\'t entered in a valid budget. Please enter one below.');
     } else {
+
       const body = {
         userId: `${this.props.userId}`,
         monthlyBudget: `${this.state.monthlyBudget}`,
         timeFrame: `${this.state.timeFrame}`
       };
+
       const reqOptions = {
         method: 'PATCH',
         headers: {
@@ -66,6 +68,7 @@ export default class SetBudget extends React.Component {
         },
         body: JSON.stringify(body)
       };
+
       fetch(`${this.props.page.fetchReqs.patch.url}`, reqOptions)
         .then(result => {
           if (result.ok) {
@@ -80,13 +83,17 @@ export default class SetBudget extends React.Component {
   }
 
   convertBudgetInfo(timeFrame, val) {
+
     let monthlyBudget;
+
     val = parseFloat(val);
+
     (timeFrame === 'Month')
       ? monthlyBudget = val.toFixed(2)
       : (timeFrame === 'Week')
           ? monthlyBudget = (val / 4.333).toFixed(2)
           : monthlyBudget = (val * 12).toFixed(2);
+
     return (isNaN(monthlyBudget))
       ? '--'
       : Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(monthlyBudget);
@@ -94,6 +101,7 @@ export default class SetBudget extends React.Component {
 
   renderBudgetInfo(toggleArr, targetVal, messageObjArr) {
     const tarIndex = toggleArr.findIndex(tar => targetVal === tar);
+
     return toggleArr.map(option => {
       return (
 
@@ -107,6 +115,7 @@ export default class SetBudget extends React.Component {
 
   render() {
     const placeholderTxt = this.props.page.formOptions.placeHolderTxt[this.state.timeFrame];
+
     return (
       <>
       <div className="menu-header-cont">

@@ -69,7 +69,7 @@ export default class Table extends React.Component {
           counter++;
           return (
                   <div data={exp[id]} key={exp[id].toString()} className='table-item shaded row'>
-                  <p className={`table-txt ${table.className.text}`}>{this.convertTime(exp.date)}</p>
+                  <p className={`table-txt ${table.className.text}`}>{exp.date}</p>
                   <p className={`table-txt ${table.className.text}`}>{`$${exp.amount}`}</p>
                   <p className={`table-txt ${table.className.text}`}>{exp.comment}</p>
                     <RenderIcon
@@ -81,13 +81,13 @@ export default class Table extends React.Component {
                     setEditOrDeleteObj={this.setEditOrDeleteObj.bind(this)}
                     className={`${table.className.icon}`}
                     editOrDeleteObj={this.props.editOrDeleteObj}
-                    convertTime= {this.convertTime} />
+                    />
               </div>);
         } else {
           counter++;
           return (
                   <div data={exp[id]} key={exp[id].toString()} className='table-item row'>
-                    <p className={`table-txt ${table.className.text}`}>{this.convertTime(exp.date)}</p>
+                    <p className={`table-txt ${table.className.text}`}>{exp.date}</p>
                     <p className={`table-txt ${table.className.text}`}>{`$${exp.amount}`}</p>
                     <p className={`table-txt ${table.className.text}`}>{exp.comment}</p>
                     <RenderIcon
@@ -99,7 +99,7 @@ export default class Table extends React.Component {
                     setEditOrDeleteObj={this.setEditOrDeleteObj.bind(this)}
                     editOrDeleteObj={this.props.editOrDeleteObj}
                     className={`${table.className.icon}`}
-                    convertTime={this.convertTime} />
+                    />
                     </div>
           );
         }
@@ -123,7 +123,7 @@ export default class Table extends React.Component {
                 setEditOrDeleteObj={this.setEditOrDeleteObj.bind(this)}
                 className={`${table.className.icon}`}
                 editOrDeleteObj={this.props.editOrDeleteObj}
-                convertTime={this.convertTime} />
+                />
             </div>);
         } else {
           counter++;
@@ -139,7 +139,7 @@ export default class Table extends React.Component {
                 setEditOrDeleteObj={this.setEditOrDeleteObj.bind(this)}
                 editOrDeleteObj={this.props.editOrDeleteObj}
                 className={`${table.className.icon}`}
-                convertTime={this.convertTime} />
+                />
             </div>
           );
         }
