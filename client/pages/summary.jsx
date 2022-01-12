@@ -5,6 +5,7 @@ import { convertBudget, setCategoryGraphInfo, functList, budgetPercent, setAllCa
 
 import Dropdown from '../components/dropdown';
 import Toggle from '../components/toggle';
+// import ApexChart from '../components/graph';
 
 export default class Summary extends React.Component {
   constructor(props) {
@@ -12,9 +13,10 @@ export default class Summary extends React.Component {
     this.state = {
       monthlyBudget: null,
       timeFrame: 'Month',
-      arr: [],
+      arr: [0, 1, 2],
       spendingCategories: [],
-      graph: null
+      graph: null,
+      options: {}
     };
   }
 
@@ -23,6 +25,7 @@ export default class Summary extends React.Component {
       .then(result => result.json())
       .then(resultJson => {
         const { monthlyBudget, timeFrame } = resultJson;
+        // console.log('get budget fetch recieved');
         fetch(`${this.props.page.fetchReqs.get.expenses.url}/${this.props.userId}`)
           .then(result1 => result1.json())
           .then(arr => {
@@ -32,10 +35,11 @@ export default class Summary extends React.Component {
           });
 
       });
+    const options = this.setGraph();
+    this.setState({ options });
   }
 
   setGraph() {
-
     let options;
 
     const percentBudget = budgetPercent(this.state.arr, this.state.timeFrame, this.state.monthlyBudget);
@@ -57,7 +61,6 @@ export default class Summary extends React.Component {
           height: '375vh',
           type: 'radialBar'
         },
-
         series: [series],
         colors: quickViewColor.startFade,
         plotOptions: {
@@ -104,7 +107,6 @@ export default class Summary extends React.Component {
         labels: [`${this.state.timeFrame}ly Budget Spent`]
       };
     } else if (this.state.graph === 'c') {
-
       options = {
         chart: {
           type: 'donut'
@@ -148,12 +150,7 @@ export default class Summary extends React.Component {
           type: 'line',
           stacked: false
         },
-        dataLabels: {
-          enabled: false
-        },
-        colors: ['#99C2A2', lineColor, '#66C7F4'],
         series: [
-
           {
             name: nameVal,
             type: 'column',
@@ -176,6 +173,10 @@ export default class Summary extends React.Component {
               : setCategoryGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget, this.state.graph).budgetArr
           }
         ],
+        dataLabels: {
+          enabled: false
+        },
+        colors: ['#99C2A2', lineColor, '#66C7F4'],
         stroke: {
           width: [4, 4, 4]
         },
@@ -233,9 +234,7 @@ export default class Summary extends React.Component {
         }
       };
     }
-
-    const chart = new ApexCharts(document.querySelector('#chart'), options);
-    chart.render();
+    return options;
   }
 
   handleToggleClick(e) {
@@ -269,11 +268,20 @@ export default class Summary extends React.Component {
   }
 
   render() {
-    this.setGraph();
-    const header = (this.state.graph === 'a' || !this.state.graph)
-      ? 'Summary Quick View'
-      : 'Categorical Summary';
-    return (
+    // console.log('this.state in summary.jsx:', this.state);
+
+    if (!this.state.options || !this.state.arr || !this.state.spendingCategories) {
+      return <div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>;
+    } else {
+      // console.log('render() in summary.jsx before setGraph');
+      const chart = ApexCharts(document.querySelector('#chart'), this.state.options);
+      chart.render();
+      // this.setGraph();
+      // console.log('this.state in else in summary.jsx:', this.state);
+      const header = (this.state.graph === 'a' || !this.state.graph)
+        ? 'Summary Quick View'
+        : 'Categorical Summary';
+      return (
       <>
         <div className="padding-1rem row just-align-center">
           <div className="col just-align-center budget-width">
@@ -299,7 +307,9 @@ export default class Summary extends React.Component {
         <div className="exp-form-cont margin-0-cent col">
           <h1 className="menu-txt">{header}</h1>
 
-          <div id="chart"></div>
+          {/* <div id="chart">
+            <ApexChart options={this.state.options} series={this.state.series}></ApexChart>
+          </div> */}
           <div className=" col summary-info-cont">
             <p className="text-center oswald-norm">
               {`Your ${this.state.timeFrame}ly Budget: $${convertBudget(this.state.timeFrame, this.state.monthlyBudget)}`}
@@ -315,6 +325,7 @@ export default class Summary extends React.Component {
            </div>
          </div>
       </>
-    );
+      );
+    }
   }
 }
