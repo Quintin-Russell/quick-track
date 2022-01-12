@@ -150,8 +150,10 @@ export default class Table extends React.Component {
 
   render() {
 
-    if (this.state.arr.length === 0) {
-      return <h1 className="menu-txt">Loading...</h1>;
+    if (this.state.arr.length === 0 || !this.state.arr) {
+      return (
+        <div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+      );
     } else {
       return (
         <>

@@ -269,6 +269,7 @@
   justify-content: space-around;
   align-items: center;
   height: 70vh;
+  max-height: 50rem;
   padding: 0;
 }
 
@@ -335,4 +336,19 @@ ul.no-bullets > li {
   align-items: center;
   min-width: 18rem;
   max-width: 25rem;
+}
+
+@media screen and (min-width: 768px) {
+  #root {
+    flex-direction: row;
+  }
+
+  .whole-pg-cont {
+    width: 100%;
+    height: 95vh;
+  }
+
+  .header-cont {
+    height: 100vh;
+  }
 }
