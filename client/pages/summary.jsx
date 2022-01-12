@@ -1,11 +1,10 @@
 import React from 'react';
-import ApexCharts from 'apexcharts';
 
 import { convertBudget, setCategoryGraphInfo, functList, budgetPercent, setAllCategoryColGraphInfo, setDonutInfo } from '../summary-funct';
 
 import Dropdown from '../components/dropdown';
 import Toggle from '../components/toggle';
-// import ApexChart from '../components/graph';
+import Chart from 'react-apexcharts';
 
 export default class Summary extends React.Component {
   constructor(props) {
@@ -25,7 +24,6 @@ export default class Summary extends React.Component {
       .then(result => result.json())
       .then(resultJson => {
         const { monthlyBudget, timeFrame } = resultJson;
-        // console.log('get budget fetch recieved');
         fetch(`${this.props.page.fetchReqs.get.expenses.url}/${this.props.userId}`)
           .then(result1 => result1.json())
           .then(arr => {
@@ -35,20 +33,20 @@ export default class Summary extends React.Component {
           });
 
       });
-    const options = this.setGraph();
-    this.setState({ options });
   }
 
   setGraph() {
     let options;
+    let series;
+    let type;
 
     const percentBudget = budgetPercent(this.state.arr, this.state.timeFrame, this.state.monthlyBudget);
 
     if (!this.state.graph || this.state.graph === 'a') {
 
-      const series = (this.state.arr)
-        ? percentBudget
-        : 0;
+      type = 'radialBar';
+
+      series = [percentBudget];
 
       const quickViewColor = (series >= 100)
         ? { startFade: ['#C3326F'], endFade: ['#FF532F'] }
@@ -57,11 +55,7 @@ export default class Summary extends React.Component {
             : { startFade: ['#20c3e660'], endFade: ['#44aa4490'] };
 
       options = {
-        chart: {
-          height: '375vh',
-          type: 'radialBar'
-        },
-        series: [series],
+        chart: { height: '375vh' },
         colors: quickViewColor.startFade,
         plotOptions: {
           radialBar: {
@@ -107,11 +101,15 @@ export default class Summary extends React.Component {
         labels: [`${this.state.timeFrame}ly Budget Spent`]
       };
     } else if (this.state.graph === 'c') {
+
+      series = setDonutInfo(this.state.spendingCategories, 'spendingCategoryId', this.state.arr, this.state.timeFrame).values;
+
+      type = 'donut';
+
       options = {
         chart: {
           type: 'donut'
         },
-        series: setDonutInfo(this.state.spendingCategories, 'spendingCategoryId', this.state.arr, this.state.timeFrame).values,
         plotOptions: {
           pie: {
             donut: {
@@ -144,35 +142,37 @@ export default class Summary extends React.Component {
             ? '#EDE342'
             : '#C5EDAC';
 
+      type = 'line';
+
+      series = [
+        {
+          name: nameVal,
+          type: 'column',
+          data: (this.state.graph === 'b')
+            ? setAllCategoryColGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget).unitSpending
+            : setCategoryGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget, this.state.graph).unitSpending
+        },
+        {
+          name: 'Total Spending',
+          type: 'line',
+          data: (this.state.graph === 'b')
+            ? setAllCategoryColGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget).totalSpending
+            : setCategoryGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget, this.state.graph).totalSpending
+        },
+        {
+          name: 'Budget',
+          type: 'line',
+          data: (this.state.graph === 'b')
+            ? setAllCategoryColGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget).budgetArr
+            : setCategoryGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget, this.state.graph).budgetArr
+        }
+      ];
+
       options = {
         chart: {
           height: 350,
-          type: 'line',
           stacked: false
         },
-        series: [
-          {
-            name: nameVal,
-            type: 'column',
-            data: (this.state.graph === 'b')
-              ? setAllCategoryColGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget).unitSpending
-              : setCategoryGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget, this.state.graph).unitSpending
-          },
-          {
-            name: 'Total Spending',
-            type: 'line',
-            data: (this.state.graph === 'b')
-              ? setAllCategoryColGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget).totalSpending
-              : setCategoryGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget, this.state.graph).totalSpending
-          },
-          {
-            name: 'Budget',
-            type: 'line',
-            data: (this.state.graph === 'b')
-              ? setAllCategoryColGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget).budgetArr
-              : setCategoryGraphInfo(this.state.arr, this.state.timeFrame, this.state.monthlyBudget, this.state.graph).budgetArr
-          }
-        ],
         dataLabels: {
           enabled: false
         },
@@ -234,7 +234,9 @@ export default class Summary extends React.Component {
         }
       };
     }
-    return options;
+
+    const retVal = { options, series, type };
+    return retVal;
   }
 
   handleToggleClick(e) {
@@ -268,16 +270,9 @@ export default class Summary extends React.Component {
   }
 
   render() {
-    // console.log('this.state in summary.jsx:', this.state);
-
     if (!this.state.options || !this.state.arr || !this.state.spendingCategories) {
       return <div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>;
     } else {
-      // console.log('render() in summary.jsx before setGraph');
-      const chart = ApexCharts(document.querySelector('#chart'), this.state.options);
-      chart.render();
-      // this.setGraph();
-      // console.log('this.state in else in summary.jsx:', this.state);
       const header = (this.state.graph === 'a' || !this.state.graph)
         ? 'Summary Quick View'
         : 'Categorical Summary';
@@ -307,9 +302,13 @@ export default class Summary extends React.Component {
         <div className="exp-form-cont margin-0-cent col">
           <h1 className="menu-txt">{header}</h1>
 
-          {/* <div id="chart">
-            <ApexChart options={this.state.options} series={this.state.series}></ApexChart>
-          </div> */}
+          <div id="chart">
+            <Chart
+            options={this.setGraph().options}
+            series={this.setGraph().series}
+            type={this.setGraph().type}
+            width='100%' />
+          </div>
           <div className=" col summary-info-cont">
             <p className="text-center oswald-norm">
               {`Your ${this.state.timeFrame}ly Budget: $${convertBudget(this.state.timeFrame, this.state.monthlyBudget)}`}
@@ -319,9 +318,6 @@ export default class Summary extends React.Component {
                 {funct.name}: {`$${funct.funct(this.state.arr, this.state.timeFrame, this.state.monthlyBudget)}`}
               </p>);
             })}
-            <p className="text-center oswald-norm">
-              Pro tip: If you do not see your graph at first, try clicking on a time frame again
-            </p>
            </div>
          </div>
       </>
