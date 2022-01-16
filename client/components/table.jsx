@@ -149,7 +149,6 @@ export default class Table extends React.Component {
   }
 
   render() {
-
     if (this.state.arr.length === 0 || !this.state.arr) {
       return (
         <div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
@@ -172,6 +171,7 @@ export default class Table extends React.Component {
 
 function RenderIcon(props) {
   const id = props.page.id;
+
   if (!props.editOrDeleteObj || props.editOrDeleteObj[id] !== props.exp[id]) {
     return (
       <i data={props.exp[id]}
@@ -179,6 +179,7 @@ function RenderIcon(props) {
       className={`table-txt fas fa-ellipsis-v ${props.className}`}></i>
     );
   } else {
+
     return (
       <>
         <div className={`row menu-icon-cont ${props.className}`}>
