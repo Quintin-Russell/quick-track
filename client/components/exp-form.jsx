@@ -233,7 +233,7 @@ export default class ExpenseForm extends React.Component {
               className="form-input"
               name="amount"
               id="amount"
-              placeholder={this.whichFormOption('placeHolderTxt', [this.state.expense])}
+              placeholder={this.whichFormOption('placeHolderTxt', this.state.expense)}
               type="number"
               step='0.01'></input>
                 </label>

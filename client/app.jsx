@@ -49,6 +49,7 @@ export default class App extends React.Component {
       resetEditOrDeleteObj={this.resetEditOrDeleteObj.bind(this)}
       setEditOrDeleteObj={this.setEditOrDeleteObj.bind(this)}
       page={this.state.page}
+      convertTime={this.convertTime}
       />
       );
     } else if (path === 'accsettings') {
@@ -79,6 +80,7 @@ export default class App extends React.Component {
       editOrDeleteObj={this.state.editOrDeleteObj}
       setEditOrDeleteObj={this.setEditOrDeleteObj.bind(this)}
       resetEditOrDeleteObj={this.resetEditOrDeleteObj.bind(this)}
+      convertTime={this.convertTime}
       page={this.state.page} />
       );
 
@@ -91,6 +93,7 @@ export default class App extends React.Component {
       editOrDeleteObj={this.state.editOrDeleteObj}
       setEditOrDeleteObj={this.setEditOrDeleteObj.bind(this)}
       resetEditOrDeleteObj={this.resetEditOrDeleteObj.bind(this)}
+      convertTime={this.convertTime}
       page={this.state.page} />
       );
 
@@ -123,12 +126,12 @@ export default class App extends React.Component {
   }
 
   convertTime(dt) {
-
     const time = new Date(dt);
-
     const yr = time.getYear();
-
-    return `${time.getMonth()}-${time.getDate()}-${yr - 100}`;
+    const month = (time.getMonth() === 0)
+      ? '01'
+      : time.getMonth();
+    return `${month}-${time.getDate()}-${yr - 100}`;
   }
 
   toggleMenu(e) {
