@@ -22,15 +22,6 @@ export default class Table extends React.Component {
     }
   }
 
-  convertTime(dt) {
-    const time = new Date(dt);
-    const yr = time.getYear();
-    const month = (time.getMonth() === 0)
-      ? '01'
-      : time.getMonth();
-    return `${month}-${time.getDate()}-${yr - 100}`;
-  }
-
   setEditOrDeleteObj(e) {
     const id = this.props.page.id;
     const tar = e.target.getAttribute('data');
@@ -149,7 +140,6 @@ export default class Table extends React.Component {
   }
 
   render() {
-
     if (this.state.arr.length === 0 || !this.state.arr) {
       return (
         <div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
@@ -172,6 +162,7 @@ export default class Table extends React.Component {
 
 function RenderIcon(props) {
   const id = props.page.id;
+
   if (!props.editOrDeleteObj || props.editOrDeleteObj[id] !== props.exp[id]) {
     return (
       <i data={props.exp[id]}
@@ -179,6 +170,7 @@ function RenderIcon(props) {
       className={`table-txt fas fa-ellipsis-v ${props.className}`}></i>
     );
   } else {
+
     return (
       <>
         <div className={`row menu-icon-cont ${props.className}`}>

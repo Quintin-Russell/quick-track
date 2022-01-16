@@ -150,11 +150,19 @@ export default class Modal extends React.Component {
             (this.props.route.path === 'pastexpenses')
               ? (
               <div className='table-item shaded row'>
+            {
+            (this.props.editOrDeleteObj)
+              ? (
+               <>
                 <p className={`table-txt ${this.props.page.table.className.text}`}>{this.props.convertTime(this.props.editOrDeleteObj.date)}</p>
                 <p className={`table-txt ${this.props.page.table.className.text}`}>{`$${this.props.editOrDeleteObj.amount}`}</p>
                 <p className={`table-txt ${this.props.page.table.className.text}`}>{this.props.editOrDeleteObj.comment}</p>
                 <i className={`disp-none table-txt fas fa-ellipsis-v ${this.props.page.table.className.icon}`}></i>
-              </div>
+               </>
+                )
+              : <></>
+                }
+ </div>
                 )
               : (
               <div className='table-item shaded row'>

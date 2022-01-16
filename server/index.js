@@ -4,16 +4,16 @@ const db = require('./db');
 const errorMiddleware = require('./error-middleware');
 const staticMiddleware = require('./static-middleware');
 const ClientError = require('./client-error');
-const cors = require('cors');
+// const cors = require('cors');
 
 const app = express();
 const jsonMiddlerware = express.json();
 
-app.use(
-  cors({
-    origin: ['http://127.0.0.1:3000', 'http://localhost:3000']
-  })
-);
+// app.use(
+//   cors({
+//     origin: ['http://127.0.0.1:3000', 'http://localhost:3000']
+//   })
+// );
 
 app.use(staticMiddleware);
 
