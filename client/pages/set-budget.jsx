@@ -118,7 +118,9 @@ export default class SetBudget extends React.Component {
 
     return (
       <>
-      <div className="menu-header-cont">
+      <form
+      onSubmit={this.sendPatch.bind(this)}
+      className="menu-header-cont">
 
       <Toggle
       page={this.props.page}
@@ -147,13 +149,13 @@ export default class SetBudget extends React.Component {
         >Cancel</button>
 
           <button
-          onClick={this.sendPatch.bind(this)}
+          type='submit'
           className="sm-button"
           >Set Budget</button>
 
       </div>
 
-      </div>
+      </form>
 
         <div className="budget-info-cont col">
           {this.renderBudgetInfo(this.props.page.formOptions.toggleOptions, this.state.timeFrame, ['Your Weekly Budget: ', 'Your Monthly Budget: ', 'Your Yearly Budget: '])}
