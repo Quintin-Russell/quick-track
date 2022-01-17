@@ -1,6 +1,8 @@
+![alt text](https://github.com/Quintin-Russell/quick-track/blob/master/quick-track-logo.png "QuickTrack Logo")
+
 # QuickTrack
 
-### A full-stack application for people that want to build positive financial habits by tracking their expenses
+### A full-stack application for people that want to build positive financial habits by tracking their expenses.
 
 <dl>
   <dt>
