@@ -62,8 +62,9 @@ Try the application live at [https://quick-track-app.herokuapp.com/](https://qui
   </dt>
 </dl>
 
-1. Clone the repository
-  - Mac:
+1. In your terminal, switch to the directory in which you would like to place the repository
+2. Clone the repository
   ```shell
   git clone https://github.com/Quintin-Russell/quick-track.git
   ```
+1. 
