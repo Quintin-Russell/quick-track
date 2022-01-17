@@ -55,3 +55,15 @@ Try the application live at [https://quick-track-app.herokuapp.com/](https://qui
 - User can export a spending report as a `.csv`.
 - User can attach a photo to an expense.
 - User can scan a reciept to input an expense.
+
+<dl>
+  <dt>
+    Getting Started:
+  </dt>
+</dl>
+
+1. Clone the repository
+  Mac:
+  ```shell
+  git clone https://github.com/Quintin-Russell/quick-track.git
+  ```
