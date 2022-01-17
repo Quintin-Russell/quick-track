@@ -46,11 +46,11 @@ Try the application live at [https://quick-track-app.herokuapp.com/](https://qui
 
 <dl>
   <dt>
-
     Strech Features:
   </dt>
 </dl>
 
+- Custom `Success` or `ERROR` modal
 - User can see a breakdown of their spending by payment category.
 - User can export a spending report as a `.csv`.
 - User can attach a photo to an expense.
