@@ -63,7 +63,7 @@ Try the application live at [https://quick-track-app.herokuapp.com/](https://qui
 </dl>
 
 1. Clone the repository
-  Mac:
+  - Mac:
   ```shell
   git clone https://github.com/Quintin-Russell/quick-track.git
   ```
