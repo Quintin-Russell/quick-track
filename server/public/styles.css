@@ -122,7 +122,7 @@
 }
 
 .x-button {
-  color: #f2f2f2;
+  color: white;
   font-size: 2rem;
 }
 
@@ -193,13 +193,17 @@ ul.no-bullets > li > a {
   height: 80px;
 }
 
+.x-button:hover {
+  color: rgb(255 97 124);
+}
+
 i:hover,
 .sm-button:hover,
 .exp-toggle-txt,
 .form-input:hover,
 .header-bars:hover,
 .create-icon:hover,
-.x-button,
+.x-button:hover,
 .header-logo-cont:hover {
   cursor: pointer;
 }
