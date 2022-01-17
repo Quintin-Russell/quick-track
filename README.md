@@ -67,4 +67,4 @@ Try the application live at [https://quick-track-app.herokuapp.com/](https://qui
   ```shell
   git clone https://github.com/Quintin-Russell/quick-track.git
   ```
-1. 
+3. 
