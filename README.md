@@ -11,6 +11,9 @@
 </dl>
 
 - React.js
+- Webpack
+- PostgreSQL
+- Express.js
 - JavaScript ES6
 - HTML5
 - CSS3
@@ -50,7 +53,9 @@ Try the application live at [https://quick-track-app.herokuapp.com/](https://qui
   </dt>
 </dl>
 
-- Custom `Success` or `ERROR` modal
+- Custom `Success` or `ERROR` modal.
+- User can add a password-verified account to login with.
+- User can login with their personal account.
 - User can see a breakdown of their spending by payment category.
 - User can export a spending report as a `.csv`.
 - User can attach a photo to an expense.
@@ -76,7 +81,15 @@ Try the application live at [https://quick-track-app.herokuapp.com/](https://qui
   npm install
   ```
 5. Set up a `.env` file containing port numbers to assign to the `dev port` and the `server port`
-6. Set up a `postgresql` database and add the database URL to the `.env` file
+6. Set up a `postgresql` database and add the database URL to the `.env` file:
 ```
 https://www.postgresql.org/docs/9.0/tutorial-createdb.html
 ```
+6. Start the `postgresql` server
+  ```shell
+  sudo service postgresql start
+  ```
+7. Run the following command in the terminal.
+  ```shell
+  npm run dev
+  ```
