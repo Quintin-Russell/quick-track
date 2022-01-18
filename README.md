@@ -62,9 +62,21 @@ Try the application live at [https://quick-track-app.herokuapp.com/](https://qui
   </dt>
 </dl>
 
-1. In your terminal, switch to the directory in which you would like to place the repository
-2. Clone the repository
+1. In your terminal, switch to the directory in which you would like to place the repository.
+2. Clone the repository.
   ```shell
   git clone https://github.com/Quintin-Russell/quick-track.git
   ```
-3. 
+3. Enter into the repository.
+  ```shell
+  cd quick-track
+  ```
+4. Install all dependencies.
+  ```shell
+  npm install
+  ```
+5. Set up a `.env` file containing port numbers to assign to the `dev port` and the `server port`
+6. Set up a `postgresql` database and add the database URL to the `.env` file
+```
+https://www.postgresql.org/docs/9.0/tutorial-createdb.html
+```
