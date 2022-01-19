@@ -39,7 +39,7 @@ insert into "expenses" (
   "paymentMethodId"
 ) values (
   1,
-  now(),
+  "01-01-2022",
   13.70,
   'sample',
   1,
