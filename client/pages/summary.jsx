@@ -303,7 +303,7 @@ export default class Summary extends React.Component {
           <h1 className="menu-txt">{header}</h1>
 
           <div id="chart">
-            <Chart
+             <Chart
             options={this.setGraph().options}
             series={this.setGraph().series}
             type={this.setGraph().type}
