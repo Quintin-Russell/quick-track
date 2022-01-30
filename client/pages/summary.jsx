@@ -269,6 +269,17 @@ export default class Summary extends React.Component {
     return [...this.state.spendingCategories, obj1, obj2, obj3];
   }
 
+  graphInfo() {
+    const graphInfo = this.setGraph();
+    return (graphInfo.type === 'line' && graphInfo.series[0].data.length === 0)
+      ? <p className="text-center padding-1rem pg-id-txt">There are no expenses in this category yet!</p>
+      : <Chart
+          options={graphInfo.options}
+          series={graphInfo.series}
+          type={graphInfo.type}
+          width='100%' />;
+  }
+
   render() {
     if (!this.state.options || !this.state.arr || !this.state.spendingCategories) {
       return <div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>;
@@ -303,11 +314,7 @@ export default class Summary extends React.Component {
           <h1 className="menu-txt">{header}</h1>
 
           <div id="chart">
-             <Chart
-            options={this.setGraph().options}
-            series={this.setGraph().series}
-            type={this.setGraph().type}
-            width='100%' />
+            {this.graphInfo()}
           </div>
           <div className=" col summary-info-cont">
             <p className="text-center oswald-norm">
