@@ -270,20 +270,17 @@ export default class Summary extends React.Component {
   }
 
   graphInfo() {
-    for (const arr in this.setGraph) {
-      // console.log('arr in graphInfo in sumary.jsx:', arr);
-      (!arr)
-        ? <p>There is nothing to display</p>
-        : <Chart
-            options={this.setGraph().options}
-            series={this.setGraph().series}
-            type={this.setGraph().type}
-            width='100%' />;
-    }
+    const graphInfo = this.setGraph();
+    return (graphInfo.type === 'line' && graphInfo.series[0].data.length === 0)
+      ? <p className="text-center padding-1rem pg-id-txt">There are no expenses in this category yet!</p>
+      : <Chart
+          options={graphInfo.options}
+          series={graphInfo.series}
+          type={graphInfo.type}
+          width='100%' />;
   }
 
   render() {
-    // console.log('this.graphInfo in summary.jsx render', this.graphInfo());
     if (!this.state.options || !this.state.arr || !this.state.spendingCategories) {
       return <div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>;
     } else {
@@ -318,11 +315,6 @@ export default class Summary extends React.Component {
 
           <div id="chart">
             {this.graphInfo()}
-            {/* <Chart
-            options={this.setGraph().options}
-            series={this.setGraph().series}
-            type={this.setGraph().type}
-            width='100%' /> */}
           </div>
           <div className=" col summary-info-cont">
             <p className="text-center oswald-norm">
