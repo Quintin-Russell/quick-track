@@ -1,3 +1,19 @@
+insert into "users" (
+  "fullName",
+  "email",
+  "username",
+  "hashedPassword",
+  "monthlyBudget",
+  "timeFrame"
+) values (
+  'Bob Johnson',
+  'BJohnson@example.com',
+  'BJohnson',
+  'nsjjndid88',
+  '3000',
+  'Month'
+);
+
 insert into "paymentMethods" (
   "userId",
   "name"
@@ -39,21 +55,21 @@ insert into "expenses" (
   "paymentMethodId"
 ) values (
   1,
-  "01-01-2022",
+  '02-10-2022',
   13.70,
   'sample',
   1,
   1
 ), (
   1,
-  "01-01-2022",
+  '02-01-2022',
   100,
   'sample1',
   2,
   2
 ), (
   1,
-  "01-01-2022",
+  '02-08-2022',
   150,
   'sample2',
   2,
@@ -61,7 +77,7 @@ insert into "expenses" (
 ),
 (
   1,
-  "01-05-2022",
+  '02-04-2022',
   100,
   'sample3',
   2,
@@ -69,7 +85,7 @@ insert into "expenses" (
 ),
 (
   1,
-  "01-27-2022",
+  '02-08-2022',
   50,
   'sample3',
   2,
