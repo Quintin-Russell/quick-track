@@ -142,7 +142,14 @@ export default class Table extends React.Component {
   render() {
     if (this.state.arr.length === 0 || !this.state.arr) {
       return (
-        <div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        <>
+        <p className="menu-txt">There is nothing to show!</p>
+        <span className='row just-cent'>
+         <p className="menu-txt">Please click the </p>
+            <i className="fas fa-plus-circle create-icon padding-sides"></i><p className="menu-txt">to add a new entry.</p>
+        </span>
+        </>
+
       );
     } else {
       return (
