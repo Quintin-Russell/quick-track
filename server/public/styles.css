@@ -1,3 +1,15 @@
+.oswald-semi-bld {
+  font-family: Oswald, sans-serif;
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+.oswald-norm {
+  font-family: Oswald, sans-serif;
+  font-weight: 300;
+  font-size: 1rem;
+}
+
 .header-cont {
   background-image: linear-gradient(rgb(68 170 68 / 58%), rgb(68 170 68 / 5%), rgb(68 170 68 / 0%));
   padding: 0.5rem;
@@ -55,6 +67,10 @@
 .menu-footer-cont {
   font-size: 0.5rem;
   background-color: white;
+}
+
+.menu-icon-txt {
+  font-size: 0.75rem;
 }
 
 .exp-form-cont {
@@ -165,18 +181,6 @@ ul.no-bullets {
 
 ul.no-bullets > li > a {
   text-decoration: none;
-}
-
-.oswald-semi-bld {
-  font-family: Oswald, sans-serif;
-  font-weight: 600;
-  font-size: 1.25rem;
-}
-
-.oswald-norm {
-  font-family: Oswald, sans-serif;
-  font-weight: 300;
-  font-size: 1rem;
 }
 
 .budget-info-cont {

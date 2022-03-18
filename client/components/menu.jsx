@@ -11,7 +11,7 @@ export default function Menu(props) {
             </a>
           <h1 className="menu-txt">
             Menu
-                </h1>
+          </h1>
         </div>
         <div className="menu-icon-cont col">
           {props.pages.map(page => {
@@ -28,7 +28,7 @@ export default function Menu(props) {
           })}
         </div>
         <div className="menu-footer-cont">
-          <p className="menu-txt">
+          <p className="menu-icon-txt oswald-norm">
             Designed by Quintin Russell
             QuickTrack Finance 2021
                 </p>
