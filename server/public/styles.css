@@ -12,7 +12,7 @@
   font-family: noto-sans, sans-serif;
   font-weight: 700;
   color: #29292960;
-  font-size: 0.75rem;
+  font-size: 1.5rem;
   margin: 0 0.5rem;
   text-decoration: none;
 }
@@ -49,6 +49,7 @@
 .menu-txt {
   font-family: Oswald, sans-serif;
   font-weight: 300;
+  font-size: 2rem;
 }
 
 .menu-footer-cont {
@@ -66,7 +67,7 @@
   font-family: noto-sans, sans-serif;
   color: #292929c0;
   font-weight: 700;
-  font-size: 0.5rem;
+  font-size: 1rem;
   filter: drop-shadow(0 0 2rem rgb(0 0 0 / 15.1%));
 }
 
@@ -80,11 +81,13 @@
   filter: drop-shadow(0 0.1rem 0.1rem #29292960);
   background-color: white;
   border-radius: 5rem;
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
+  font-size: 1rem;
 }
 
 .form-label-txt {
   font-family: noto-sans, sans-serif;
-  font-size: 0.5rem;
+  font-size: 0.75rem;
 }
 
 .sm-button {
