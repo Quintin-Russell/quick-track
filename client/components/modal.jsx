@@ -51,6 +51,12 @@ export default class Modal extends React.Component {
     this.setState({ newEntry });
   }
 
+  // close(e) {
+  //   console.log('props.page in close modal.jsx:', this.props.page);
+  //   console.log('target in close modal.jsx:', e.target.className);
+  //   if (e.target.className === 'overlay z-2 just-align-center') return `${this.props.page.hash}`;
+  // }
+
   readFunct() {
     if (!this.props.route.params.get('funct')) {
       return <></>;
@@ -70,7 +76,8 @@ export default class Modal extends React.Component {
                 ? 'New Payment Method'
                 : 'New Spending Category'
               }</h2>
-              <label className='budget-width just-cent' htmlFor="new-payment-method">
+              <label className='budget-width just-cent'
+              htmlFor="new-payment-method">
                 <input
                 id="new-payment-method"
                 name="new-payment-method"
@@ -83,7 +90,9 @@ export default class Modal extends React.Component {
                   <button className="sm-button">Go Back</button>
                 </a>
                 <a href={this.props.page.hash}>
-                  <button onClick={this.sendFetchReq.bind(this)} className="sm-button">Submit</button>
+                  <button
+                  onClick={this.sendFetchReq.bind(this)}
+                  className="sm-button">Submit</button>
                 </a>
               </div>
 
@@ -197,8 +206,18 @@ export default class Modal extends React.Component {
       return <></>;
     } else {
       return (
+      // need to add a w/ pg.normal-#route or add onClick
+        // <a className="overlay z-2 just-align-center"
+        // onClick={this.close}>
+        //   <a href={this.props.page.hash}
+        //     className="x-button">
+        //     <i className="far fa-times-circle"></i>
+        //   </a>
+        //   {this.readFunct()}
+        // </a>
         <div className="overlay z-2 just-align-center">
-        <a href={this.props.page.hash} className="x-button">
+        <a href={this.props.page.hash}
+        className="x-button">
           <i className="far fa-times-circle"></i>
         </a>
         {this.readFunct()}

@@ -5,10 +5,13 @@ export default class Header extends React.Component {
   render() {
     return (
       <header className="header-cont col">
-          <i onClick={this.props.toggleMenu} className="fas fa-bars header-bars"></i>
+          <i onClick={this.props.toggleMenu}
+          className="fas fa-bars header-bars"></i>
         <div className="row just-cent">
           <a href="">
-            <img className="header-logo" src="images/quick-track-logo.png" alt="quick-track-logo"></img>
+            <img className="header-logo"
+            src="images/quick-track-logo.png"
+            alt="quick-track-logo"></img>
           </a>
         </div>
           <div className="row">

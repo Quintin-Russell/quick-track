@@ -2,9 +2,9 @@ import React from 'react';
 
 export default function Menu(props) {
   return (
-    <div className="overlay">
+    <div className="overlay" onClick={props.toggleMenu}>
       <div className="menu-cont">
-        <div className="header-cont">
+        <div className="header-cont" style={{ height: '23vh' }}>
             <i onClick={props.toggleMenu} className="fas fa-angle-double-left"></i>
           <a onClick={props.toggleMenu} className="header-logo-cont" href="#">
               <img className="menu-header-logo" src="images/quick-track-logo.png" alt="quick-track-logo"></img>
