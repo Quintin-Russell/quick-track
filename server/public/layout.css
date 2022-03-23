@@ -10,6 +10,7 @@
   left: 0;
   right: 0;
   display: flex;
+  z-index: 3;
 }
 
 .whole-pg-cont {
@@ -224,7 +225,7 @@
 
 .form-input {
   min-width: 90%;
-  height: 2rem;
+  height: 2.75rem;
 }
 
 .form-input-extra-padding {

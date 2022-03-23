@@ -38,10 +38,12 @@ export default class Table extends React.Component {
     return (
       table.tableHeaders.map(item => {
         if (table.tableHeaders.findIndex(index => index === item) < table.tableHeaders.length - 1) {
-          return <h2 key={item} className={`menu-txt ${table.className.text}`}>{item}</h2>;
+          return <h2 key={item}
+          className={`menu-txt ${table.className.text}`}>{item}</h2>;
         } else {
           return (
-          <div className={`row ${table.className.divCont}`} key={item}>
+          <div className={`row ${table.className.divCont}`}
+          key={item}>
             <h2 className={`menu-txt ${table.className.text}`}>{item}</h2>
             <i className={`${table.className.icon} fas fa-ellipsis-v disp-none`}></i>
           </div>);
@@ -59,7 +61,9 @@ export default class Table extends React.Component {
         if (counter % 2 === 1) {
           counter++;
           return (
-                  <div data={exp[id]} key={exp[id].toString()} className='table-item shaded row'>
+                  <div data={exp[id]}
+                  key={exp[id].toString()}
+                  className='table-item shaded row'>
                   <p className={`table-txt ${table.className.text}`}>{exp.date}</p>
                   <p className={`table-txt ${table.className.text}`}>{`$${exp.amount}`}</p>
                   <p className={`table-txt ${table.className.text}`}>{exp.comment}</p>
@@ -77,7 +81,9 @@ export default class Table extends React.Component {
         } else {
           counter++;
           return (
-                  <div data={exp[id]} key={exp[id].toString()} className='table-item row'>
+                  <div data={exp[id]}
+                  key={exp[id].toString()}
+                  className='table-item row'>
                     <p className={`table-txt ${table.className.text}`}>{exp.date}</p>
                     <p className={`table-txt ${table.className.text}`}>{`$${exp.amount}`}</p>
                     <p className={`table-txt ${table.className.text}`}>{exp.comment}</p>
@@ -103,7 +109,9 @@ export default class Table extends React.Component {
         if (counter % 2 === 1) {
           counter++;
           return (
-            <div data={item[id]} key={item[id].toString()} className='table-item shaded row'>
+            <div data={item[id]}
+            key={item[id].toString()}
+            className='table-item shaded row'>
               <p className={`table-txt ${table.className.text}`}>{`${item.name}`}</p>
               <RenderIcon
                 route={this.props.route}
@@ -119,7 +127,9 @@ export default class Table extends React.Component {
         } else {
           counter++;
           return (
-            <div data={item[id]} key={item[id].toString()} className='table-item row'>
+            <div data={item[id]}
+            key={item[id].toString()}
+            className='table-item row'>
               <p className={`table-txt ${table.className.text}`}>{`${item.name}`}</p>
               <RenderIcon
                 route={this.props.route}

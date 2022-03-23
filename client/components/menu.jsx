@@ -2,16 +2,16 @@ import React from 'react';
 
 export default function Menu(props) {
   return (
-    <div className="overlay">
+    <div className="overlay" onClick={props.toggleMenu}>
       <div className="menu-cont">
-        <div className="header-cont">
+        <div className="header-cont" style={{ height: '23vh' }}>
             <i onClick={props.toggleMenu} className="fas fa-angle-double-left"></i>
           <a onClick={props.toggleMenu} className="header-logo-cont" href="#">
               <img className="menu-header-logo" src="images/quick-track-logo.png" alt="quick-track-logo"></img>
             </a>
           <h1 className="menu-txt">
             Menu
-                </h1>
+          </h1>
         </div>
         <div className="menu-icon-cont col">
           {props.pages.map(page => {
@@ -28,7 +28,7 @@ export default function Menu(props) {
           })}
         </div>
         <div className="menu-footer-cont">
-          <p className="menu-txt">
+          <p className="menu-icon-txt oswald-norm">
             Designed by Quintin Russell
             QuickTrack Finance 2021
                 </p>
