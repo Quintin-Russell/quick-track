@@ -206,14 +206,14 @@ export default class Modal extends React.Component {
       return <></>;
     } else {
       return (
-        <a className="overlay z-2 just-align-center"
+        <div className="overlay z-2 just-align-center"
         onClick={this.close.bind(this)}>
           <a href={this.props.page.hash}
             className="x-button">
             <i className="far fa-times-circle"></i>
           </a>
           {this.readFunct()}
-        </a>
+        </div>
       );
     }
   }
