@@ -51,11 +51,11 @@ export default class Modal extends React.Component {
     this.setState({ newEntry });
   }
 
-  // close(e) {
-  //   console.log('props.page in close modal.jsx:', this.props.page);
-  //   console.log('target in close modal.jsx:', e.target.className);
-  //   if (e.target.className === 'overlay z-2 just-align-center') return `${this.props.page.hash}`;
-  // }
+  close(e) {
+    if (e.target.className === 'overlay z-2 just-align-center') {
+      window.location.href = this.props.page.hash;
+    }
+  }
 
   readFunct() {
     if (!this.props.route.params.get('funct')) {
@@ -206,21 +206,13 @@ export default class Modal extends React.Component {
       return <></>;
     } else {
       return (
-      // need to add a w/ pg.normal-#route or add onClick
-        // <a className="overlay z-2 just-align-center"
-        // onClick={this.close}>
-        //   <a href={this.props.page.hash}
-        //     className="x-button">
-        //     <i className="far fa-times-circle"></i>
-        //   </a>
-        //   {this.readFunct()}
-        // </a>
-        <div className="overlay z-2 just-align-center">
-        <a href={this.props.page.hash}
-        className="x-button">
-          <i className="far fa-times-circle"></i>
-        </a>
-        {this.readFunct()}
+        <div className="overlay z-2 just-align-center"
+        onClick={this.close.bind(this)}>
+          <a href={this.props.page.hash}
+            className="x-button">
+            <i className="far fa-times-circle"></i>
+          </a>
+          {this.readFunct()}
         </div>
       );
     }
