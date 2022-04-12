@@ -93,7 +93,10 @@ export default class ExpenseForm extends React.Component {
       time = new Date(inputDate);
     }
     const dt = new Date(time);
-    return `${((dt.getMonth() + 1) < 10) ? `0${dt.getMonth() + 1}` : dt.getMonth() + 1}-${(dt.getDate() < 10) ? `0${dt.getDate()}` : dt.getDate()}-${dt.getFullYear()}`;
+    const returnVal = (dt.getMonth())
+      ? `${((dt.getMonth() + 1) < 10) ? `0${dt.getMonth() + 1}` : dt.getMonth() + 1}-${(dt.getDate() < 10) ? `0${dt.getDate()}` : dt.getDate()}-${dt.getFullYear()}`
+      : false;
+    return returnVal;
   }
 
   addEditValues() {
@@ -142,12 +145,11 @@ export default class ExpenseForm extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    if (!this.state.amount) {
-      return window.alert('Please enter an amount, payment method, spending category and comment');
-    }
-    if (!this.state.paymentMethod || !this.state.spendingCategory) {
-      return window.alert('We can\'t find the Payment Method or Spending Category you originally used. Please choose another one from the list');
-    }
+    if (!this.state.amount) return window.alert('Please enter an amount, payment method, spending category and comment');
+
+    if (!this.state.paymentMethod || !this.state.spendingCategory) return window.alert('We can\'t find the Payment Method or Spending Category you originally used. Please choose another one from the list');
+
+    if (!this.generateDate()) return window.alert('Please select the date of your past transaction.');
 
     const body = {
       userId: `${this.props.userId}`,
