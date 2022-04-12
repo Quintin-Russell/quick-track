@@ -97,7 +97,7 @@ export default class Table extends React.Component {
                     editOrDeleteObj={this.props.editOrDeleteObj}
                     className={`${table.className.icon}`}
                     />
-                    </div>
+                  </div>
           );
         }
 

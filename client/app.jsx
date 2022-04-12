@@ -49,7 +49,6 @@ export default class App extends React.Component {
       resetEditOrDeleteObj={this.resetEditOrDeleteObj.bind(this)}
       setEditOrDeleteObj={this.setEditOrDeleteObj.bind(this)}
       page={this.state.page}
-      convertTime={this.convertTime}
       />
       );
     } else if (path === 'accsettings') {
