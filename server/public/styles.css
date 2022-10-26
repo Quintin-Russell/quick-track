@@ -132,6 +132,10 @@
   padding: 0 0.5rem;
 }
 
+.fa-ellipsis-v {
+  font-size: 1.2rem;
+}
+
 .table-item {
   border-radius: 1rem;
 }
@@ -142,7 +146,7 @@
 
 .x-button {
   color: black;
-  font-size: 2rem;
+  font-size: 2.75rem;
 }
 
 .modal-icon-cont {
@@ -152,10 +156,12 @@
 
 .fa-trash-alt {
   color: #ff532f;
+  font-size: 1.2rem;
 }
 
 .fa-edit {
   color: #0e9aa7;
+  font-size: 1.2rem;
 }
 
 .white-bkgrd {

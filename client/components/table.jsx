@@ -1,4 +1,5 @@
 import React from 'react';
+import { HiDotsVertical, HiOutlineTrash, HiOutlinePencilAlt } from 'react-icons/hi';
 
 export default class Table extends React.Component {
   constructor(props) {
@@ -182,9 +183,9 @@ function RenderIcon(props) {
 
   if (!props.editOrDeleteObj || props.editOrDeleteObj[id] !== props.exp[id]) {
     return (
-      <i data={props.exp[id]}
+      <HiDotsVertical data={props.exp[id]}
       onClick={props.setEditOrDeleteObj}
-      className={`table-txt fas fa-ellipsis-v ${props.className}`}></i>
+      className={`table-txt fa-ellipsis-v ${props.className}`}/>
     );
   } else {
 
@@ -192,11 +193,11 @@ function RenderIcon(props) {
       <>
         <div className={`row menu-icon-cont ${props.className}`}>
           <a href={props.page.deleteQuery} data={props.exp[id]} className="menu-header-cont ">
-            <i data={props.exp[id]} className="far fa-trash-alt"></i>
+            <HiOutlineTrash data={props.exp[id]} className="fa-trash-alt" />
             <p data={props.exp[id]} className="form-label-txt">Delete</p>
           </a>
           <a href={props.page.editQuery} data={props.exp[id]} className="menu-header-cont">
-            <i data={props.exp[id]} className="far fa-edit"></i>
+            <HiOutlinePencilAlt data={props.exp[id]} className="fa-edit" />
             <p data={props.exp[id]} className="form-label-txt">Edit</p>
         </a>
       </div>

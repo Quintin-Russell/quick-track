@@ -1,4 +1,5 @@
 import React from 'react';
+import { IoIosCloseCircleOutline } from 'react-icons/io';
 
 import ExpenseForm from './exp-form';
 
@@ -210,7 +211,7 @@ export default class Modal extends React.Component {
         onClick={this.close.bind(this)}>
           <a href={this.props.page.hash}
             className="x-button">
-            <i className="far fa-times-circle"></i>
+            <IoIosCloseCircleOutline />
           </a>
           {this.readFunct()}
         </div>

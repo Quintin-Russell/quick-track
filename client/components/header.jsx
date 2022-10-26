@@ -1,4 +1,5 @@
 import React from 'react';
+import { AiOutlinePlusCircle } from 'react-icons/ai';
 
 export default class Header extends React.Component {
 
@@ -43,7 +44,7 @@ function CreateIcon(props) {
       <a
       href={pg.createQuery}
       className="create-cont">
-        <i className="fas fa-plus-circle create-icon"></i>
+        <AiOutlinePlusCircle className="create-icon" />
       </a>
     );
   } else {
