@@ -15,13 +15,14 @@ import SetBudget from './pages/set-budget';
 import PaymentMethods from './pages/payment-methods';
 import SpendingCategories from './pages/spending-categories';
 import Summary from './pages/summary';
+import LoginForm from './components/login-form';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.toggleMenu = this.toggleMenu.bind(this);
     this.state = {
-      userId: 1,
+      userId: null,
       route: parseRoute(window.location.hash),
       page: pages.find(pg => pg.path === parseRoute(window.location.hash).path),
       showMenu: false,
@@ -34,11 +35,13 @@ export default class App extends React.Component {
     const path = this.state.route.path;
 
     if (path === '') {
-      return <Home
+      return (this.state.userId)
+        ? <Home
       page={this.state.page}
       userId={this.state.userId}
-      route={this.state.route} />;
+      route={this.state.route} />
 
+        : <LoginForm />;
     } else if (path === 'pastexpenses') {
 
       return (
